@@ -16,7 +16,7 @@ const initialSettings = {
     drawerType: FIXED_DRAWER,
     width: window.innerWidth,
     isDirectionRTL: false,
-    navigationStyle: VERTICAL_NAVIGATION,
+    navigationStyle: HORIZONTAL_MENU_POSITION,
     horizontalNavPosition: INSIDE_THE_HEADER,
     locale: {
         languageId: 'english',

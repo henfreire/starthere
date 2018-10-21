@@ -80,12 +80,7 @@ class SidenavContent extends Component {
                 <ul className="nav-menu">
 
                     <li className="nav-header"><IntlMessages id="sidebar.main"/></li>
-                    <li className="menu no-arrow">
-                        <NavLink to="/app/sample-page">
-                            <i className="zmdi zmdi-view-dashboard zmdi-hc-fw"/>
-                            <span className="nav-text"><IntlMessages id="pages.samplePage"/> </span>
-                        </NavLink>
-                    </li>
+                   
                 </ul>
             </CustomScrollbars>
         );
