@@ -1,5 +1,9 @@
 package model;
 
 public class Empresa extends Usuario {
-//	private 
+
+	public Empresa(String nome, String senha, String email) {
+		super(nome, senha, email);
+	}
+	
 }

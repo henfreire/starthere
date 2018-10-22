@@ -2,12 +2,18 @@ package model;
 
 import org.json.JSONObject;
 
-public abstract class Usuario implements toJSON{
+public class Usuario implements toJSON {
 	private long id;
 	private String nome,
 				   senha,
 				   email;
 
+	Usuario(String nome, String senha, String email) {
+		this.nome = nome;
+		this.senha = senha;
+		this.email = email;
+	}
+	
 	public long getId() {
 		return id;
 	}

@@ -1,9 +1,13 @@
 import java.io.PrintStream;
 
+import javax.swing.JOptionPane;
+
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
+
+import router.RouteController;
 
 public class AJAXServer implements Container {
 	
@@ -11,13 +15,17 @@ public class AJAXServer implements Container {
 	
 	public void handle(Request request, Response response) {
 		try {
-			this.enviaResposta(Status.CREATED, response);
+			new RouteController().handle(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
+			try {
+				this.enviaResposta(Status.BAD_REQUEST, response, e.getMessage());
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "O servidor encontrou um problema ao responder uma requisição.");
+			}
 		}
 	}
-
-	private void enviaResposta(Status status, Response response) throws Exception {
+	
+	private void enviaResposta(Status status, Response response, String message) throws Exception {
 		PrintStream body = response.getPrintStream();
 		long time = System.currentTimeMillis();
 
@@ -28,8 +36,8 @@ public class AJAXServer implements Container {
 		response.setDate("Last-Modified", time);
 		response.setStatus(status);
 
-//		if (str != null)
-//			body.println(str);
+		if (message != null)
+			body.println(message);
 		body.close();
 	}
 
