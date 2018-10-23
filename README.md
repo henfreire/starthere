@@ -26,7 +26,7 @@ It consists in a software built to integrate StartUps and Investors in a mobile-
  - [Thiguet][thiguet]
  - [Luan Cesar][luan]
  - [Henrique Freire][henrique]
- - Pedro Dantas
+ - [Pedro Dantas][pedro]
  
 
    [classDiagram]: <https://drive.google.com/file/d/1IaSaMysFd4ZHIIGA2l68B6yuGSu9OrA-/view?usp=sharing>
@@ -34,3 +34,4 @@ It consists in a software built to integrate StartUps and Investors in a mobile-
    [thiguet]: <https://github.com/thiguet>   
    [luan]: <https://github.com/luancesar>
    [henrique]: <https://github.com/henriquefreire>
+   [pedro]: <https://github.com/gitdopedrodantas>
