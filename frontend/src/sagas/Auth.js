@@ -23,15 +23,27 @@ import {
     userTwitterSignInSuccess
 } from "../actions/Auth";
 
+const createUserWithEmailPasswordRequest = async (name, email, password, cPassword) => api.post('/api/register', {
+    name,
+    email,
+    password
+  })
+    .then(authUser => authUser)
+    .catch(error => error);
+  
+  const signInUserWithEmailPasswordRequest = async (email, password) => api.post('usuario/login', {
+    email,
+    password
+  })
+    .then(authUser => authUser)
+    .catch(error => error);
+
 const createUserWithEmailPasswordRequest = async (email, password) =>
     await  auth.createUserWithEmailAndPassword(email, password)
         .then(authUser => authUser)
         .catch(error => error);
 
-const signInUserWithEmailPasswordRequest = async (email, password) =>
-    await  auth.signInWithEmailAndPassword(email, password)
-        .then(authUser => authUser)
-        .catch(error => error);
+
 
 const signOutRequest = async () =>
     await  auth.signOut()
