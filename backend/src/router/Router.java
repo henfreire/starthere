@@ -3,23 +3,19 @@ package router;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import javax.swing.JOptionPane;
+
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
-import org.simpleframework.http.core.Container;
 
-import controller.EmpresaController;
-import controller.EventoController;
-import controller.UsuarioController;
-
-public class RouteController implements Container {
+public class Router implements IContainer, Routable {
 	private static final String NON_POST_MESSAGE = "This server won't respond to non POST methods";
 	
 	private Request request;
 	private Response response;
 	
 	public void handle(Request request, Response response) {
-		
 		this.request = request;
 		this.response = response;
 		
@@ -28,9 +24,9 @@ public class RouteController implements Container {
 
 		try {
 			if("POST".equals(method)) {
-				this.sendRoute(path);
+				this.sendRoute(path, request, response);
 			} else {
-				this.setResponse(RouteController.NON_POST_MESSAGE);
+				this.setResponse(Router.NON_POST_MESSAGE);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,21 +35,31 @@ public class RouteController implements Container {
 		}
 	}
 	
-	public void sendRoute (String route) throws Exception {
+	public void sendRoute (String route, Request request, Response response) {
 		String message = null;
-		Container router;
-	
+		Routable router;
+		
 		if (route.startsWith("/empresa")) {
+			route = route.replaceAll("/empresa", "");
 			router = new EmpresaRouter();
+		} else if (route.startsWith("/startup")) {
+			router = new StartUpRouter();
+		} else if (route.startsWith("/investidor")) {
+			router = new InvestidorRouter();
 		} else if (route.startsWith("/evento")) {
 			router = new EventoRouter();
 		} else {
-			throw new Exception("Invalid Route !");
+			router = null;
 		}
 		
-		router.handle(request, response);
-		this.setResponse(message);
-	 
+		try {
+			if(router != null) {
+				router.sendRoute(route, request, response);
+				this.setResponse(message);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void setResponse(String message) throws IOException {
@@ -71,5 +77,4 @@ public class RouteController implements Container {
 			body.println(message);
 		body.close();
 	}
-	
 }

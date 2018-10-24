@@ -53,5 +53,10 @@ public class Usuario implements toJSON {
 	public JSONObject toJSONObject() {
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + "]";
+	}
 	
 }

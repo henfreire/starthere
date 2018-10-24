@@ -1,14 +1,34 @@
 package controller;
 
-import org.simpleframework.http.Request;
-import org.simpleframework.http.Response;
-import org.simpleframework.http.core.Container;
+import service.EmpresaService;
 
-public class EmpresaController implements UsuarioController, Container {
+import java.util.List;
 
-	@Override
-	public void handle(Request request, Response response) {
+import javax.swing.JOptionPane;
+
+import model.Empresa;
+
+public class EmpresaController implements UsuarioController {
+	private EmpresaService empService;
+	
+	public EmpresaController() {
+		this.empService = new EmpresaService ();
+	}
+	
+	public void add(String nome, String senha, String email) throws Exception {
+		JOptionPane.showMessageDialog(null, nome);
+		this.empService.add(nome, senha, email);
+	}
+	
+	public List<Empresa> getAll() {
+		String s = null;
 		
-	}	
+		for(int i = 0; i < this.empService.getAll().size() ; i++ ) {
+			s += this.empService.getAll().get(i);
+		}
+		
+		JOptionPane.showMessageDialog(null, s);
+		return this.empService.getAll();
+	}
 	
 }
