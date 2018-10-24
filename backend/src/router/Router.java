@@ -12,7 +12,7 @@ import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 
 public class Router implements IContainer, Routable {
-	private static final String NON_POST_MESSAGE = "This server won't respond to non POST methods";
+	private static final String NON_POST_MESSAGE = "Este servidor não irá responder a métodos que não são POST";
 	
 	private Request request;
 	private Response response;
@@ -72,6 +72,7 @@ public class Router implements IContainer, Routable {
 			route = route.replace("/usuario", "");
 			router = new UsuarioRouter();
 		} else if (route.startsWith("/evento")) {
+			route = route.replace("/evento", "");
 			router = new EventoRouter();
 		} else {
 			router = null;

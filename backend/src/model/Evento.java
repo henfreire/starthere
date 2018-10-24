@@ -9,7 +9,7 @@ public class Evento {
 					descricao;
 	private Date    dataEvento;
 	
-	Evento(String nome, Empresa emp) {
+	public Evento(String nome, Empresa emp) {
 		this.nome = nome;
 		this.empCriadora = emp;
 	}

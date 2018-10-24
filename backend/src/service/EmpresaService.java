@@ -14,7 +14,7 @@ import model.Usuario;
 
 public class EmpresaService implements UsuarioService {
 
-	private static List<Empresa> empresas = new ArrayList<Empresa> ();
+	public static List<Empresa> empresas = new ArrayList<Empresa> ();
 	
 	public EmpresaService() {}
 	
@@ -31,8 +31,8 @@ public class EmpresaService implements UsuarioService {
 
 	@Override
 	public Usuario buscar(String email) {
-		for(int i = 0; i < this.empresas.size() ; i++) {
-			Usuario user = this.empresas.get(i);
+		for(int i = 0; i < EmpresaService.empresas.size() ; i++) {
+			Usuario user = EmpresaService.empresas.get(i);
 			if(email.equals(user.getEmail())) {
 				return user;
 			}
@@ -49,6 +49,18 @@ public class EmpresaService implements UsuarioService {
 
 	public List<Empresa> getAll() {
 		return EmpresaService.empresas;
+	}
+
+	public Empresa getEmpresaById(long idEmpresa) {
+		Empresa aux = null;
+		
+		for(int i = 0 ; i < EmpresaService.empresas.size() ; i++) {
+			if(EmpresaService.empresas.get(i).getId() == idEmpresa){
+				aux = EmpresaService.empresas.get(i);
+			}
+		}
+		
+		return aux;
 	}
 
 }
