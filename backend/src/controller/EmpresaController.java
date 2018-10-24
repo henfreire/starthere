@@ -1,6 +1,7 @@
 package controller;
 
 import service.EmpresaService;
+import service.IService;
 
 import java.util.List;
 
@@ -24,8 +25,6 @@ public class EmpresaController implements UsuarioController {
 		JSONArray aux = new JSONArray ();
 		List <Empresa> empresas = this.empService.getAll();
 		
-		JOptionPane.showMessageDialog(null, empresas.get(0).toString());
-		
 		for(int i = 0 ;  i < empresas.size() ; i++ ) {
 			aux.put(empresas.get(i).toJSONObject());
 		}
@@ -34,16 +33,7 @@ public class EmpresaController implements UsuarioController {
 		
 		return aux;
 	}
-
-	@Override
-	public void add(JSONObject obj) {
-		String  nome = obj.getString("nome"),
-				senha = obj.getString("senha"),
-				email = obj.getString("email");
-		
-		this.empService.add(nome, senha, email);
-	}
-
+	
 	@Override
 	public JSONObject delete(long id) {
 		return null;
@@ -61,5 +51,10 @@ public class EmpresaController implements UsuarioController {
 		result.put("email", user.getEmail());
 		
 		return result;
+	}
+
+	@Override
+	public IService getService() {
+		return this.empService;
 	}	
 }

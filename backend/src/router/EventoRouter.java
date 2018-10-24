@@ -1,15 +1,30 @@
 package router;
 
+import javax.swing.JOptionPane;
+
 import org.json.JSONObject;
-import org.simpleframework.http.Request;
-import org.simpleframework.http.Response;
+
+import controller.EventoController;
 
 public class EventoRouter implements Routable {
-
+	public EventoController evtController; 
+	
+	public EventoRouter () {
+		evtController = new EventoController();
+	}
+	
 	@Override
 	public String sendRoute(String route, JSONObject requestData) {
-		// TODO Auto-generated method stub
-		return null;
+		String result = null;
+		
+		JOptionPane.showMessageDialog(null, route);
+		
+		if(route.startsWith("/add")) {
+			EventoRouter e = new EventoRouter(); 
+			this.evtController.add(requestData);
+			result = "O registro foi salvo com sucesso !";
+		}
+		return result ;
 	}
 
 

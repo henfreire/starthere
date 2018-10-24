@@ -6,15 +6,14 @@ import org.json.JSONObject;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 
-import com.google.gson.JsonObject;
-
 import controller.EmpresaController;
+import controller.StartupController;
 
-public class EmpresaRouter implements Routable {
-	private EmpresaController empController;
+public class StartupRouter implements Routable {
+	private StartupController stpController;
 	
-	public EmpresaRouter () {
-		this.empController = new EmpresaController ();
+	public StartupRouter () {
+		this.stpController = new StartupController ();
 	}
 	
 	@Override
@@ -25,17 +24,18 @@ public class EmpresaRouter implements Routable {
 		
 		if(route.startsWith("/add")) {			
 			try {
-				this.empController.add(this.empController.getService(), data);
+				this.stpController.add(this.stpController.getService(), data);
 				result = "O registro foi salvo com sucesso !";
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
 		} else if(route.startsWith("/getAll")) {
-			result = this.empController.getAll().toString();
+			result = this.stpController.getAll().toString();
 		}  else {
 			result = null;
 		}
 		
 		return result;
 	}
+
 }

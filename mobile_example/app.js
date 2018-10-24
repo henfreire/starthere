@@ -9,11 +9,11 @@ var sendRequest =  (route, jsonData) => {
 
 $('#loginBtn').click(() => {
 	var data = {
-		nome : $('#loginNome').val(),
+		email : $('#loginEmail').val(),
 		senha: $('#loginSenha').val()
 	};
 
-	route = 'usuario/get';	
+	route = 'usuario/login';	
 
 	sendRequest(route, data).then((response) => {
 		localStorage.setItem('loginId', response['id']);
@@ -50,10 +50,10 @@ $('#cadEventoBtn').click(() => {
 		nome : $('#cadEventoNome').val(),
 		dataEvento: $('#cadEventoData').val(),
 		descricao: $('#cadEventoDesc').val(),
-		idEmpresa: $('#cadEventoIdEmpresa').val()
+		idEmpresa: localStorage.getItem('loginId')
 	};
-
-	// localStorage.getItem('loginId');
-
-	sendRequest(data);
+	
+	route = 'evento/add';
+	
+	sendRequest(route, data);
 });
