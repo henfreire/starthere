@@ -5,6 +5,8 @@ import java.io.PrintStream;
 
 import javax.swing.JOptionPane;
 
+import org.json.JSONObject;
+import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
@@ -19,45 +21,28 @@ public class Router implements IContainer, Routable {
 		this.request = request;
 		this.response = response;
 		
-		String path = request.getPath().getPath();
-		String method = request.getMethod();
-
+		String path = this.request.getPath().getPath();
+		String method = this.request.getMethod();
+		
+		Query query = this.request.getQuery();
+		JSONObject obj = new JSONObject ();
+		
 		try {
+			Object[] keys = query.keySet().toArray();
+			
+			for(int i = 0 ; i < keys.length; i++) {
+				obj.put(keys[i].toString(), query.get(keys[i]));
+			}
+			
 			if("POST".equals(method)) {
-				this.sendRoute(path, request, response);
+				this.setResponse(this.sendRoute(path, obj));
 			} else {
 				this.setResponse(Router.NON_POST_MESSAGE);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void sendRoute (String route, Request request, Response response) {
-		String message = null;
-		Routable router;
-		
-		if (route.startsWith("/empresa")) {
-			route = route.replaceAll("/empresa", "");
-			router = new EmpresaRouter();
-		} else if (route.startsWith("/startup")) {
-			router = new StartUpRouter();
-		} else if (route.startsWith("/investidor")) {
-			router = new InvestidorRouter();
-		} else if (route.startsWith("/evento")) {
-			router = new EventoRouter();
-		} else {
-			router = null;
-		}
-		
-		try {
-			if(router != null) {
-				router.sendRoute(route, request, response);
-				this.setResponse(message);
-			}
-		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}
@@ -76,5 +61,31 @@ public class Router implements IContainer, Routable {
 		if (message != null)
 			body.println(message);
 		body.close();
+	}
+
+	@Override
+	public String sendRoute(String route, JSONObject requestData) {
+		String message = null;
+		Routable router;
+		
+		if(route.startsWith("/usuario")) {
+			route = route.replace("/usuario", "");
+			router = new UsuarioRouter();
+		} else if (route.startsWith("/evento")) {
+			router = new EventoRouter();
+		} else {
+			router = null;
+		}
+		
+		try {
+			if(router != null) {
+				message = router.sendRoute(route, requestData);
+				this.setResponse(message);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return message;
 	}
 }

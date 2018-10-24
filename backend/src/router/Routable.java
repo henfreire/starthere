@@ -1,10 +1,7 @@
 package router;
 
-import org.simpleframework.http.Request;
-import org.simpleframework.http.Response;
+import org.json.JSONObject;
 
 public interface Routable {
-	
-	public void sendRoute(String route, Request request, Response response);
-	
+	public String sendRoute(String route, JSONObject requestData);	
 }

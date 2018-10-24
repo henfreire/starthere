@@ -1,5 +1,5 @@
 package controller;
 
-public interface UsuarioController {
+public interface UsuarioController extends basicCRUD {
 	
 }

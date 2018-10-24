@@ -1,18 +1,16 @@
 package router;
 
+import org.json.JSONObject;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 
 public class StartUpRouter implements Routable {
 
 	@Override
-	public void handle(Request arg0, Response arg1) {
-		
+	public String sendRoute(String route, JSONObject requestData) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public void sendRoute(String route) {
-		
-	}
 
 }

@@ -1,19 +1,15 @@
 package router;
 
+import org.json.JSONObject;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 
 public class InvestidorRouter implements Routable {
 
 	@Override
-	public void handle(Request request, Response response) {
-		
-	}
-
-	@Override
-	public void sendRoute(String route) {
+	public String sendRoute(String route, JSONObject requestData) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
