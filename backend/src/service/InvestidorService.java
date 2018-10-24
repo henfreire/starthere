@@ -1,32 +1,30 @@
 package service;
 
-import java.util.List;
-
-import model.Empresa;
 import model.Usuario;
 
-public class EmpresaServiceImpl implements UsuarioService {
+public class InvestidorService implements UsuarioService {
 
-	private static List<Empresa> empresas;
-	
 	@Override
 	public void add(String nome, String email, String senha) {
-		Empresa newEmp = new Empresa(nome, senha, email);
-		this.empresas.add(0, newEmp);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void delete(long id) {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Usuario buscar(String nome) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Usuario buscar(long id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

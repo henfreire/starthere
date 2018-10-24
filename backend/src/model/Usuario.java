@@ -3,12 +3,14 @@ package model;
 import org.json.JSONObject;
 
 public class Usuario implements toJSON {
+	private static long cont = 0; 
 	private long id;
 	private String nome,
 				   senha,
 				   email;
 
-	Usuario(String nome, String senha, String email) {
+	public Usuario(String nome, String senha, String email) {
+		this.id = ++Usuario.cont;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
@@ -50,8 +52,20 @@ public class Usuario implements toJSON {
 		// not implemented
 	}
 
+	@Override
 	public JSONObject toJSONObject() {
-		return null;
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("nome", nome);
+		obj.put("email", email);
+		
+		return obj;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + "]";
 	}
 	
 }

@@ -7,7 +7,7 @@ import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
 
-import router.RouteController;
+import router.Router;
 
 public class AJAXServer implements Container {
 	
@@ -15,7 +15,7 @@ public class AJAXServer implements Container {
 	
 	public void handle(Request request, Response response) {
 		try {
-			new RouteController().handle(request, response);
+			new Router().handle(request, response);
 		} catch (Exception e) {
 			try {
 				this.enviaResposta(Status.BAD_REQUEST, response, e.getMessage());
