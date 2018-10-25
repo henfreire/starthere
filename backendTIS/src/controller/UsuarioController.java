@@ -14,8 +14,8 @@ public interface UsuarioController extends basicCRUD {
 		JSONObject result = new JSONObject();
 		
 		Usuario user = service.buscar(email);
-		
-		if(user != null && user.getSenha() == senha) {
+
+		if(user != null && user.getSenha().equals(senha)) {
 			result.put("id", user.getId());
 			result.put("nome", user.getNome());
 			result.put("email", user.getEmail());

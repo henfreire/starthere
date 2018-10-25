@@ -1,12 +1,7 @@
 package router;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
-import org.simpleframework.http.Request;
-import org.simpleframework.http.Response;
 
-import controller.EmpresaController;
 import controller.StartupController;
 
 public class StartupRouter implements Routable {
@@ -19,8 +14,6 @@ public class StartupRouter implements Routable {
 	@Override
 	public String sendRoute(String route, JSONObject data) {
 		String result = null;
-		
-		JOptionPane.showMessageDialog(null, route);
 		
 		if(route.startsWith("/add")) {			
 			try {

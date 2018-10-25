@@ -42,7 +42,6 @@ public class Router implements IContainer, Routable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}
@@ -81,6 +80,7 @@ public class Router implements IContainer, Routable {
 		try {
 			if(router != null) {
 				message = router.sendRoute(route, requestData);
+				JOptionPane.showMessageDialog(null, message);
 				this.setResponse(message);
 			}
 		} catch (IOException e) {

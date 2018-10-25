@@ -1,4 +1,4 @@
-var SERVER_URL = "http://127.0.0.1:7200/";
+var SERVER_URL = "http://127.0.0.1:7201/";
 
 var sendRequest =  (route, jsonData) => {
 	return $.post({
@@ -49,7 +49,7 @@ $('#cadEventoBtn').click(() => {
 	var data = {
 		nome : $('#cadEventoNome').val(),
 		dataEvento: $('#cadEventoData').val(),
-		descricao: $('#cadEventoDesc').val(),
+		descricao: $('#cadEventoDescricao').val(),
 		idEmpresa: localStorage.getItem('loginId')
 	};
 	

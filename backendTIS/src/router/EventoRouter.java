@@ -1,7 +1,5 @@
 package router;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
 
 import controller.EventoController;
@@ -17,14 +15,15 @@ public class EventoRouter implements Routable {
 	public String sendRoute(String route, JSONObject requestData) {
 		String result = null;
 		
-		JOptionPane.showMessageDialog(null, route);
-		
 		if(route.startsWith("/add")) {
 			EventoRouter e = new EventoRouter(); 
 			this.evtController.add(requestData);
 			result = "O registro foi salvo com sucesso !";
+		} else {
+			result = "Ocorreu um erro inseperador";
 		}
-		return result ;
+		
+		return result;
 	}
 
 

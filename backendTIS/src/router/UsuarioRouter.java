@@ -1,7 +1,5 @@
 package router;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
 
 import controller.EmpresaController;
@@ -16,7 +14,7 @@ public class UsuarioRouter implements Routable {
 		Routable router = null;
 		
 		if(route.startsWith("/login")) {
-			str = this.login(requestData);
+			str = this.login(requestData);		
 		} else {
 			if (route.startsWith("/empresa")) {
 				route = route.replaceAll("/empresa", "");
@@ -54,7 +52,7 @@ public class UsuarioRouter implements Routable {
 		}
 		
 		return obj != null 
-					? obj.toString()
-					: "Não há usuário cadastrado !";
+					? "Usuário logado !"
+					: "Nenhum usuário foi encontrado !";
 	}
 }

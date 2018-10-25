@@ -1,7 +1,5 @@
 package router;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
 
 import controller.InvestidorController;
@@ -16,8 +14,6 @@ public class InvestidorRouter implements Routable {
 	@Override
 	public String sendRoute(String route, JSONObject data) {
 		String result = null;
-		
-		JOptionPane.showMessageDialog(null, route);
 		
 		if(route.startsWith("/add")) {			
 			try {

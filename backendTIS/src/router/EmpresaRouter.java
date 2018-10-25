@@ -1,12 +1,6 @@
 package router;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
-import org.simpleframework.http.Request;
-import org.simpleframework.http.Response;
-
-import com.google.gson.JsonObject;
 
 import controller.EmpresaController;
 
@@ -20,8 +14,6 @@ public class EmpresaRouter implements Routable {
 	@Override
 	public String sendRoute(String route, JSONObject data) {
 		String result = null;
-		
-		JOptionPane.showMessageDialog(null, route);
 		
 		if(route.startsWith("/add")) {			
 			try {

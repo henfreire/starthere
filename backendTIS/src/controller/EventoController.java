@@ -14,7 +14,7 @@ public class EventoController {
 	public void add(JSONObject obj) {
 		String  nome = obj.getString("nome"),
 				descricao = obj.getString("descricao"),
-				data = obj.getString("data");
+				data = obj.getString("dataEvento");
 		long    idEmpresa = obj.getLong("idEmpresa");
 		
 		this.evtService.add(nome, descricao, data, idEmpresa);
