@@ -10,7 +10,9 @@ import model.Usuario;
 public class EmpresaService implements UsuarioService {
 	private EmpresaDAO<Empresa, Long> empDAO;
 	
-	public EmpresaService() {}
+	public EmpresaService() {
+		this.empDAO = new EmpresaDAOImpl();
+	}
 	
 	@Override
 	public void add(String nome, String email, String senha) throws Exception {
@@ -22,46 +24,35 @@ public class EmpresaService implements UsuarioService {
 		if(email ==  null)
 			throw new Exception("O email não pode ser nulo");
 		
-		Long id = empDAO.getNextId();
-		
-		Empresa empresa = new Empresa(id, nome, senha, email);
-		empDAO.addEmpresa(empresa);
+		Empresa empresa = new Empresa(nome, senha, email);
+		empDAO.add(empresa);
 	}
 
 	@Override
-	public void delete(long id) {
-//		this.empDAO = new EmpresaDAOImpl();
-//		Empresa empresa = empDAO.deleteEmpresa(empresa);
-//		return empresa;
+	public Empresa delete(long id) throws Exception {
+		Empresa empresa = empDAO.get(id);
+		return empDAO.delete(empresa);
 	}
 
 	@Override
-	public Usuario buscar(String email) {
-//		if(email ==  null)
-//			throw new Exception("O email não pode ser nulo !");
-//		
-		this.empDAO = new EmpresaDAOImpl();
+	public Usuario buscar(String email) throws Exception {
+		if(email ==  null)
+			throw new Exception("O email não pode ser nulo !");
 		
-		Empresa empresa = empDAO.getEmpresa(Long.parseLong(email));
-		
-		return empresa;
+		return empDAO.getByNome(email);
 	}
 
 	@Override
 	public Usuario buscar(long id) {
-		// not implemented yet.
-		return null;
+		return empDAO.get(id);
 	}
 
 	public List<Empresa> getAll() {
-		this.empDAO = new EmpresaDAOImpl();
-		return this.empDAO.getEmpresas();
+		return empDAO.getAll();
 	}
 
 	public Empresa getEmpresaById(long idEmpresa) {
-		this.empDAO = new EmpresaDAOImpl();
-		Empresa empresa = empDAO.getEmpresa(idEmpresa);		
-		return empresa;
+		return empDAO.get(idEmpresa);		
 	}
 
 }

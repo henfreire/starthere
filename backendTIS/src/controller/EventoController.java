@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import service.EventoService;
 
-public class EventoController {
+public class EventoController implements Routable {
 	private EventoService evtService;
 	
 	public EventoController() {
@@ -19,5 +19,20 @@ public class EventoController {
 		
 		this.evtService.add(nome, descricao, data, idEmpresa);
 	}
+
+	@Override
+	public String sendRoute(String route, JSONObject requestData) {
+		String result = null;
+		
+		if(route.startsWith("/add")) {
+//			this.evtService.add(requestData);
+			result = "O registro foi salvo com sucesso !";
+		} else {
+			result = "Ocorreu um erro inseperador";
+		}
+		
+		return result;
+	}
+
 
 }

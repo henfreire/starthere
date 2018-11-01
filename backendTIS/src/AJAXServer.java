@@ -1,44 +1,97 @@
+import java.io.IOException;
 import java.io.PrintStream;
 
 import javax.swing.JOptionPane;
 
+import org.json.JSONObject;
+import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
 
-import router.Router;
+import controller.EventoController;
+import controller.LoginController;
+import controller.Routable;
 
-public class AJAXServer implements Container {
+public class AJAXServer implements Container, Routable {
+	private static final String NON_POST_MESSAGE = "Este servidor não irá responder a métodos que não são POST";
 	
-	AJAXServer () {}
+	private Request request;
+	private Response response;
+
+	AJAXServer () {}	
 	
 	public void handle(Request request, Response response) {
+		this.request = request;
+		this.response = response;
+		
+		String path = this.request.getPath().getPath();
+		String method = this.request.getMethod();
+		
+		Query query = this.request.getQuery();
+		JSONObject obj = new JSONObject ();
+		
 		try {
-			new Router().handle(request, response);
-		} catch (Exception e) {
-			try {
-				this.enviaResposta(Status.BAD_REQUEST, response, e.getMessage());
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "O servidor encontrou um problema ao responder uma requisição.");
+			Object[] keys = query.keySet().toArray();
+			
+			for(int i = 0 ; i < keys.length; i++) {
+				obj.put(keys[i].toString(), query.get(keys[i]));
 			}
+			
+			if("POST".equals(method)) {
+				this.setResponse(this.sendRoute(path, obj));
+			} else {
+				this.setResponse(AJAXServer.NON_POST_MESSAGE);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
-	private void enviaResposta(Status status, Response response, String message) throws Exception {
-		PrintStream body = response.getPrintStream();
+	private void setResponse(String message) throws IOException {
+		PrintStream body = this.response.getPrintStream();
 		long time = System.currentTimeMillis();
 
-		response.setValue("Content-Type", "application/json");
-		response.setValue("Server", "Controle de EstoqueService (1.0)");
-		response.setValue("Access-Control-Allow-Origin", "null");
-		response.setDate("Date", time);
-		response.setDate("Last-Modified", time);
-		response.setStatus(status);
+		this.response.setValue("Content-Type", "application/json");
+		this.response.setValue("Server", "Controle de EstoqueService (1.0)");
+		this.response.setValue("Access-Control-Allow-Origin", "null");
+		this.response.setDate("Date", time);
+		this.response.setDate("Last-Modified", time);
+		this.response.setStatus(Status.OK);
 
 		if (message != null)
 			body.println(message);
 		body.close();
 	}
 
+	@Override
+	public String sendRoute(String route, JSONObject requestData) {
+		String message = null;
+		Routable router;
+		
+		if(route.startsWith("/login")) {
+			route = route.replace("/login", "");
+			router = new LoginController();
+		} else if (route.startsWith("/evento")) {
+			route = route.replace("/evento", "");
+			router = new EventoController();
+		} else {
+			router = null;
+		}
+		
+		try {
+			if(router != null) {
+				message = router.sendRoute(route, requestData);
+				JOptionPane.showMessageDialog(null, message);
+				this.setResponse(message);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return message;
+	}
 }

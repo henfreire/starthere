@@ -3,14 +3,19 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
+import DAO.InvestidorDAO;
+import DAOImpl.InvestidorDAOImpl;
 import model.Investidor;
 import model.Usuario;
 
 public class InvestidorService implements UsuarioService {
-
+	private InvestidorDAO invDAO;
+	
 	public static List<Investidor> investidores = new ArrayList<Investidor> ();
 	
-	public InvestidorService() {}
+	public InvestidorService() {
+		invDAO = new InvestidorDAOImpl();
+	}
 	
 	@Override
 	public void add(String nome, String email, String senha) {
@@ -18,11 +23,7 @@ public class InvestidorService implements UsuarioService {
 		InvestidorService.investidores.add(newEmp);
 	}
 
-	@Override
-	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public Usuario buscar(String email) {
@@ -37,6 +38,12 @@ public class InvestidorService implements UsuarioService {
 	}
 	@Override
 	public Usuario buscar(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Usuario delete(long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -18,10 +18,6 @@ public class StartupService implements UsuarioService {
 		StartupService.startups.add(newEmp);
 	}
 
-	@Override
-	public void delete(long id) {
-		
-	}
 
 	@Override
 	public Usuario buscar(String email) {
@@ -37,6 +33,12 @@ public class StartupService implements UsuarioService {
 
 	@Override
 	public Usuario buscar(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Usuario delete(long id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -3,23 +3,23 @@ package model;
 import org.json.JSONObject;
 
 public class Usuario implements toJSON {
-	private static long cont = 0; 
 	private long id;
 	private String nome,
 				   senha,
 				   email;
 
-	public Usuario(Long id) {
-		this.id = id;
-	}
+	public Usuario() {}
 	
-	public Usuario(Long id, String nome, String senha, String email) {
-		this.id = id;
+	public Usuario(String nome, String senha, String email) {
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public long getId() {
 		return id;
 	}

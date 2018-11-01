@@ -1,7 +1,6 @@
 package controller;
 
 import service.EmpresaService;
-import service.IService;
 
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class EmpresaController implements UsuarioController {
 		this.empService = new EmpresaService ();
 	}
 	
-	@Override
 	public JSONArray getAll() {
 		JSONArray aux = new JSONArray ();
 		List <Empresa> empresas = this.empService.getAll();
@@ -34,13 +32,11 @@ public class EmpresaController implements UsuarioController {
 		return aux;
 	}
 	
-	@Override
 	public JSONObject delete(long id) {
 		return null;
 	}
 
-	@Override
-	public JSONObject get(JSONObject obj) {
+	public JSONObject get(JSONObject obj) throws Exception {
 		String email = obj.getString("email");
 		JSONObject result = new JSONObject();
 		
@@ -52,9 +48,24 @@ public class EmpresaController implements UsuarioController {
 		
 		return result;
 	}
-
+	
 	@Override
-	public IService getService() {
-		return this.empService;
-	}	
+	public String sendRoute(String route, JSONObject data) {
+		String result = null;
+		
+		if(route.startsWith("/add")) {			
+			try {
+				this.add(data);
+				result = "O registro foi salvo com sucesso !";
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+		} else if(route.startsWith("/getAll")) {
+			result = this.getAll().toString();
+		}  else {
+			result = null;
+		}
+		
+		return result;
+	}
 }
