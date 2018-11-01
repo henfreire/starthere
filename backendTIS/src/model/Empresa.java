@@ -2,10 +2,12 @@ package model;
 
 public class Empresa extends Usuario {
 
-	public Empresa() {}
+	public Empresa(Long id) {
+		super(id);
+	}
 	
-	public Empresa(String nome, String senha, String email) {
-		super(nome, senha, email);
+	public Empresa(Long id, String nome, String senha, String email) {
+		super(id, nome, senha, email);
 	}
 
 	@Override

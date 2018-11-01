@@ -9,8 +9,12 @@ public class Usuario implements toJSON {
 				   senha,
 				   email;
 
-	public Usuario(String nome, String senha, String email) {
-		this.id = ++Usuario.cont;
+	public Usuario(Long id) {
+		this.id = id;
+	}
+	
+	public Usuario(Long id, String nome, String senha, String email) {
+		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
@@ -18,10 +22,6 @@ public class Usuario implements toJSON {
 	
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 	
 	public String getNome() {
@@ -47,10 +47,6 @@ public class Usuario implements toJSON {
 	public void setEmail(String email) {
 		this.email = email;
 	}	
-	
-	public void criarLamentacao (String nome) {
-		// not implemented
-	}
 
 	@Override
 	public JSONObject toJSONObject() {
@@ -67,5 +63,4 @@ public class Usuario implements toJSON {
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + "]";
 	}
-	
 }

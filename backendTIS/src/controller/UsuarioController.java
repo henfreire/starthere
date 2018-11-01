@@ -31,7 +31,7 @@ public interface UsuarioController extends basicCRUD {
 				senha = obj.getString("senha"),
 				email = obj.getString("email");
 		
-		service.add(nome, senha, email);
+//		service.add(nome, senha, email);
 	}
 	
 	public IService getService();

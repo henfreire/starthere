@@ -1,44 +1,50 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import org.json.JSONArray;
-
-import com.google.gson.JsonArray;
-
+import DAO.EmpresaDAO;
+import DAOImpl.EmpresaDAOImpl;
 import model.Empresa;
 import model.Usuario;
 
 public class EmpresaService implements UsuarioService {
-
-	public static List<Empresa> empresas = new ArrayList<Empresa> ();
+	private EmpresaDAO<Empresa, Long> empDAO;
 	
 	public EmpresaService() {}
 	
 	@Override
-	public void add(String nome, String email, String senha) {
-		Empresa newEmp = new Empresa(nome, senha, email);
-		EmpresaService.empresas.add(newEmp);
+	public void add(String nome, String email, String senha) throws Exception {
+		EmpresaDAO<Empresa, Long> empDAO = new EmpresaDAOImpl();
+		
+		if(nome == null) 
+			throw new Exception("O nome não pode ser nulo");
+		
+		if(email ==  null)
+			throw new Exception("O email não pode ser nulo");
+		
+		Long id = empDAO.getNextId();
+		
+		Empresa empresa = new Empresa(id, nome, senha, email);
+		empDAO.addEmpresa(empresa);
 	}
 
 	@Override
 	public void delete(long id) {
-		// not implemented yet.
+//		this.empDAO = new EmpresaDAOImpl();
+//		Empresa empresa = empDAO.deleteEmpresa(empresa);
+//		return empresa;
 	}
 
 	@Override
 	public Usuario buscar(String email) {
-		for(int i = 0; i < EmpresaService.empresas.size() ; i++) {
-			Usuario user = EmpresaService.empresas.get(i);
-			if(email.equals(user.getEmail())) {
-				return user;
-			}
-		}
+//		if(email ==  null)
+//			throw new Exception("O email não pode ser nulo !");
+//		
+		this.empDAO = new EmpresaDAOImpl();
 		
-		return null;
+		Empresa empresa = empDAO.getEmpresa(Long.parseLong(email));
+		
+		return empresa;
 	}
 
 	@Override
@@ -48,19 +54,14 @@ public class EmpresaService implements UsuarioService {
 	}
 
 	public List<Empresa> getAll() {
-		return EmpresaService.empresas;
+		this.empDAO = new EmpresaDAOImpl();
+		return this.empDAO.getEmpresas();
 	}
 
 	public Empresa getEmpresaById(long idEmpresa) {
-		Empresa aux = null;
-		
-		for(int i = 0 ; i < EmpresaService.empresas.size() ; i++) {
-			if(EmpresaService.empresas.get(i).getId() == idEmpresa){
-				aux = EmpresaService.empresas.get(i);
-			}
-		}
-		
-		return aux;
+		this.empDAO = new EmpresaDAOImpl();
+		Empresa empresa = empDAO.getEmpresa(idEmpresa);		
+		return empresa;
 	}
 
 }
