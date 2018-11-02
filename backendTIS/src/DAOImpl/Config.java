@@ -6,7 +6,6 @@ public class Config {
 											"src" + 
 											"\\" + 
 											"Model" +
-											"\\" + 
-											"Series.txt";;
+											"\\";
 			
 }

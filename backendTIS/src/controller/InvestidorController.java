@@ -28,7 +28,7 @@ public class InvestidorController implements UsuarioController {
 	}
 
 	@Override
-	public String sendRoute(String route, JSONObject data) {
+	public JSONObject sendRoute(String route, JSONObject data) {
 		String result = null;
 		
 		if(route.startsWith("/add")) {			
@@ -44,7 +44,13 @@ public class InvestidorController implements UsuarioController {
 			result = null;
 		}
 		
-		return result;
+		return null;
+	}
+
+	@Override
+	public void add(JSONObject obj) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import DAO.EmpresaDAO;
 import model.Empresa;
 
 public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
-	private static final String FILE_NAME = Config.FILES_DIR + "empresa.dat"; 
+	private static final String FILE_PATH = Config.FILES_DIR + "empresa.dat"; 
 	
 	public EmpresaDAOImpl () {}
 	
@@ -21,9 +23,10 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 		Empresa empresa = null;
 		String idSTR;
 
-		try (DataInputStream entrada = new DataInputStream(new FileInputStream(FILE_NAME))) {
+		try (DataInputStream entrada = new DataInputStream(new FileInputStream(FILE_PATH))) {
 			while ((idSTR = entrada.readUTF()) != null) {
 				empresa = new Empresa();
+				JOptionPane.showMessageDialog(null, idSTR);
 				empresa.setId(Long.parseLong(idSTR));
 				empresa.setEmail(entrada.readUTF());
 				empresa.setNome(entrada.readUTF());
@@ -45,7 +48,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 		Empresa aux = null;
 		String idSTR;
 
-		try (DataInputStream entrada = new DataInputStream(new FileInputStream("bemduravel.dat"))) {
+		try (DataInputStream entrada = new DataInputStream(new FileInputStream(FILE_PATH))) {
 			while ((idSTR = entrada.readUTF()) != null) {
 				aux = new Empresa();
 				aux.setId(Long.parseLong(idSTR));
@@ -67,7 +70,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 
 	@Override
 	public void add(Empresa empresa) {
-		try (DataOutputStream saida = new DataOutputStream(new FileOutputStream(FILE_NAME, true))) {
+		try (DataOutputStream saida = new DataOutputStream(new FileOutputStream(FILE_PATH, true))) {
 			saida.writeLong(empresa.getId());
 			saida.writeUTF(empresa.getNome());
 			saida.writeUTF(empresa.getEmail());
@@ -111,7 +114,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 
 	private void saveEmpresasToFile(List<Empresa> empresas) {
 		try (DataOutputStream saida = 
-			new DataOutputStream(new FileOutputStream(FILE_NAME, false))) {
+			new DataOutputStream(new FileOutputStream(FILE_PATH, false))) {
 			for (Empresa empresa : empresas) {
 				saida.writeUTF(String.valueOf(empresa.getId()));
 				saida.writeUTF(empresa.getNome());
@@ -131,7 +134,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 		Empresa aux = null;
 		String idSTR;
 		
-		try (DataInputStream entrada = new DataInputStream(new FileInputStream("bemduravel.dat"))) {
+		try (DataInputStream entrada = new DataInputStream(new FileInputStream(FILE_PATH))) {
 			while ((idSTR = entrada.readUTF()) != null) {
 				aux = new Empresa();
 				aux.setId(Long.parseLong(idSTR));

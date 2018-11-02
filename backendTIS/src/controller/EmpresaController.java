@@ -50,22 +50,31 @@ public class EmpresaController implements UsuarioController {
 	}
 	
 	@Override
-	public String sendRoute(String route, JSONObject data) {
-		String result = null;
+	public JSONObject sendRoute(String route, JSONObject data) {
+		JSONObject result = new JSONObject();
 		
 		if(route.startsWith("/add")) {			
 			try {
 				this.add(data);
-				result = "O registro foi salvo com sucesso !";
+				result.put("message", "O registro foi salvo com sucesso !");
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
 		} else if(route.startsWith("/getAll")) {
-			result = this.getAll().toString();
+			result.put("empresas", this.getAll());
 		}  else {
 			result = null;
 		}
 		
 		return result;
+	}
+
+	@Override
+	public void add(JSONObject obj) throws Exception {
+		String email = obj.getString("email"),
+			   senha = obj.getString("senha"),
+			   nome  = obj.getString("nome");
+		
+		this.empService.add(nome, email, senha);
 	}
 }

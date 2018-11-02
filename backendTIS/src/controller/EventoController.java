@@ -21,7 +21,7 @@ public class EventoController implements Routable {
 	}
 
 	@Override
-	public String sendRoute(String route, JSONObject requestData) {
+	public JSONObject sendRoute(String route, JSONObject requestData) {
 		String result = null;
 		
 		if(route.startsWith("/add")) {
@@ -31,7 +31,7 @@ public class EventoController implements Routable {
 			result = "Ocorreu um erro inseperador";
 		}
 		
-		return result;
+		return null;
 	}
 
 

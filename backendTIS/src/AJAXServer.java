@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.io.PrintStream;
 
-import javax.swing.JOptionPane;
-
 import org.json.JSONObject;
 import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
@@ -10,9 +8,12 @@ import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
 
+import controller.EmpresaController;
 import controller.EventoController;
+import controller.InvestidorController;
 import controller.LoginController;
 import controller.Routable;
+import controller.StartupController;
 
 public class AJAXServer implements Container, Routable {
 	private static final String NON_POST_MESSAGE = "Este servidor não irá responder a métodos que não são POST";
@@ -40,7 +41,7 @@ public class AJAXServer implements Container, Routable {
 			}
 			
 			if("POST".equals(method)) {
-				this.setResponse(this.sendRoute(path, obj));
+				this.setResponse(this.sendRoute(path, obj).toString());
 			} else {
 				this.setResponse(AJAXServer.NON_POST_MESSAGE);
 			}
@@ -68,8 +69,8 @@ public class AJAXServer implements Container, Routable {
 	}
 
 	@Override
-	public String sendRoute(String route, JSONObject requestData) {
-		String message = null;
+	public JSONObject sendRoute(String route, JSONObject requestData) {
+		JSONObject result = null;
 		Routable router;
 		
 		if(route.startsWith("/login")) {
@@ -78,20 +79,29 @@ public class AJAXServer implements Container, Routable {
 		} else if (route.startsWith("/evento")) {
 			route = route.replace("/evento", "");
 			router = new EventoController();
+		} else if (route.startsWith("/empresa")) {
+			route = route.replaceAll("/empresa", "");
+			router = new EmpresaController();
+		} else if (route.startsWith("/startup")) {
+			route = route.replaceAll("/startup", "");
+			router = new StartupController();
+		} else if (route.startsWith("/investidor")) {
+			route = route.replaceAll("/investidor", "");
+			router = new InvestidorController();
 		} else {
 			router = null;
 		}
 		
 		try {
 			if(router != null) {
-				message = router.sendRoute(route, requestData);
-				JOptionPane.showMessageDialog(null, message);
-				this.setResponse(message);
+				result = router.sendRoute(route, requestData);
+				// JOptionPane.showMessageDialog(null, result);
+				this.setResponse(result.toString());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return message;
+		return result;
 	}
 }

@@ -6,6 +6,7 @@ import model.Usuario;
 import service.UsuarioService;
 
 public class LoginController implements Routable {
+	
 	public JSONObject getUser (UsuarioService service, JSONObject obj) throws Exception {
 		String email = obj.getString("email"),
 			   senha = obj.getString("senha");
@@ -26,8 +27,31 @@ public class LoginController implements Routable {
 	}
 
 	@Override
-	public String sendRoute(String route, JSONObject requestData) {
+	public JSONObject sendRoute(String route, JSONObject requestData) {
 		// TODO Auto-generated method stub
 		return null;
 	}	
+	
+	public String login (JSONObject requestData) {
+		
+		JSONObject obj = null;
+		
+//		obj = empCtl.getUser(empCtl.getService(), requestData);
+//		
+//		if(obj == null) {
+//			obj = stpCtl.getUser(stpCtl.getService(), requestData);
+//		} 
+//		
+//		if(obj == null) {
+//			obj = invCtl.getUser(invCtl.getService(), requestData);
+//		}
+		
+		return obj != null 
+					? "Usuário logado !"
+					: "Nenhum usuário foi encontrado !";
+	}
+	
+	
+	
+	
 }
