@@ -2,25 +2,54 @@ package model;
 
 import org.json.JSONObject;
 
-public class Usuario implements toJSON {
-	private long id;
+import util.toDAT;
+import util.toJSON;
+
+public class Usuario implements toJSON, toDAT {
+	private Long id;
 	private String nome,
 				   senha,
-				   email;
-
+				   email,
+				   linkSite,
+				   linkLinkedIn,
+				   imagem;
+	
 	public Usuario() {}
 	
-	public Usuario(String nome, String senha, String email) {
+	public Usuario(String nome, String email) {
 		this.nome = nome;
-		this.senha = senha;
 		this.email = email;
 	}
 	
+	public String getLinkSite() {
+		return linkSite;
+	}
+
+	public void setLinkSite(String linkSite) {
+		this.linkSite = linkSite;
+	}
+
+	public String getLinkLinkedIn() {
+		return linkLinkedIn;
+	}
+
+	public void setLinkLinkedIn(String linkLinkedIn) {
+		this.linkLinkedIn = linkLinkedIn;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
@@ -60,7 +89,26 @@ public class Usuario implements toJSON {
 	}
 
 	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + "]";
+	public String toDATFormat() {
+		return  id + "|" + 
+				nome + "|" + 
+				senha + "|" + 
+				email + "|" + 
+				linkSite + "|" + 
+				linkLinkedIn + "|" +
+				imagem + "|";
+	}
+
+	@Override
+	public void setDAT(String DAT) {
+		String[] vet = DAT.split("|");
+		
+		this.id = Long.parseLong(vet[0]);
+		this.nome = vet[1];
+		this.senha = vet[2]; 
+		this.email = vet[3]; 
+		this.linkSite = vet[4];
+		this.linkLinkedIn = vet[5];
+		this.imagem = vet[6];
 	}
 }

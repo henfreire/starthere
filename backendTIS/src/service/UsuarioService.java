@@ -1,10 +1,9 @@
 package service;
 
-import model.Usuario;
+import util.RNException;
 
-public interface UsuarioService {
-	public void add(String nome, String email, String senha) throws Exception;
-	public Usuario delete(long id) throws Exception;
-	public Usuario buscar(String nome) throws Exception;
-	public Usuario buscar(long id);
+public interface UsuarioService<Usr, Key> extends CRUDService<Usr, Key> {
+	public Usr getUsuario(Key id) throws RNException;
+	public Usr getUsuarioByEmail(String nome) throws RNException;
+	public Usr autenticar(String email, String senha) throws RNException;
 }

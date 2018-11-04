@@ -18,7 +18,8 @@ public class EmpresaDAOTest {
 		String  nome="Exemplo SA",
 				email="exemplo@teste.com",
 				senha="123";
-		emp = new Empresa(nome, email, senha);
+		emp = new Empresa(nome, email);
+		emp.setSenha(senha);
 		emp.setId(Long.parseLong("13"));
     }
 

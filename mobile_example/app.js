@@ -1,3 +1,12 @@
+/*
+	Author: github.com/thiguet
+
+	Special thanks to github user blueimp (github.com/blueimp), 
+	who had the MD5 JS lib.
+
+	Link: https://github.com/blueimp/JavaScript-MD5/
+*/
+
 var SERVER_URL = "http://127.0.0.1:7201/";
 
 var sendRequest =  (route, jsonData) => {
@@ -10,7 +19,7 @@ var sendRequest =  (route, jsonData) => {
 $('#loginBtn').click(() => {
 	var data = {
 		email : $('#loginEmail').val(),
-		senha: $('#loginSenha').val()
+		senha: md5($('#loginSenha').val())
 	};
 
 	route = 'usuario/login';	

@@ -2,44 +2,45 @@ package DAOImpl;
 
 import java.util.List;
 
-import DAO.InvestidorDAO;
-import model.Investidor;
+import DAO.StartupDAO;
+import model.Startup;
 
-public class InvestidorDAOImpl implements InvestidorDAO<Investidor, Long> {
+public class StartupDAOImpl implements StartupDAO<Startup, Long> {
 
 	@Override
-	public Investidor getByEmail(String nome) {
+	public Startup getByEmail(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Investidor> getAll() {
+	public List<Startup> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Investidor get(Long id) {
+	public Startup get(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(Investidor ele) {
+	public void add(Startup ele) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(Investidor ele) {
+	public void update(Startup ele) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Investidor delete(Investidor ele) {
+	public Startup delete(Startup ele) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
