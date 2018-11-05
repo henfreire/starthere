@@ -1,17 +1,28 @@
 package serviceImpl;
 
-import DAOImpl.InvestidorDAOImpl;
-import model.Investidor;
+import java.util.List;
 
-public class InvestidorServiceImpl extends UsuarioServiceImpl<Investidor> {
+import DAOImpl.InvestidorDAOImpl;
+import model.Evento;
+import model.Investidor;
+import model.Ranking;
+import model.Startup;
+import service.InvestidorService;
+import util.RNException;
+
+public class InvestidorServiceImpl extends UsuarioServiceImpl<Investidor> implements InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer> > {
 	public InvestidorServiceImpl() {
 		super(new InvestidorDAOImpl());
 	}
 
 	@Override
-	public Investidor buildNewUser(String nome, String email, String senha) {
-		Investidor ivs = new Investidor(nome, email);
-		ivs.setSenha(senha);
-		return ivs;
+	public List<Startup> buscarStartups() throws RNException {
+		return null;
 	}
+
+	@Override
+	public void avaliarStartup(Startup stp, Ranking<Integer> rank) throws RNException {
+		
+	}
+	
 }

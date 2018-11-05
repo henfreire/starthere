@@ -3,27 +3,25 @@ package model;
 import java.util.Date;
 
 public class Evento {
-	private long    id;
-	private Empresa empCriadora;
-	private String  nome,
-					descricao;
-	private Date    dataEvento;
+	private Long     id;
+	private String   nome,
+					 descricao;
+	private Date     dataEvento;
 	
-	public Evento(String nome, Empresa emp) {
+	public Evento() {}
+	
+	public Evento(String nome, String descricao, Date dataEvento) {
 		this.nome = nome;
-		this.empCriadora = emp;
+		this.descricao = descricao;
+		this.dataEvento = dataEvento;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Empresa getEmpCriadora() {
-		return empCriadora;
 	}
 	
 	public String getNome() {

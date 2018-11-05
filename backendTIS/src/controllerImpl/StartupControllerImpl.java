@@ -2,38 +2,32 @@ package controllerImpl;
 
 import org.json.JSONObject;
 
+import controller.StartupController;
 import serviceImpl.StartupServiceImpl;
 
-public class StartupControllerImpl  {
+public class StartupControllerImpl extends UsuarioControllerImpl implements StartupController {
 	public StartupServiceImpl stpService;
 	
 	public StartupControllerImpl() {
 		stpService = new StartupServiceImpl ();
 	}
-
+	
 	@Override
 	public JSONObject sendRoute(String route, JSONObject data) {
-		String result = null;
+		JSONObject result = new JSONObject ();
 		
 		if(route.startsWith("/add")) {			
 			try {
-//				this.add(this.getService(), data);
-				result = "O registro foi salvo com sucesso !";
+				this.add(data);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
 		} else if(route.startsWith("/getAll")) {
-			result = this.getAll().toString();
+			result.put("", this.getAll().toString());
 		}  else {
 			result = null;
 		}
 		
-		return null;
-	}
-
-	@Override
-	public void add(JSONObject obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		return result;
 	}
 }

@@ -1,13 +1,17 @@
 package controllerImpl;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import controller.InvestidorController;
+import model.Evento;
+import model.Investidor;
+import model.Ranking;
+import model.Startup;
+import service.InvestidorService;
 import serviceImpl.InvestidorServiceImpl;
 
-public class InvestidorControllerImpl implements InvestidorController {
-	private InvestidorServiceImpl invService;
+public class InvestidorControllerImpl extends UsuarioControllerImpl implements InvestidorController {
+	private InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer>> invService;
 	
 	public InvestidorControllerImpl() {
 		this.invService = new InvestidorServiceImpl ();
@@ -26,36 +30,6 @@ public class InvestidorControllerImpl implements InvestidorController {
 			result = null;
 		}
 		
-		return null;
-	}
-	
-	@Override
-	public JSONObject add(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JSONObject update(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JSONObject delete(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JSONObject get(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JSONArray getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

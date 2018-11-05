@@ -1,9 +1,12 @@
 package model;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 public class Empresa extends Usuario {
 	private String razaoSocial;
+	private List<Evento> eventos;
 
 	public Empresa() {}
 	
@@ -17,6 +20,14 @@ public class Empresa extends Usuario {
 
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	@Override

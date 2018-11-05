@@ -78,4 +78,16 @@ public abstract class UsuarioControllerImpl implements UsuarioController {
 		
 		return result;
 	}
+
+	@Override
+	public JSONObject update(JSONObject obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject delete(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

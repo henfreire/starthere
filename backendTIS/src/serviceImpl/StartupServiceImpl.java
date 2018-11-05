@@ -2,16 +2,11 @@ package serviceImpl;
 
 import DAOImpl.StartupDAOImpl;
 import model.Startup;
+import service.StartupService;
 
-public class StartupServiceImpl extends UsuarioServiceImpl<Startup> {
+public class StartupServiceImpl extends UsuarioServiceImpl<Startup> implements StartupService<Startup, Long> {
 	public StartupServiceImpl() {
 		super( new StartupDAOImpl() );
 	}
 
-	@Override
-	public Startup buildNewUser(String nome, String email, String senha) {
-		Startup startup = new Startup(nome, email);
-		startup.setSenha(senha);
-		return startup;
-	}
 }

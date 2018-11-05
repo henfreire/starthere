@@ -1,6 +1,5 @@
 package serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Empresa;
@@ -13,8 +12,7 @@ public class EventoServiceImpl implements EventoService<Evento, Empresa, Long> {
 	
 	@Override
 	public void add(Evento element) throws RNException {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override

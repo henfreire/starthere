@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 import controller.LoginController;
 import model.Usuario;
+import service.UsuarioService;
 import serviceImpl.EmpresaServiceImpl;
 import serviceImpl.InvestidorServiceImpl;
 import serviceImpl.StartupServiceImpl;
-import serviceImpl.UsuarioServiceImpl;
 import util.RNException;
 
 public class LoginControllerImpl implements LoginController {
@@ -26,7 +26,7 @@ public class LoginControllerImpl implements LoginController {
 	public JSONObject login (JSONObject requestData) {
 		JSONObject result = new JSONObject();
 		Usuario usr = null;
-		UsuarioServiceImpl<? extends Usuario> service;
+		UsuarioService<? extends Usuario, Long> service;
 		
 		String email = requestData.getString("email"),
 			   senha = requestData.getString("senha");
@@ -34,17 +34,17 @@ public class LoginControllerImpl implements LoginController {
 		service = new EmpresaServiceImpl();
 		
 		try {
-			usr = service.auth(email, senha);
+			usr = service.autenticar(email, senha);
 		
 
 			if(usr == null) {
 				service = new StartupServiceImpl();
-				usr = service.auth(email, senha);
+				usr = service.autenticar(email, senha);
 			}
 			
 			if(usr == null) {
 				service = new InvestidorServiceImpl();
-				usr = service.auth(email, senha);
+				usr = service.autenticar(email, senha);
 			}
 			
 			if(usr == null) {

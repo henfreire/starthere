@@ -1,17 +1,26 @@
 package serviceImpl;
 
+import java.util.List;
+
 import DAOImpl.EmpresaDAOImpl;
 import model.Empresa;
+import model.Evento;
+import model.Startup;
+import service.EmpresaService;
+import util.RNException;
 
-public class EmpresaServiceImpl extends UsuarioServiceImpl<Empresa> {
+public class EmpresaServiceImpl extends UsuarioServiceImpl<Empresa> implements EmpresaService<Empresa, Startup, Evento, Long> {
 	public EmpresaServiceImpl() {
 		super( new EmpresaDAOImpl() );
 	}
 
 	@Override
-	public Empresa buildNewUser(String nome, String email, String senha) {
-		Empresa empresa = new Empresa (nome, email);
-		empresa.setSenha(senha);
-		return empresa;
+	public void criarEvento(Evento evento) throws RNException {
 	}
+
+	@Override
+	public List<Startup> buscarStartups() throws RNException {
+		return null;
+	}
+
 }
