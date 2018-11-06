@@ -3,19 +3,17 @@ package controllerImpl;
 import org.json.JSONObject;
 
 import model.Empresa;
-import model.Evento;
-import model.Startup;
 
 import controller.EmpresaController;
 
-import service.EmpresaService;
 import serviceImpl.EmpresaServiceImpl;
 
-public class EmpresaControllerImpl extends UsuarioControllerImpl implements EmpresaController {
-	private EmpresaService<Empresa, Startup, Evento, Long> empService;
+public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implements EmpresaController {
+//	private EmpresaService<Empresa, Startup, Evento, Long> empService;
 	
 	public EmpresaControllerImpl () {
-		this.empService = new EmpresaServiceImpl ();
+		this.service = new EmpresaServiceImpl ();
+//		this.empService = new EmpresaServiceImpl ();
 	}
 	
 	@Override
@@ -24,12 +22,9 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 		
 		try {
 			if(route.startsWith("/add")) {			
-				this.add(data);
-				result.put("empresa", data);
+				result = this.add(data);
 			} else if(route.startsWith("/get")) {
 				result.put("empresas", this.get(data));
-			} else if(route.startsWith("/getAll")) {
-				result.put("empresas", this.getAll());
 			} else if(route.startsWith("/getAll")) {
 				result.put("empresas", this.getAll());
 			} else {
@@ -42,5 +37,4 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 			
 		return result;
 	}
-
 }

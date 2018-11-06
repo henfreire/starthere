@@ -19,10 +19,11 @@ var sendRequest =  (route, jsonData) => {
 $('#loginBtn').click(() => {
 	var data = {
 		email : $('#loginEmail').val(),
-		senha: md5($('#loginSenha').val())
+		// senha: md5($('#loginSenha').val())
+		senha: $('#loginSenha').val()
 	};
 
-	route = 'usuario/login';	
+	route = 'login';	
 
 	sendRequest(route, data).then((response) => {
 		localStorage.setItem('loginId', response['id']);
@@ -39,7 +40,7 @@ $('#cadUsuarioBtn').click(() => {
 
 	var categoria = $('#cadUsuarioCategoria').val();
 
-	route = "usuario/";
+	route = "";
 
 	if(categoria === "Empresa") {
 		route += "empresa";

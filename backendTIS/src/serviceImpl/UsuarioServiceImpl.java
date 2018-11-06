@@ -8,12 +8,8 @@ import service.UsuarioService;
 import util.RNException;
 
 public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioService<E, Long> {
-	UsuarioDAO<E, Long> usrDAO;
+	protected UsuarioDAO<E, Long> usrDAO;
 	
-	public UsuarioServiceImpl(UsuarioDAO<E, Long> usrDAO) {
-		this.usrDAO = usrDAO;
-	}
-
 	@Override
 	public void update(E user) throws RNException {
 		this.usrDAO.update(user);
@@ -42,7 +38,7 @@ public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioSe
 		if(user.getNome() == null) 
 			throw new RNException("O nome não pode ser nulo !");
 		
-		if(user.getEmail()==  null)
+		if(user.getEmail() == null)
 			throw new RNException("O email não pode ser nulo !");
 		
 		if(user.getSenha() == null)
@@ -83,7 +79,8 @@ public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioSe
 	}
 	
 	private boolean isRegisteredEmail(String email) {
-		return this.usrDAO.getByEmail(email) == null;
+		E user = this.usrDAO.getByEmail(email);
+		return user != null;
 	}
 	
 	public boolean isValidPassword(Usuario user, String senha) {

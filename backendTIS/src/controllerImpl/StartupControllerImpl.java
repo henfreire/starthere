@@ -3,13 +3,14 @@ package controllerImpl;
 import org.json.JSONObject;
 
 import controller.StartupController;
+import model.Startup;
 import serviceImpl.StartupServiceImpl;
 
-public class StartupControllerImpl extends UsuarioControllerImpl implements StartupController {
+public class StartupControllerImpl extends UsuarioControllerImpl<Startup> implements StartupController {
 	public StartupServiceImpl stpService;
 	
 	public StartupControllerImpl() {
-		stpService = new StartupServiceImpl ();
+		this.service = this.stpService = new StartupServiceImpl ();
 	}
 	
 	@Override
@@ -25,7 +26,7 @@ public class StartupControllerImpl extends UsuarioControllerImpl implements Star
 		} else if(route.startsWith("/getAll")) {
 			result.put("", this.getAll().toString());
 		}  else {
-			result = null;
+			result.put("error", "Essa rota não existe para as Startups !");
 		}
 		
 		return result;

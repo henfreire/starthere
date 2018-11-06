@@ -11,7 +11,7 @@ import util.RNException;
 
 public class EmpresaServiceImpl extends UsuarioServiceImpl<Empresa> implements EmpresaService<Empresa, Startup, Evento, Long> {
 	public EmpresaServiceImpl() {
-		super( new EmpresaDAOImpl() );
+		this.usrDAO = new EmpresaDAOImpl();
 	}
 
 	@Override

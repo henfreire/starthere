@@ -6,7 +6,6 @@ import service.StartupService;
 
 public class StartupServiceImpl extends UsuarioServiceImpl<Startup> implements StartupService<Startup, Long> {
 	public StartupServiceImpl() {
-		super( new StartupDAOImpl() );
+		this.usrDAO = new StartupDAOImpl();
 	}
-
 }

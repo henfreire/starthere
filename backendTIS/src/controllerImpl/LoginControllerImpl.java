@@ -14,13 +14,7 @@ public class LoginControllerImpl implements LoginController {
 	
 	@Override
 	public JSONObject sendRoute(String route, JSONObject requestData) {
-		JSONObject result = new JSONObject();
-		
-		if(route.equals("/login")) {
-			result = login(requestData);
-		}
-		
-		return result;
+		return login(requestData);
 	}
 	
 	public JSONObject login (JSONObject requestData) {

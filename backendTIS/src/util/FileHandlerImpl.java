@@ -2,12 +2,17 @@ package util;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.io.IOException;
 
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 
 public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
@@ -39,13 +44,18 @@ public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
 	@Override
 	public void saveToFile(E fileContent) {
 		DataOutputStream saida;
-
+		
+		JOptionPane.showMessageDialog(null, "caralho");
+			
 		try {
 			saida = new DataOutputStream(new FileOutputStream(filePath, true));
 			saida.writeUTF(fileContent.toDATFormat() + "\n");
 			saida.flush();
 			
 			saida.close();
+		} catch (FileNotFoundException | EOFException e ) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +69,7 @@ public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
 		try {
 			DataInputStream entrada = new DataInputStream(new FileInputStream(filePath));
 			
-			while ((str = entrada.readUTF()) != null) {
+			while ((entrada.available() > 0) && (str = entrada.readUTF()) != null) {
 				result.add(str);
 			}
 			

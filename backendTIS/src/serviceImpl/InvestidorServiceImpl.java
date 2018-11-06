@@ -12,7 +12,7 @@ import util.RNException;
 
 public class InvestidorServiceImpl extends UsuarioServiceImpl<Investidor> implements InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer> > {
 	public InvestidorServiceImpl() {
-		super(new InvestidorDAOImpl());
+		this.usrDAO = new InvestidorDAOImpl();
 	}
 
 	@Override

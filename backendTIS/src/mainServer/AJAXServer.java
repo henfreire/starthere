@@ -1,4 +1,5 @@
 package mainServer;
+
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -47,7 +48,7 @@ public class AJAXServer implements Container, Routable {
 
 	@Override
 	public JSONObject sendRoute(String route, JSONObject requestData) {
-		JSONObject result = null;
+		JSONObject result = new JSONObject ();
 		Routable router;
 		
 		if(route.startsWith("/login")) {
@@ -72,11 +73,16 @@ public class AJAXServer implements Container, Routable {
 		try {
 			if(router != null) {
 				result = router.sendRoute(route, requestData);
-				// JOptionPane.showMessageDialog(null, result);
 				this.setResponse(result.toString());
+			} else {
+				throw new Exception("Essa rota não existe !");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			result.put("error", e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("error", e.getMessage());
 		}
 		
 		return result;
