@@ -11,8 +11,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import java.util.ArrayList;
 
 public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
@@ -45,8 +43,6 @@ public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
 	public void saveToFile(E fileContent) {
 		DataOutputStream saida;
 		
-		JOptionPane.showMessageDialog(null, "caralho");
-			
 		try {
 			saida = new DataOutputStream(new FileOutputStream(filePath, true));
 			saida.writeUTF(fileContent.toDATFormat() + "\n");
