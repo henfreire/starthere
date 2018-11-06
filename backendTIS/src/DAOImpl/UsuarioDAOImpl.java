@@ -115,6 +115,6 @@ public abstract class UsuarioDAOImpl<E extends Usuario> implements UsuarioDAO<E,
 	
 	private Long getNextId() {
 		List<E> empresas = getAll();
-		return Long.parseLong(empresas.size() + "");
+		return Long.parseLong((empresas.size() + 1) + "");
 	}
 }

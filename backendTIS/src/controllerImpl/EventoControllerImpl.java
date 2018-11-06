@@ -30,7 +30,7 @@ public class EventoControllerImpl implements EventoController {
 		if(route.startsWith("/add")) {
 			result.put("evento", this.add(requestData));
 		} else {
-			result.put("error", "Esta rota n„o existe !");
+			result.put("error", "Esta rota n√£o existe !");
 		}
 		
 		return result;

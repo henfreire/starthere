@@ -42,10 +42,11 @@ public class LoginControllerImpl implements LoginController {
 			}
 			
 			if(usr == null) {
-				throw new RNException("Credenciais Inv·lidas !");
+				throw new RNException("Credenciais Inv√°lidas !");
 			} else {
+				usr.setSenha(null);
 				result = new JSONObject();
-				result.append("user", usr.getId());
+				result.put("user", usr.toJSONObject());
 			}
 		} catch (RNException e) {
 			result.append("RNException", e.getMessage());

@@ -8,12 +8,9 @@ import controller.EmpresaController;
 
 import serviceImpl.EmpresaServiceImpl;
 
-public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implements EmpresaController {
-//	private EmpresaService<Empresa, Startup, Evento, Long> empService;
-	
+public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implements EmpresaController {	
 	public EmpresaControllerImpl () {
 		this.service = new EmpresaServiceImpl ();
-//		this.empService = new EmpresaServiceImpl ();
 	}
 	
 	@Override
@@ -28,7 +25,7 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implem
 			} else if(route.startsWith("/getAll")) {
 				result.put("empresas", this.getAll());
 			} else {
-				throw new Exception("Rota inv·lida !");
+				throw new Exception("Rota inv√°lida !");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

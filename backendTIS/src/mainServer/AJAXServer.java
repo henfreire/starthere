@@ -75,7 +75,7 @@ public class AJAXServer implements Container, Routable {
 				result = router.sendRoute(route, requestData);
 				this.setResponse(result.toString());
 			} else {
-				throw new Exception("Essa rota n„o existe !");
+				throw new Exception("Essa rota n√£o existe !");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -92,8 +92,8 @@ public class AJAXServer implements Container, Routable {
 		PrintStream body = this.response.getPrintStream();
 		long time = System.currentTimeMillis();
 
-		this.response.setValue("Content-Type", "application/json");
-		this.response.setValue("Server", "Controle de EstoqueService (1.0)");
+		this.response.setValue("Content-Type", "application/json; charset=utf-8");
+		this.response.setValue("Server", "StartHere v0.0.1");
 		this.response.setValue("Access-Control-Allow-Origin", "null");
 		this.response.setDate("Date", time);
 		this.response.setDate("Last-Modified", time);

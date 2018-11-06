@@ -35,7 +35,7 @@ public abstract class UsuarioControllerImpl<E extends Usuario> implements Usuari
 			user = (E) this.service.delete(id);
 			result.append("usuario", user);
 		} catch (RNException e) {
-			result.append("RNError", e.getMessage());
+			result.append("RNException", e.getMessage());
 		}
 		
 		return result;
@@ -74,7 +74,7 @@ public abstract class UsuarioControllerImpl<E extends Usuario> implements Usuari
 			result.append("user", user.toJSONObject());
 		} catch (RNException e) {
 			e.printStackTrace();
-			result.put("error", e.getMessage());
+			result.put("RNException", e.getMessage());
 		}
 		
 		return result;

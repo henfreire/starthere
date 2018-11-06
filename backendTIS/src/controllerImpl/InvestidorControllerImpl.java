@@ -3,33 +3,32 @@ package controllerImpl;
 import org.json.JSONObject;
 
 import controller.InvestidorController;
-import model.Evento;
 import model.Investidor;
-import model.Ranking;
-import model.Startup;
-import service.InvestidorService;
 import serviceImpl.InvestidorServiceImpl;
 
-public class InvestidorControllerImpl extends UsuarioControllerImpl implements InvestidorController {
-	private InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer>> invService;
+public class InvestidorControllerImpl extends UsuarioControllerImpl<Investidor> implements InvestidorController {
 	
 	public InvestidorControllerImpl() {
-		this.invService = new InvestidorServiceImpl ();
+		this.service = new InvestidorServiceImpl();
 	}
 
 	@Override
 	public JSONObject sendRoute(String route, JSONObject data) {
 		JSONObject result = new JSONObject ();
 		
-		if(route.startsWith("/add")) {			
-			this.add(data);
-			result.put("", data.get("id"));
-		} else if(route.startsWith("/getAll")) {
-			this.getAll().toString();
-		}  else {
-			result = null;
+		try {
+			if(route.startsWith("/add")) {			
+				result = this.add(data);
+			} else if(route.startsWith("/getAll")) {
+				this.getAll().toString();
+			}  else {
+				throw new Exception("Rota inválida !");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("error", e.getMessage());
 		}
 		
-		return null;
+		return result;
 	}
 }

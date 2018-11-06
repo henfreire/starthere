@@ -7,26 +7,26 @@ import model.Startup;
 import serviceImpl.StartupServiceImpl;
 
 public class StartupControllerImpl extends UsuarioControllerImpl<Startup> implements StartupController {
-	public StartupServiceImpl stpService;
 	
 	public StartupControllerImpl() {
-		this.service = this.stpService = new StartupServiceImpl ();
+		this.service = new StartupServiceImpl ();
 	}
 	
 	@Override
 	public JSONObject sendRoute(String route, JSONObject data) {
 		JSONObject result = new JSONObject ();
 		
-		if(route.startsWith("/add")) {			
-			try {
-				this.add(data);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-		} else if(route.startsWith("/getAll")) {
-			result.put("", this.getAll().toString());
-		}  else {
-			result.put("error", "Essa rota n„o existe para as Startups !");
+		try {
+			if(route.startsWith("/add")) {			
+				result = this.add(data);
+			} else if(route.startsWith("/getAll")) {
+				this.getAll().toString();
+			}  else {
+				throw new Exception("Rota inv√°lida !");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("error", e.getMessage());
 		}
 		
 		return result;
