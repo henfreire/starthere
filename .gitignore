@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 /frontend/node_modules
 /backendTIS/.classpath
 /frontend/yarn-error\.log
+=======
+node_modules
+frontend/yarn-error\.log
+backendTIS/.classpath
+>>>>>>> 2f63e700b2b6f31996188c4210ca297786bb429c

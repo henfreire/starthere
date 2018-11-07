@@ -1,20 +1,9 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import model.Empresa;
-import model.Evento;
+import util.RNException;
 
-public class EventoService {
-	public static List<Evento> eventos = new ArrayList<Evento> ();
-	
-	public EventoService() {}	
-	
-	public void add(String nome, String email, String senha, long idEmpresa) {
-		Empresa emp = new EmpresaService().getEmpresaById(idEmpresa);
-		Evento evt = new Evento(nome, emp);
-		
-	}
-
+public interface EventoService<Evt, Emp, Key> extends CRUDService<Evt, Key> {
+	public List<Evt> getEventosByEmpresa(Emp empresa) throws RNException;
 }

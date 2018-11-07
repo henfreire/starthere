@@ -1,6 +1,12 @@
 package model;
 
-public class Lamentacao {
+import org.json.JSONObject;
+
+import util.toDAT;
+import util.toJSON;
+
+public class Lamentacao implements toJSON, toDAT {
+	private Long id;
 	private String  nome,
 				    descricao;
 	private boolean status;
@@ -37,5 +43,37 @@ public class Lamentacao {
 	public void finalizarLamentacao() {
 		this.status = true;
 	}
+
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject ();
+		
+		obj.put("id", this.id);		
+		obj.put("nome", this.nome);		
+		obj.put("descricao", this.descricao);		
+		obj.put("status", this.status);		
+		obj.put("bonificacao", this.bonificacao);		
+		
+		return obj;
+	}
 	
+	@Override
+	public String toDATFormat() {
+		return this.id + "|" +
+			   this.nome + "|" +
+			   this.descricao + "|" +
+			   this.status + "|" +
+			   this.bonificacao + "|";
+	}
+
+	@Override
+	public void setDAT(String DAT) {
+		String[] vet = DAT.split("|");
+		
+		this.id = Long.parseLong(vet[0]);
+		this.nome = vet[1];
+		this.descricao = vet[2];
+		this.status = Boolean.parseBoolean(vet[3]);
+		this.bonificacao = Double.parseDouble(vet[4]);
+	}
 }

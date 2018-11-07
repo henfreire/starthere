@@ -1,13 +1,53 @@
 package model;
 
-public class Empresa extends Usuario {
+import java.util.List;
 
-	public Empresa(String nome, String senha, String email) {
-		super(nome, senha, email);
+import org.json.JSONObject;
+
+public class Empresa extends Usuario {
+	private String razaoSocial;
+	private List<Evento> eventos;
+
+	public Empresa() {}
+	
+	public Empresa(String nome, String email) {
+		super(nome, email);
+	}
+
+	public String getRazaoSocial() {
+		return razaoSocial;
+	}
+
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	@Override
-	public String toString() {
-		return super.toString();
+	public JSONObject toJSONObject() {
+		JSONObject obj = super.toJSONObject();
+		obj.put("razaoSocial", this.razaoSocial);
+		return obj;
+	}
+
+	@Override
+	public String toDATFormat() {
+		return super.toDATFormat() + this.razaoSocial + "|";
+	}
+
+	@Override
+	public void setDAT(String DAT) {
+		super.setDAT(DAT);
+		
+		String[] vet = DAT.split("|");
+		
+		this.razaoSocial = vet[7];
 	}
 }

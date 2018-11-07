@@ -1,15 +1,25 @@
 package model;
 
+import org.json.JSONObject;
+
 public class Investidor extends Usuario {
-	public Investidor(String nome, String senha, String email) {
-		super(nome, senha, email);
+	
+	public Investidor(String nome, String email) {
+		super(nome, email);
 	}
 
-	public void procurarStartUp(String nome) {
-		// not implemented
+	@Override
+	public JSONObject toJSONObject() {
+		return super.toJSONObject();
 	}
-	
-	public void procurarStartUp(StartUp startUp) {
-		// not implemented
-	}	
+
+	@Override
+	public String toDATFormat() {
+		return super.toDATFormat();
+	}
+
+	@Override
+	public void setDAT(String DAT) {
+		super.setDAT(DAT);
+	}
 }

@@ -109,11 +109,6 @@ class Header extends React.Component {
                     <Link className="app-logo mr-2 d-none d-sm-block" to="/">
                         <img src={logo} alt="Jambo" title="Jambo"/>
                     </Link>
-
-
-                    <SearchBox styleName="d-none d-lg-block" placeholder=""
-                               onChange={this.updateSearchText.bind(this)}
-                               value={this.state.searchText}/>
                     {(navigationStyle === HORIZONTAL_NAVIGATION && horizontalNavPosition === INSIDE_THE_HEADER) &&
                     <Menu/>}
 
