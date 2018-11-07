@@ -2,7 +2,9 @@ package model;
 
 import java.util.Date;
 
-public class Evento {
+import util.toDAT;
+
+public class Evento implements toDAT {
 	private Long     id;
 	private String   nome,
 					 descricao;
@@ -46,5 +48,14 @@ public class Evento {
 
 	public void setDataEvento(Date dataEvento) {
 		this.dataEvento = dataEvento;
+	}
+
+	@Override
+	public String toDATFormat() {
+		return null;
+	}
+
+	@Override
+	public void setDAT(String DAT) {
 	}
 }

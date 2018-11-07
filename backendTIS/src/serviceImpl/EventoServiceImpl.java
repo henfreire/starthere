@@ -2,13 +2,20 @@ package serviceImpl;
 
 import java.util.List;
 
+import DAO.EventoDAO;
+import DAOImpl.EventoDAOImpl;
 import model.Empresa;
 import model.Evento;
 import service.EventoService;
+import util.FileHandler;
 import util.RNException;
 
-public class EventoServiceImpl implements EventoService<Evento, Empresa, Long> {
-	public EventoServiceImpl() {}	
+public class EventoServiceImpl implements EventoService<Evento, Empresa, Long> {	
+	private EventoDAO evtDAO;
+	
+	public EventoServiceImpl() {
+		evtDAO = new EventoDAOImpl ();
+	}	
 	
 	@Override
 	public void add(Evento element) throws RNException {

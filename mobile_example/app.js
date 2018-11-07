@@ -67,3 +67,18 @@ $('#cadEventoBtn').click(() => {
 	
 	sendRequest(route, data);
 });
+
+$(document).ready(() => {
+	var route = "evento/getAll";
+	
+	sendRequest(route).then(response => {
+		response.forEach((data, index) => {
+			$('#events-name').append(
+				'<a class="list-group-item list-group-item-action" id="list-name-' + index + '" data-toggle="list" href="#list-item-' + index + '" role="tab" aria-controls="home">Home</a>'
+			);
+			$('#events-items').append(
+				'<div class="tab-pane fade" id="list-item-' + index + '" role="tabpanel" aria-labelledby="list-item-' + index + '-list">' + data.descricao + '</div>'
+			);
+		});
+	});
+});
