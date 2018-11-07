@@ -22,7 +22,7 @@ import IntlMessages from 'util/IntlMessages';
 import LanguageSwitcher from 'components/LanguageSwitcher/index';
 import Menu from 'components/TopNav/Menu';
 import UserInfoPopup from 'components/UserInfo/UserInfoPopup';
-
+import {logo} from 'components/Logo';
 class Header extends React.Component {
 
     onAppNotificationSelect = () => {
@@ -107,7 +107,7 @@ class Header extends React.Component {
                     }
 
                     <Link className="app-logo mr-2 d-none d-sm-block" to="/">
-                        <img src="http://via.placeholder.com/177x65" alt="Jambo" title="Jambo"/>
+                        <img src={logo} alt="Jambo" title="Jambo"/>
                     </Link>
 
 
@@ -140,76 +140,6 @@ class Header extends React.Component {
                                 </DropdownMenu>
                             </Dropdown>
                         </li>
-                        <li className="list-inline-item">
-                            <Dropdown
-                                className="quick-menu"
-                                isOpen={this.state.langSwitcher}
-                                toggle={this.onLangSwitcherSelect.bind(this)}>
-
-                                <DropdownToggle
-                                    className="d-inline-block"
-                                    tag="span"
-                                    data-toggle="dropdown">
-                                    <div className="d-flex align-items-center pointer pt-1">
-                                        <i className={`flag flag-24 flag-${locale.icon}`}/>
-                                    </div>
-                                </DropdownToggle>
-
-                                <DropdownMenu right className="w-50">
-                                    <LanguageSwitcher switchLanguage={this.props.switchLanguage}
-                                                      handleRequestClose={this.handleRequestClose}/>
-                                </DropdownMenu>
-                            </Dropdown>
-
-
-                        </li>
-                        <li className="list-inline-item app-tour">
-                            <Dropdown
-                                className="quick-menu"
-                                isOpen={this.state.appNotification}
-                                toggle={this.onAppNotificationSelect.bind(this)}>
-
-                                <DropdownToggle
-                                    className="d-inline-block"
-                                    tag="span"
-                                    data-toggle="dropdown">
-                                    <IconButton className="icon-btn size-20 font-size-20">
-                                        <i className="zmdi zmdi-notifications-active icon-alert animated infinite wobble"/>
-                                    </IconButton>
-                                </DropdownToggle>
-
-                                <DropdownMenu right>
-                                    <CardHeader styleName="align-items-center"
-                                                heading={<IntlMessages id="appNotification.title"/>}/>
-                                    <AppNotification/>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </li>
-                        <li className="list-inline-item mail-tour">
-                            <Dropdown
-                                className="quick-menu"
-                                isOpen={this.state.mailNotification}
-                                toggle={this.onMailNotificationSelect.bind(this)}
-                            >
-                                <DropdownToggle
-                                    className="d-inline-block"
-                                    tag="span"
-                                    data-toggle="dropdown">
-
-                                    <IconButton className="icon-btn size-20 font-size-20">
-                                        <i className="zmdi zmdi-comment-alt-text icon-alert zmdi-hc-fw"/>
-                                    </IconButton>
-                                </DropdownToggle>
-
-
-                                <DropdownMenu right>
-                                    <CardHeader styleName="align-items-center"
-                                                heading={<IntlMessages id="mailNotification.title"/>}/>
-                                    <MailNotification/>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </li>
-
                         {navigationStyle === HORIZONTAL_NAVIGATION &&
                         <li className="list-inline-item user-nav">
                             <Dropdown

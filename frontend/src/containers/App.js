@@ -37,11 +37,12 @@ class App extends Component {
 
     render() {
         const {match, location, locale, authUser, initURL, isDirectionRTL} = this.props;
+        console.log("authUser", authUser)
         if (location.pathname === '/') {
             if (authUser === null) {
                 return ( <Redirect to={'/signin'}/> );
             } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
-                return ( <Redirect to={'/app/login'}/> );
+                return ( <Redirect to={'/app/cadastro'}/> );
             } else {
                 return ( <Redirect to={initURL}/> );
             }

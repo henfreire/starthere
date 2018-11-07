@@ -3,11 +3,12 @@ import {
     CHANGE_NAVIGATION_STYLE,
     FIXED_DRAWER,
     HORIZONTAL_MENU_POSITION,
+    HORIZONTAL_NAVIGATION,
     INSIDE_THE_HEADER,
     SWITCH_LANGUAGE,
     TOGGLE_COLLAPSED_NAV,
     VERTICAL_NAVIGATION,
-    WINDOW_WIDTH
+    WINDOW_WIDTH,
 } from 'constants/ActionTypes';
 
 const rltLocale = ['ar'];
@@ -16,7 +17,7 @@ const initialSettings = {
     drawerType: FIXED_DRAWER,
     width: window.innerWidth,
     isDirectionRTL: false,
-    navigationStyle: HORIZONTAL_MENU_POSITION,
+    navigationStyle: HORIZONTAL_NAVIGATION,
     horizontalNavPosition: INSIDE_THE_HEADER,
     locale: {
         languageId: 'english',
