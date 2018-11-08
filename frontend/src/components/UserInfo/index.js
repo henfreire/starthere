@@ -21,15 +21,12 @@ class UserInfo extends React.Component {
     };
 
     render() {
+        const {usuario}= this.props;
         return (
             <div className="user-profile d-flex flex-row align-items-center">
-                <Avatar
-                    alt='...'
-                    src='http://via.placeholder.com/150x150'
-                    className="user-avatar "
-                />
+                <Avatar className="user-avatar">{usuario ? usuario.nome.charAt(0) : 'U'}</Avatar>
                 <div className="user-detail">
-                    <h4 className="user-name" onClick={this.handleClick}>Robert Johnson <i
+                    <h4 className="user-name" onClick={this.handleClick}>{usuario.nome} <i
                         className="zmdi zmdi-caret-down zmdi-hc-fw align-middle"/>
                     </h4>
                 </div>
@@ -68,9 +65,10 @@ class UserInfo extends React.Component {
     }
 }
 
-const mapStateToProps = ({settings}) => {
+const mapStateToProps = ({settings, auth}) => {
     const {locale} = settings;
-    return {locale}
+    const {usuario} = auth;
+    return {locale, usuario}
 };
 export default connect(mapStateToProps, {userSignOut})(UserInfo);
 

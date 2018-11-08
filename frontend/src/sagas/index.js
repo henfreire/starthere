@@ -1,8 +1,8 @@
 import {all} from 'redux-saga/effects';
-import authSagas from './Auth';
+import AuthSagas from './Auth';
 
 export default function* rootSaga(getState) {
     yield all([
-        authSagas()
+        AuthSagas()
     ]);
 }

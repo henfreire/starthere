@@ -1,25 +1,22 @@
-import React, {Component} from 'react';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
-import {Redirect, Route, Switch} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {IntlProvider} from 'react-intl'
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { IntlProvider } from 'react-intl'
 import 'react-big-calendar/lib/less/styles.less';
 import 'styles/bootstrap.scss'
 import 'styles/app.scss';
 import 'styles/app-rtl.scss';
 import defaultTheme from './themes/defaultTheme';
 import AppLocale from '../lngProvider';
-
-import MainApp from 'app/index';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import {setInitUrl} from '../actions/Auth';
+import { setInitUrl } from '../actions/Auth';
 import RTL from 'util/RTL';
-import asyncComponent from 'util/asyncComponent';
+import LoadingComponent from 'util/LoadingComponent';
+import Loadable from 'react-loadable';
 
-const RestrictedRoute = ({component: Component, ...rest, authUser}) =>
+const RestrictedRoute = ({ component: Component, ...rest, authUser }) =>
     <Route
         {...rest}
         render={props =>
@@ -27,8 +24,8 @@ const RestrictedRoute = ({component: Component, ...rest, authUser}) =>
                 ? <Component {...props} />
                 : <Redirect
                     to={{
-                        pathname: '/signin',
-                        state: {from: props.location}
+                        pathname: '/login',
+                        state: { from: props.location }
                     }}
                 />}
     />;
@@ -36,15 +33,15 @@ const RestrictedRoute = ({component: Component, ...rest, authUser}) =>
 class App extends Component {
 
     render() {
-        const {match, location, locale, authUser, initURL, isDirectionRTL} = this.props;
-        console.log("authUser", authUser)
+        const { match, location, locale, usuario, initURL, isDirectionRTL } = this.props;
+
         if (location.pathname === '/') {
-            if (authUser === null) {
-                return ( <Redirect to={'/signin'}/> );
-            } else if (initURL === '' || initURL === '/' || initURL === '/signin') {
-                return ( <Redirect to={'/app/cadastro'}/> );
+            if (usuario.nome === null) {
+                return (<Redirect to={'/login'} />);
+            } else if (initURL === '' || initURL === '/' || initURL === '/login') {
+                return (<Redirect to={'/app/cadastro'} />);
             } else {
-                return ( <Redirect to={initURL}/> );
+                return (<Redirect to={initURL} />);
             }
         }
         const applyTheme = createMuiTheme(defaultTheme);
@@ -67,12 +64,24 @@ class App extends Component {
                         <RTL>
                             <div className="app-main">
                                 <Switch>
-                                    <RestrictedRoute path={`${match.url}app`} authUser={authUser}
-                                                     component={MainApp}/>
-                                    <Route path='/signin' component={SignIn}/>
-                                    <Route path='/signup' component={SignUp}/>
+                                    <RestrictedRoute path={`${match.url}app`} usuario={usuario}
+                                        component={Loadable({
+                                            loader: () => import('app/index'),
+                                            loading: () => <LoadingComponent />
+                                        })} />
+                                    <Route path='/login' component={Loadable({
+                                        loader: () => import('./Login'),
+                                        loading: () => <LoadingComponent />
+                                    })} />
+                                    <Route path='/cadastro' component={Loadable({
+                                        loader: () => import('./Cadastro'),
+                                        loading: () => <LoadingComponent />
+                                    })} />
                                     <Route
-                                        component={asyncComponent(() => import('components/Error404'))}/>
+                                        component={Loadable({
+                                            loader: () => import('components/Error404'),
+                                            loading: () => <LoadingComponent />
+                                        })} />
                                 </Switch>
                             </div>
                         </RTL>
@@ -83,11 +92,11 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = ({settings, auth}) => {
-    const {sideNavColor, locale, isDirectionRTL} = settings;
-    const {authUser, initURL} = auth;
-    return {sideNavColor, locale, isDirectionRTL, authUser, initURL}
+const mapStateToProps = ({ settings, auth }) => {
+    const { sideNavColor, locale, isDirectionRTL } = settings;
+    const { usuario, initURL } = auth;
+    return { sideNavColor, locale, isDirectionRTL, usuario, initURL }
 };
 
-export default connect(mapStateToProps, {setInitUrl})(App);
+export default connect(mapStateToProps, { setInitUrl })(App);
 

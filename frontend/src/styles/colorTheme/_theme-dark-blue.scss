@@ -2,8 +2,8 @@
 $app-primary-dark-blue: #2196F3 !default;
 $secondary-dark-blue: #FF6E40;
 
-$sidebar-dark-blue: #252525 !default;
-$sidebar-text-dark-blue: #a1a1a1 !default;
+$sidebar-dark-blue: #2196F3 !default;
+$sidebar-text-dark-blue: #fff !default;
 $sidebar-darken-blue: darken($sidebar-dark-blue, 3%);
 
 // Links
@@ -147,7 +147,7 @@ $link-hover-dark-blue: $white;
 
 //_header.scss
 .dark-blue .app-main-header {
-  background-color: $app-primary-dark-blue !important;
+  background-color: $white !important;
 
   & .search-bar input {
     background-color: lighten($app-primary-dark-blue, 5%);
@@ -465,7 +465,7 @@ $link-hover-dark-blue: $white;
 // login page content
 
 .dark-blue .app-logo-content {
-  background-color: $app-primary-dark-blue;
+  background-color: $white;
 }
 
 .dark-blue .app-social-block {
