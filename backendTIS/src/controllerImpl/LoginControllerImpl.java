@@ -51,7 +51,8 @@ public class LoginControllerImpl implements LoginController {
 		} catch (RNException e) {
 			result.append("RNException", e.getMessage());
 		}
-			
+		
+		
 		return result;
 	}
 }

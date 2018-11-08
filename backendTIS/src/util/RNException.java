@@ -2,7 +2,7 @@ package util;
 
 @SuppressWarnings("serial")
 public class RNException extends Exception {
-	private static final String PREFIX_ERROR_MESSAGE = "Violação da Regra de Negócio: ";
+	private static final String PREFIX_ERROR_MESSAGE = "ViolaÃ§Ã£o da Regra de NegÃ³cio: ";
 	private String error;
 	
 	public RNException(String error) {
