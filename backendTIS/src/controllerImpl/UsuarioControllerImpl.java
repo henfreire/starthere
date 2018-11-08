@@ -14,15 +14,20 @@ import model.Usuario;
 public abstract class UsuarioControllerImpl<E extends Usuario> implements UsuarioController {
 	protected UsuarioService<E, Long> service; 
 	
-	public JSONArray getAll() {	
-		JSONArray aux = new JSONArray ();
+	public JSONObject getAll() {	
+		JSONObject aux = new JSONObject ();
+		JSONArray usuariosJSON = new JSONArray();
+		
 		List<E> usuarios;
 		try {
 			usuarios = (List<E>) this.service.getAll();
 			usuarios.stream()
-					.forEach(emp -> aux.put( emp.toJSONObject()) );
+					.forEach(emp -> usuariosJSON.put( emp.toJSONObject()) );
+			
+			aux.put("usuarios", usuariosJSON);
 		} catch (RNException e) {
 			e.printStackTrace();
+			aux.put("RNException", e.getMessage());
 		}
 		
 		return aux;
@@ -60,6 +65,7 @@ public abstract class UsuarioControllerImpl<E extends Usuario> implements Usuari
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	public JSONObject add(JSONObject obj) {
 		JSONObject result = new JSONObject();
 		String email = obj.getString("email"),

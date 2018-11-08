@@ -1,6 +1,8 @@
 package controllerImpl;
 
 import java.util.Date;
+import java.util.List;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -28,9 +30,9 @@ public class EventoControllerImpl implements EventoController {
 		JSONObject result = new JSONObject ();
 		
 		if(route.startsWith("/add")) {
-			result.put("evento", this.add(requestData));
+			result = this.add(requestData);
 		} else if(route.startsWith("/getAll")) {
-			result.append("eventos", this.getAll());
+			result = this.getAll();
 		} else {
 			result.put("error", "Esta rota não existe !");
 		}
@@ -59,6 +61,8 @@ public class EventoControllerImpl implements EventoController {
 			evento.setDescricao(descricao);
 			
 			this.evtService.add(evento);
+			
+			result.put("evento", evento.toJSONObject());
 		} catch (RNException e) {
 			e.printStackTrace();
 			result.put("RNException", e.getMessage());
@@ -86,7 +90,24 @@ public class EventoControllerImpl implements EventoController {
 	}
 
 	@Override
-	public JSONArray getAll() {
-		return null;
+	public JSONObject getAll() {
+		List<Evento> eventos;
+		JSONObject result = new JSONObject();
+		JSONArray array = new JSONArray();
+		
+		try {
+			eventos = this.evtService.getAll();
+			
+			if(eventos != null) {
+				eventos.stream().forEach(evt -> array.put(evt.toJSONObject()));
+			}
+			
+			result.put("eventos", array);
+		} catch (RNException e) {
+			e.printStackTrace();
+			result.put("RNException", e.getMessage());
+		}
+		
+		return result;
 	}
 }

@@ -2,9 +2,12 @@ package model;
 
 import java.util.Date;
 
-import util.toDAT;
+import org.json.JSONObject;
 
-public class Evento implements toDAT {
+import util.toDAT;
+import util.toJSON;
+
+public class Evento implements toDAT, toJSON {
 	private Long     id;
 	private String   nome,
 					 descricao;
@@ -52,10 +55,22 @@ public class Evento implements toDAT {
 
 	@Override
 	public String toDATFormat() {
-		return null;
+		return id + "|" + nome + "|" + descricao + "|" + dataEvento.toString() + "|" ;
 	}
 
 	@Override
 	public void setDAT(String DAT) {
+	}
+
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject obj = new JSONObject();
+		
+		obj.put("id", id);		
+		obj.put("nome", nome);		
+		obj.put("descricao", descricao);		
+		obj.put("dataEvento", dataEvento);
+		
+		return obj;
 	}
 }
