@@ -1,5 +1,7 @@
 package DAOImpl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DAO.EventoDAO;
@@ -18,8 +20,28 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 
 	@Override
 	public List<Evento> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Evento> empresas = new ArrayList<Evento>();
+		List<String> fileContents;
+		String  str, 
+				vet[];
+		Evento empresa = null;
+		fileContents = fileManager.getFileContents();
+		
+		Iterator<String> itStr = fileContents.iterator();
+		while(itStr.hasNext()) {
+			str = itStr.next();
+			vet = str.split("[|]");
+			
+			empresa = new Evento ();
+			empresa.setId(Long.parseLong(vet[0]));
+			empresa.setNome(vet[1]);
+			empresa.setDescricao(vet[2]);
+//			empresa.setDataEvento(vet[3]);
+			
+			empresas.add(empresa);
+		}
+			
+		return empresas;
 	}
 
 	@Override
@@ -29,9 +51,10 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 	}
 
 	@Override
-	public void add(Evento ele) {
-		// TODO Auto-generated method stub
-		
+	public void add(Evento evento) {
+		Long id = getNextId();
+		evento.setId(id);
+		fileManager.saveToFile(evento);
 	}
 
 	@Override
@@ -64,5 +87,9 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 		return null;
 	}	
 
+	private Long getNextId() {
+		List<Evento> empresas = getAll();
+		return Long.parseLong((empresas.size() + 1) + "");
+	}
 
 }
