@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {NavLink, withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import IntlMessages from 'util/IntlMessages';
 import CustomScrollbars from 'util/CustomScrollbars';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 class SidenavContent extends Component {
     componentDidMount() {
-        const {history} = this.props;
+        const { history } = this.props;
         const that = this;
         const pathname = `#${history.location.pathname}`;// get current path
 
@@ -78,9 +78,20 @@ class SidenavContent extends Component {
         return (
             <CustomScrollbars className="scrollbar">
                 <ul className="nav-menu">
+                    <ul className="nav-menu">
 
-                    <li className="nav-header"><IntlMessages id="sidebar.main"/></li>
-                   
+                        <li className="menu no-arrow">
+                            <NavLink to="/app/dashboard">
+                                <i className="zmdi zmdi-hc-fw">
+                                    <FontAwesomeIcon icon={faCalendarAlt} />
+                                </i>
+                                <span className="nav-text">
+                                    Eventos
+                                </span>
+                            </NavLink>
+                        </li>
+                    </ul>
+
                 </ul>
             </CustomScrollbars>
         );

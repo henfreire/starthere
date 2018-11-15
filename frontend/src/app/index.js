@@ -13,6 +13,7 @@ import {
 } from 'constants/ActionTypes';
 import { isIOS, isMobile } from 'react-device-detect';
 import TopNav from 'components/TopNav';
+
 import Loadable from 'react-loadable';
 class App extends React.Component {
 	render() {
