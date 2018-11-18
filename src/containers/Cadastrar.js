@@ -11,7 +11,7 @@ import FormularioCadastro from 'components/Cadastrar/Formulario';
 import Bolhas from 'components/Efeitos/Bolhas';
 const styles = {
 	paperContainer: {
-		backgroundImage: `)`,
+		backgroundImage: ``,
 		backgroundSize: 'cover'
 	}
 };
@@ -87,7 +87,6 @@ class Login extends Component {
 					{exibirAuthMensagem && NotificationManager.error(authMensagem)}
 					<NotificationContainer />
 				</div>
-				<Bolhas />
 			</Paper>
 		);
 	}

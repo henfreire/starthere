@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { logo } from 'components/Logo';
 import { Creators as ActionsAuth } from 'ducks/Auth';
 import FormularioLogin from 'components/Login/Formulario';
-import Bolhas from 'components/Efeitos/Bolhas';
+import { bindActionCreators } from 'redux';
 const styles = {
 	paperContainer: {
 		backgroundImage: ``,
@@ -20,6 +20,7 @@ class Login extends Component {
 		super(props);
 	}
 
+	
 	componentDidUpdate() {
 		if (this.props.exibirAuthMensagem) {
 			setTimeout(() => {
@@ -82,7 +83,6 @@ class Login extends Component {
 					{exibirAuthMensagem && NotificationManager.error(authMensagem)}
 					<NotificationContainer />
 				</div>
-				<Bolhas />
 			</Paper>
 		);
 	}
@@ -93,9 +93,8 @@ const mapStateToProps = ({ auth, form }) => {
 	const { FormularioLogin } = form;
 	return { usuario, authMensagem, exibirAuthMensagem, authLoader, formularioLogin: FormularioLogin };
 };
-
-export default connect(mapStateToProps, {
-	login: ActionsAuth.login,
-	setAuthMensagem: ActionsAuth.setAuthMensagem,
-	setLoaderAuth: ActionsAuth.setLoaderAuth
-})(Login);
+const mapDispacthToProps = (dispatch) => {
+	const { login, setAuthMensagem, setLoaderAuth, setUsuario} = ActionsAuth;
+	return { ...bindActionCreators({ login, setAuthMensagem, setLoaderAuth, setUsuario}, dispatch) };
+};
+export default connect(mapStateToProps, mapDispacthToProps)(Login);

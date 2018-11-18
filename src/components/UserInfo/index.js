@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar'
 import {connect} from 'react-redux'
 import Menu from '@material-ui/core/Menu';import MenuItem from '@material-ui/core/MenuItem';
-import {userSignOut} from 'actions/Auth';
+import { Creators as ActionsAuth } from 'ducks/Auth';
 import IntlMessages from 'util/IntlMessages';
 
 class UserInfo extends React.Component {
@@ -53,7 +53,7 @@ class UserInfo extends React.Component {
                     </MenuItem>
                     <MenuItem onClick={() => {
                         this.handleRequestClose();
-                        this.props.userSignOut()
+                        this.props.logout()
                     }}>
                         <i className="zmdi zmdi-sign-in zmdi-hc-fw mr-2"/>
 
@@ -70,6 +70,7 @@ const mapStateToProps = ({settings, auth}) => {
     const {usuario} = auth;
     return {locale, usuario}
 };
-export default connect(mapStateToProps, {userSignOut})(UserInfo);
+const { logout } = ActionsAuth;
+export default connect(mapStateToProps, {logout})(UserInfo);
 
 

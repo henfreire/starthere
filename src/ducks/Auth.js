@@ -13,7 +13,7 @@ const INIT_STATE = {
 	authMensagem: '',
 	exibirAuthMensagem: false,
 	authLoader: false,
-    usuario: null,
+	usuario: null,
     initURL: '',
 };
 const setMensagem = (state = INIT_STATE, action) => {

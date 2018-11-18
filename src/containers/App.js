@@ -14,6 +14,7 @@ import AppLocale from '../lngProvider';
 import Loadable from 'react-loadable';
 import RTL from 'util/RTL';
 import LoadingComponent from 'util/LoadingComponent';
+import { Creators as ActionsAuth } from 'ducks/Auth';
 let RestrictedRoute = ({ component: Component, ...rest, authUser }) => (
 	<Route
 		{...rest}
@@ -21,13 +22,13 @@ let RestrictedRoute = ({ component: Component, ...rest, authUser }) => (
 			authUser ? (
 				<Component {...props} />
 			) : (
-				<Redirect
-					to={{
-						pathname: '/login',
-						state: { from: props.location }
-					}}
-				/>
-			)}
+					<Redirect
+						to={{
+							pathname: '/login',
+							state: { from: props.location }
+						}}
+					/>
+				)}
 	/>
 );
 
@@ -35,8 +36,11 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 	}
+	UNSAFE_componentWillMount() {
+		this.props.setUsuario({ nome: 'Teste', email: 'teste@starthere.com' });
+	}
 	render() {
-        const { match, location, locale, usuario, initURL, isDirectionRTL } = this.props;
+		const { match, location, locale, usuario, initURL, isDirectionRTL } = this.props;
 		if (location.pathname === '/') {
 			if (usuario === null) {
 				return <Redirect to={'/login'} />;
@@ -102,10 +106,10 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = ({ settings, auth}) => {
+const mapStateToProps = ({ settings, auth }) => {
 	const { sideNavColor, locale, isDirectionRTL } = settings;
-	const { usuario, initURL} = auth;
+	const { usuario, initURL } = auth;
 	return { sideNavColor, locale, isDirectionRTL, initURL, usuario };
 };
-
-export default connect(mapStateToProps)(App);
+const { setUsuario } = ActionsAuth;
+export default connect(mapStateToProps, { setUsuario })(App);

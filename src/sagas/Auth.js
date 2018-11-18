@@ -17,12 +17,12 @@ function* criarContaEmailSenha({ payload }) {
 			nome: dados.nome,
 			email: dados.email,
 			senha: dados.senha,
-			
-        };
-    
+
+		};
+
 		const response = yield call(criarContaEmailSenhaRequest, novoUsuario);
 		if (response.ok) {
-			usuarioData = response.data.user;
+			usuarioData = novoUsuario;
 		} else if (Object.prototype.hasOwnProperty.call(response.data, 'error')) {
 			switch (response.data.error) {
 				case 'Unauthorised':
@@ -59,7 +59,12 @@ function* loginEmailSenha({ payload }) {
 		};
 		const response = yield call(loginEmailSenhaRequest, dadosLogin);
 		if (response.ok) {
-			usuarioData = response.data.user;
+			if (Object.prototype.hasOwnProperty.call(response.data, 'user')) {
+				usuarioData = response.data;
+			} else {
+				mensagemAuth = 'Resposta inválida';
+			}
+
 		} else if (Object.prototype.hasOwnProperty.call(response.data, 'error')) {
 			switch (response.data.error) {
 				case 'Unauthorised':
@@ -110,5 +115,5 @@ export function* criarContaAcao() {
 }
 
 export default function* rootSaga() {
-	yield all([ fork(loginAcao), fork(criarContaAcao), fork(logoutAcao) ]);
+	yield all([fork(loginAcao), fork(criarContaAcao), fork(logoutAcao)]);
 }
