@@ -11,7 +11,7 @@
 .app-main-header {
   //z-index: 1302 !important;
   background-color: $app-primary !important;
-  color: $white !important;
+  color: $gray-300 !important;
 
   & .search-bar input {
     @include transition($transition-base);

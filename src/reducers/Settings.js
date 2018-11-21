@@ -9,13 +9,14 @@ import {
     TOGGLE_COLLAPSED_NAV,
     VERTICAL_NAVIGATION,
     WINDOW_WIDTH,
-    MINI_DRAWER
+    MINI_DRAWER,
+    COLLAPSED_DRAWER,
 } from 'constants/ActionTypes';
 
 const rltLocale = ['ar'];
 const initialSettings = {
     navCollapsed: false,
-    drawerType: MINI_DRAWER,
+    drawerType: COLLAPSED_DRAWER,
     width: window.innerWidth,
     isDirectionRTL: false,
     navigationStyle: VERTICAL_NAVIGATION,

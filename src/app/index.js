@@ -38,18 +38,23 @@ class App extends React.Component {
 							: ''}`}
 					>
 						{navigationStyle === HORIZONTAL_NAVIGATION &&
-						horizontalNavPosition === ABOVE_THE_HEADER && <TopNav styleName="app-top-header" />}
+							horizontalNavPosition === ABOVE_THE_HEADER && <TopNav styleName="app-top-header" />}
 						<Header />
 						{navigationStyle === HORIZONTAL_NAVIGATION &&
-						horizontalNavPosition === BELOW_THE_HEADER && <TopNav />}
+							horizontalNavPosition === BELOW_THE_HEADER && <TopNav />}
 					</div>
 
 					<main className="app-main-content-wrapper">
 						<div className="app-main-content">
-						<Switch>
+							<Switch>
 								<Route path={`${match.url}/cadastro`}
 									component={Loadable({
 										loader: () => import('app/routes/Cadastro'),
+										loading: () => <div />
+									})} />
+								<Route path={`${match.url}/eventos`}
+									component={Loadable({
+										loader: () => import('app/routes/Eventos'),
 										loading: () => <div />
 									})} />
 								<Route

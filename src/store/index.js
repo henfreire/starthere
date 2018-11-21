@@ -13,7 +13,7 @@ const persistConfig = {
 	key: 'root',
 	storage,
     version: 7,
-    whitelist: [ 'settings'],
+    whitelist: [ 'geral'],
 };
 const middlewares = [ sagaMiddleware, routeMiddleware ];
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

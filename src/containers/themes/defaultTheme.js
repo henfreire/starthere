@@ -1,5 +1,5 @@
 import blue from '@material-ui/core/colors/blue';
-import green from '@material-ui/core/colors/green';
+import cyan from '@material-ui/core/colors/cyan';
 
 export default {
     palette: {
@@ -10,9 +10,9 @@ export default {
             contrastText: '#fff'
         },
         secondary: {
-            light: green['A100'],
-            main: green['A700'],
-            dark: green[700],
+            light: cyan['A400'],
+            main: cyan['A400'],
+            dark: cyan['700'],
             contrastText: '#fff'
         }
     },

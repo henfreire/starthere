@@ -4,7 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
 import CustomScrollbars from 'util/CustomScrollbars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 class SidenavContent extends Component {
     componentDidMount() {
         const { history } = this.props;
@@ -81,12 +81,22 @@ class SidenavContent extends Component {
                     <ul className="nav-menu">
 
                         <li className="menu no-arrow">
-                            <NavLink to="/app/dashboard">
+                            <NavLink to="/app/eventos">
                                 <i className="zmdi zmdi-hc-fw">
                                     <FontAwesomeIcon icon={faCalendarAlt} />
                                 </i>
                                 <span className="nav-text">
                                     Eventos
+                                </span>
+                            </NavLink>
+                        </li>
+                        <li className="menu no-arrow">
+                            <NavLink to="/app/cadastro">
+                                <i className="zmdi zmdi-hc-fw">
+                                    <FontAwesomeIcon icon={faUserEdit} />
+                                </i>
+                                <span className="nav-text">
+                                    Cadastro
                                 </span>
                             </NavLink>
                         </li>
