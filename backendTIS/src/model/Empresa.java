@@ -10,6 +10,10 @@ public class Empresa extends Usuario {
 
 	public Empresa() {}
 	
+	public Empresa (Usuario user) {
+		this.setUserData(user);
+	}
+	
 	public Empresa(String nome, String email) {
 		super(nome, email);
 	}
@@ -44,10 +48,17 @@ public class Empresa extends Usuario {
 
 	@Override
 	public void setDAT(String DAT) {
-		super.setDAT(DAT);
-		
 		String[] vet = DAT.split("|");
-		
-		this.razaoSocial = vet[7];
+		this.setId(Long.parseLong(vet[0]));
+		this.razaoSocial = vet[1];
+	}
+	
+	public void setUserData(Usuario user) {
+		this.setEmail(user.getEmail());
+		this.setNome(user.getNome());
+		this.setSenha(user.getSenha());
+		this.setLinkSite(user.getLinkSite());
+		this.setLinkLinkedIn(user.getLinkLinkedIn());
+		this.setImagem(user.getImagem());
 	}
 }

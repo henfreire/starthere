@@ -10,8 +10,8 @@ import model.Evento;
 import util.FileHandler;
 import util.FileHandlerImpl;
 
-public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
-	private static final String FILE_NAME = "eventos.dat"; 
+public class EventoDAOImpl implements EventoDAO<Evento, Empresa> {
+	private final String FILE_NAME = "eventos.dat"; 
 	protected FileHandler<Evento> fileManager;
 
 	public EventoDAOImpl() {
@@ -20,34 +20,35 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 
 	@Override
 	public List<Evento> getAll() {
-		List<Evento> empresas = new ArrayList<Evento>();
+		List<Evento> eventos = new ArrayList<Evento>();
 		List<String> fileContents;
-		String  str, 
-				vet[];
-		Evento empresa = null;
+		
+		String  str;
+		
+		Evento evento = null;
 		fileContents = fileManager.getFileContents();
 		
 		Iterator<String> itStr = fileContents.iterator();
+		
 		while(itStr.hasNext()) {
 			str = itStr.next();
-			vet = str.split("[|]");
 			
-			empresa = new Evento ();
-			empresa.setId(Long.parseLong(vet[0]));
-			empresa.setNome(vet[1]);
-			empresa.setDescricao(vet[2]);
-//			empresa.setDataEvento(vet[3]);
-			
-			empresas.add(empresa);
+			evento = new Evento ();
+			evento.setDAT(str);
+	
+			eventos.add(evento);
 		}
 			
-		return empresas;
+		return eventos;
 	}
 
 	@Override
 	public Evento get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Evento> eventos = this.getAll();
+		return eventos.stream()
+					  .filter(evt -> evt.getId().equals(id))
+					  .findAny()
+					  .orElse(null);
 	}
 
 	@Override
@@ -70,26 +71,14 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 	}
 
 	@Override
-	public List<Evento> getEventos(Empresa empresa) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Evento> getEventosByEmpresa(Empresa empresa) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Evento getEvento(Long chave) {
-		// TODO Auto-generated method stub
-		return null;
-	}	
-
 	private Long getNextId() {
-		List<Evento> empresas = getAll();
-		return Long.parseLong((empresas.size() + 1) + "");
+		List<Evento> eventos = getAll();
+		Long id = eventos.get(eventos.size()).getId();
+		return id + 1L;
 	}
-
 }

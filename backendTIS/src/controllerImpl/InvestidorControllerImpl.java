@@ -2,11 +2,11 @@ package controllerImpl;
 
 import org.json.JSONObject;
 
-import controller.InvestidorController;
+import controller.RoutableCRUD;
 import model.Investidor;
 import serviceImpl.InvestidorServiceImpl;
 
-public class InvestidorControllerImpl extends UsuarioControllerImpl<Investidor> implements InvestidorController {
+public class InvestidorControllerImpl extends UsuarioControllerImpl<Investidor> implements RoutableCRUD {
 	
 	public InvestidorControllerImpl() {
 		this.service = new InvestidorServiceImpl();

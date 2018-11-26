@@ -4,7 +4,7 @@ import java.util.List;
 
 import util.RNException;
 
-public interface EmpresaService<Emp, Stp, Evt, Key> extends UsuarioService<Emp, Key> {
+public interface EmpresaService<Emp, Stp, Evt> extends UsuarioService<Emp> {
 	public void criarEvento(Evt evento) throws RNException;
 	public List<Stp> buscarStartups() throws RNException;
 }

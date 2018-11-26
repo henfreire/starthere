@@ -2,11 +2,11 @@ package controllerImpl;
 
 import org.json.JSONObject;
 
-import controller.StartupController;
+import controller.RoutableCRUD;
 import model.Startup;
 import serviceImpl.StartupServiceImpl;
 
-public class StartupControllerImpl extends UsuarioControllerImpl<Startup> implements StartupController {
+public class StartupControllerImpl extends UsuarioControllerImpl<Startup> implements RoutableCRUD {
 	
 	public StartupControllerImpl() {
 		this.service = new StartupServiceImpl ();

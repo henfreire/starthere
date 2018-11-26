@@ -60,6 +60,11 @@ public class Evento implements toDAT, toJSON {
 
 	@Override
 	public void setDAT(String DAT) {
+		String[] vet = DAT.split("|");
+		this.id = Long.parseLong(vet[0]);
+		this.nome = vet[1];
+		this.descricao = vet[2];
+//		this.dataEvento = vet[3];
 	}
 
 	@Override

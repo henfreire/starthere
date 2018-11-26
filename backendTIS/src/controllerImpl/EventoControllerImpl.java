@@ -9,8 +9,7 @@ import java.text.SimpleDateFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.EventoController;
-
+import controller.RoutableCRUD;
 import model.Empresa;
 import model.Evento;
 import service.EventoService;
@@ -18,7 +17,7 @@ import serviceImpl.EventoServiceImpl;
 
 import util.RNException;
 
-public class EventoControllerImpl implements EventoController {
+public class EventoControllerImpl implements RoutableCRUD {
 	private EventoService<Evento, Empresa, Long> evtService;
 	
 	public EventoControllerImpl() {
@@ -51,8 +50,7 @@ public class EventoControllerImpl implements EventoController {
 			descricao = obj.getString("descricao");
 			dataEventoStr = obj.getString("dataEvento");
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY");
-	        
+			SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
 	        Date dataEvento = formatter.parse(dataEventoStr);
 	            
 			Evento evento = new Evento ();

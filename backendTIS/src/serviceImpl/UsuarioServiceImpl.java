@@ -7,7 +7,7 @@ import model.Usuario;
 import service.UsuarioService;
 import util.RNException;
 
-public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioService<E, Long> {
+public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioService<E> {
 	protected UsuarioDAO<E, Long> usrDAO;
 	
 	@Override

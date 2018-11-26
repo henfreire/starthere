@@ -20,13 +20,14 @@ $('#loginBtn').click(() => {
 	var data = {
 		email : $('#loginEmail').val(),
 		// senha: md5($('#loginSenha').val())
-		senha: $('#loginSenha').val()
+		// senha: $('#loginSenha').val()
 	};
 
 	route = 'login';	
 
 	sendRequest(route, data).then((response) => {
 		localStorage.setItem('loginId', response['id']);
+		window.location.href = "file:///C:/Users/thiguet/Documents/starthere/mobile_example/cadastroEvento.html";
 	});
 });
 

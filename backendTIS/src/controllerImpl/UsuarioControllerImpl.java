@@ -5,13 +5,12 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.UsuarioController;
-
+import controller.RoutableCRUD;
 import service.UsuarioService;
 import util.RNException;
 import model.Usuario;
 
-public abstract class UsuarioControllerImpl<E extends Usuario> implements UsuarioController {
+public abstract class UsuarioControllerImpl<E extends Usuario> implements RoutableCRUD {
 	protected UsuarioService<E, Long> service; 
 	
 	public JSONObject getAll() {	

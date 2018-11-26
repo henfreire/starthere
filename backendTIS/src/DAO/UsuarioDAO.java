@@ -1,5 +1,5 @@
 package DAO;
 
-public interface UsuarioDAO<E, K> extends CRUD<E, K> {
+public interface UsuarioDAO<E> extends CRUD<E, Long> {
 	public E getByEmail(String nome);
 }

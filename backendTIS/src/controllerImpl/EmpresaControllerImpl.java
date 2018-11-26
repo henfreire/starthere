@@ -4,11 +4,10 @@ import org.json.JSONObject;
 
 import model.Empresa;
 
-import controller.EmpresaController;
-
+import controller.RoutableCRUD;
 import serviceImpl.EmpresaServiceImpl;
 
-public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implements EmpresaController {	
+public class EmpresaControllerImpl extends UsuarioControllerImpl<Empresa> implements RoutableCRUD {	
 	public EmpresaControllerImpl () {
 		this.service = new EmpresaServiceImpl ();
 	}

@@ -8,113 +8,118 @@ import java.util.stream.Collectors;
 import DAO.UsuarioDAO;
 import model.Usuario;
 import util.FileHandler;
+import util.FileHandlerImpl;
 
-public abstract class UsuarioDAOImpl<E extends Usuario> implements UsuarioDAO<E, Long> {
-	protected FileHandler<E> fileManager;
+public class UsuarioDAOImpl implements UsuarioDAO<Usuario> {
+	private final String FILE_NAME = "usuarios.dat"; 
+	private FileHandler<Usuario> fileManager;
+	private static Long NEXT_ID = 1L;
 	
-	public List<E> getAll() {
-		List<E> empresas = new ArrayList<E>();
+	UsuarioDAOImpl() {
+		this.fileManager = new FileHandlerImpl<Usuario> (this.FILE_NAME);
+	}
+	
+	UsuarioDAOImpl(String fileName) {
+		this.fileManager = new FileHandlerImpl<Usuario> (fileName);
+	}
+	
+	@Override
+	public List<Usuario> getAll() {
+		List<Usuario> usuarios = new ArrayList<Usuario> ();
 		List<String> fileContents;
-		String  str, 
-				vet[];
-		E empresa = null;
+		Iterator<String> itStr;
+		String  str;
+		Usuario usuario = null;
+		
 		fileContents = fileManager.getFileContents();
 		
-		Iterator<String> itStr = fileContents.iterator();
+		itStr = fileContents.iterator();
+		
 		while(itStr.hasNext()) {
 			str = itStr.next();
-			vet = str.split("[|]");
 			
-			empresa = (E) new Usuario();
-			empresa.setId(Long.parseLong(vet[0]));
-			empresa.setNome(vet[1]);
-			empresa.setEmail(vet[2]);
-			empresa.setSenha(vet[3]);
-			
-			empresas.add(empresa);
+			usuario = new Usuario();
+			usuario.setDAT(str);
+			usuarios.add(usuario);
 		}
 			
-		return empresas;
+		return usuarios;
 	}
 
 	@Override
-	public E get(Long id) {
-		List<E> empresas = getAll();
+	public Usuario get(Long id) {
+		List<Usuario> usuarios = getAll();
 		
-		return  empresas.stream()
-				.filter(empresa -> empresa.getId().equals(id))
+		return  usuarios.stream()
+				.filter(usuario -> usuario.getId().equals(id))
 				.collect(Collectors.toList())
 				.get(0);		
 	}
 
 	@Override
-	public void add(E empresa) {
-		Long id = getNextId();
-		empresa.setId(id);
-		fileManager.saveToFile(empresa);
+	public void add(Usuario usuario) {
+		usuario.setId(getNextId());
+		this.fileManager.saveToFile(usuario);
 	}
 
 	@Override
-	public void update(E empresa) {
-		List<E> empresas = getAll();
+	public void update(Usuario usuario) {
+		List<Usuario> usuarios = getAll();
 
-		int index = empresas.indexOf(empresa);
+		int index = usuarios.indexOf(usuario);
 		if(index != -1) {
-			empresas.set(index, empresa);
+			usuarios.set(index, usuario);
 		}
 		
+		this.fileManager.saveToFile(usuarios);
 	}
 
 	@Override
-	public E delete(E empresa) {
-		List<E> empresas = getAll();
-		E aux = null;
+	public Usuario delete(Usuario usuario) {
+		List<Usuario> usuarios = getAll();
+		Usuario aux = null;
 		
-		int index = empresas.indexOf(empresa);
+		int index = usuarios.indexOf(usuario);
 		
 		if(index != -1) {
-			aux = empresas.remove(index);
+			aux = usuarios.remove(index);
 		}
 		
-		saveEmpresasToFile(empresas);
+		this.fileManager.saveToFile(usuarios);
 
 		return aux;
 	}
 
-	private void saveEmpresasToFile(List<E> empresas) {
-		fileManager.saveToFile(empresas);	
-	}
-
 	@Override
-	public E getByEmail(String email) {
+	public Usuario getByEmail(String email) {
 		List<String> fileContents = fileManager.getFileContents();
-		E user = null;
-		String str, vet[];
+		Usuario usuario = null;
+		String str;
 		
 		Iterator<String> itStr = fileContents.iterator();
 				
 		while(itStr.hasNext()) {
 			str = itStr.next();
-			vet = str.split("[|]");
 
-			user = (E) new Usuario();
-			
-			user.setId(Long.parseLong(vet[0]));
-			user.setNome(vet[1]);
-			user.setSenha(vet[2]);
-			user.setEmail(vet[3]);
-			
-			if(user.getEmail().equals(email))
+			usuario = new Usuario();			
+			usuario.setDAT(str);
+			if(usuario.getEmail().equals(email)) 
 				break;
-			else 
-				user = null;
+			
+			usuario = null;
 		}
 		
-		return user;
+		return usuario;
 	}
 	
-	private Long getNextId() {
-		List<E> empresas = getAll();
-		return Long.parseLong((empresas.size() + 1) + "");
+	public Long getNextId() {
+		List<Usuario> usuarios = getAll();
+		Long lastId = usuarios.get(usuarios.size() - 1).getId();
+
+		NEXT_ID = (lastId == null)
+				? 1L
+				: (lastId + 1);
+
+		return NEXT_ID;
 	}
 }
