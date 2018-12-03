@@ -1,33 +1,40 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Typography';
-import Filtros from 'components/Eventos/Components/Filtros';
-import Cards from 'components/Eventos/Components/Cards';
-class index extends Component {
-    render() {
-        return (
-            <div className="app-wrapper">
-                <div className="animated slideInUpTiny animation-duration-3">
-                    <Typography variant="title" gutterBottom> Eventos</Typography>
-                    <div className="row">
-                        <div className="col col-12">
-                            <Filtros />
-                        </div>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="col col-12">
-                            <Cards />
-                        </div>
-                    </div>
-                </div>
+import React from "react";
+import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Typography";
+import Filtros from "components/Eventos/Filtros";
+import Opcoes from "components/Eventos/Opcoes";
+import Cards from "components/Eventos/Cards";
+class Lista extends React.Component {
+  novoEventoTela = () => {
+    this.props.history.push(`${this.props.match.url}/novo`);
+  };
+  render() {
+    return (
+      <div className="app-wrapper">
+        <div className="animated slideInUpTiny animation-duration-3">
+          <Typography variant="h6" gutterBottom>
+            Eventos
+          </Typography>
+          <div className="row">
+            <div className="col col-6">
+              <Filtros />
             </div>
-        );
-    }
+            <div className="col col-6">
+              <div className="d-flex justify-content-end">
+                <Opcoes novoEvento={this.novoEventoTela} />
+              </div>
+            </div>
+          </div>
+          <div className="row mt-2">
+            <div className="col col-12">
+              <Cards />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-index.propTypes = {
-
-};
-
-export default index;
+export default Lista;
