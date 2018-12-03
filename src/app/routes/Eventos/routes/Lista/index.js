@@ -2,13 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Typography";
+
 import Filtros from "components/Eventos/Filtros";
 import Opcoes from "components/Eventos/Opcoes";
 import Cards from "components/Eventos/Cards";
+
 class Lista extends React.Component {
   novoEventoTela = () => {
     this.props.history.push(`${this.props.match.url}/novo`);
   };
+
   render() {
     return (
       <div className="app-wrapper">
@@ -31,6 +34,7 @@ class Lista extends React.Component {
               <Cards />
             </div>
           </div>
+          
         </div>
       </div>
     );

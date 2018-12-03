@@ -4,7 +4,7 @@ import ListaAutoCompleta from 'components/Formularios/ListaAutoCompleta';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-export const renderTextField = ({ input, type, errorLabel, label, meta: { touched, error }, ...custom }) => (
+export const renderTextField = ({ input, type, errorLabel, label, ...custom ,  meta: { touched, error },}) => (
 	<div>
 		<TextField
 			label={touched && error && !errorLabel ? error : label}
