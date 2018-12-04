@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.json.JSONObject;
-import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
@@ -28,17 +27,10 @@ public class AJAXServer implements Container, Routable {
 	public void handle(Request request, Response response) {
 		this.request = request;
 		this.response = response;
-		
-		String path = this.request.getPath().getPath();
-		Query query = this.request.getQuery();
-		JSONObject obj = new JSONObject ();
-		
+
 		try {
-			Object[] keys = query.keySet().toArray();
-			
-			for(int i = 0 ; i < keys.length; i++) {
-				obj.put(keys[i].toString(), query.get(keys[i]));
-			}
+			String path = this.request.getPath().getPath();
+			JSONObject obj = new JSONObject (this.request.getContent());
 			
 			this.setResponse(this.sendRoute(path, obj).toString());
 		} catch (Exception e) {
