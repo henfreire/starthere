@@ -56,11 +56,12 @@ public class EmpresaServiceImpl implements EmpresaService<Empresa, Startup, Even
 
 	@Override
 	public Empresa delete(Long id) throws RNException {
+//		return this.empresaDAO.delete();
 		return null;
 	}
 
 	@Override
 	public List<Empresa> getAll() throws RNException {
-		return null;
+		return this.empresaDAO.getAll();
 	}
 }

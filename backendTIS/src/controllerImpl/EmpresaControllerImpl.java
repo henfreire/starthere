@@ -28,7 +28,7 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl {
 //			} else if(route.startsWith("/getAll")) {
 //				result.put("empresas", this.getAll());
 //			} else {
-				return this.login(data);
+				return this.sendRoute(route, data);
 //			}
 		} catch (Exception e) {
 			e.printStackTrace();

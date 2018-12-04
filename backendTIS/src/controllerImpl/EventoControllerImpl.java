@@ -77,12 +77,7 @@ public class EventoControllerImpl implements CRUDRoutableController {
 	public JSONObject update(JSONObject obj) {
 		return null;
 	}
-
-	@Override
-	public JSONObject delete(long id) {
-		return null;
-	}
-
+	
 	@Override
 	public JSONObject get(JSONObject obj) {
 		return null;
@@ -113,5 +108,11 @@ public class EventoControllerImpl implements CRUDRoutableController {
 	private Date getDate (String date) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat(BRAZILIAN_DATE_FORMAT);
         return formatter.parse(date);
+	}
+
+	@Override
+	public JSONObject delete(long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
