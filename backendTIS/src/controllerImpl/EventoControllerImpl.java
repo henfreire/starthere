@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.EventoController;
+import controller.CRUDRoutableController;
 
 import model.Empresa;
 import model.Evento;
@@ -18,8 +18,9 @@ import serviceImpl.EventoServiceImpl;
 
 import util.RNException;
 
-public class EventoControllerImpl implements EventoController {
+public class EventoControllerImpl implements CRUDRoutableController {
 	private EventoService<Evento, Empresa, Long> evtService;
+	private final String BRAZILIAN_DATE_FORMAT = "DD/MM/YYYY";
 	
 	public EventoControllerImpl() {
 		this.evtService = new EventoServiceImpl ();
@@ -51,10 +52,8 @@ public class EventoControllerImpl implements EventoController {
 			descricao = obj.getString("descricao");
 			dataEventoStr = obj.getString("dataEvento");
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY");
+	        Date dataEvento = this.getDate(dataEventoStr);
 	        
-	        Date dataEvento = formatter.parse(dataEventoStr);
-	            
 			Evento evento = new Evento ();
 			evento.setNome(nome);
 			evento.setDataEvento(dataEvento);
@@ -68,7 +67,7 @@ public class EventoControllerImpl implements EventoController {
 			result.put("RNException", e.getMessage());
 		} catch(ParseException e) {
 			e.printStackTrace();
-			result.put("error", e.getMessage());
+			result.put("ParseException", e.getMessage());
 		}
 		
 		return result;
@@ -109,5 +108,10 @@ public class EventoControllerImpl implements EventoController {
 		}
 		
 		return result;
+	}
+	
+	private Date getDate (String date) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat(BRAZILIAN_DATE_FORMAT);
+        return formatter.parse(date);
 	}
 }

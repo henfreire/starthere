@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.json.JSONObject;
-import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
 
 import controller.Routable;
-
+import controllerImpl.ControllerException;
 import controllerImpl.EmpresaControllerImpl;
 import controllerImpl.EventoControllerImpl;
 import controllerImpl.InvestidorControllerImpl;
-import controllerImpl.LoginControllerImpl;
 import controllerImpl.StartupControllerImpl;
+import controllerImpl.UsuarioControllerFactory;
 
 public class AJAXServer implements Container, Routable {
 	private Request request;
@@ -28,17 +27,10 @@ public class AJAXServer implements Container, Routable {
 	public void handle(Request request, Response response) {
 		this.request = request;
 		this.response = response;
-		
-		String path = this.request.getPath().getPath();
-		Query query = this.request.getQuery();
-		JSONObject obj = new JSONObject ();
-		
+
 		try {
-			Object[] keys = query.keySet().toArray();
-			
-			for(int i = 0 ; i < keys.length; i++) {
-				obj.put(keys[i].toString(), query.get(keys[i]));
-			}
+			String path = this.request.getPath().getPath();
+			JSONObject obj = new JSONObject (this.request.getContent());
 			
 			this.setResponse(this.sendRoute(path, obj).toString());
 		} catch (Exception e) {
@@ -49,11 +41,16 @@ public class AJAXServer implements Container, Routable {
 	@Override
 	public JSONObject sendRoute(String route, JSONObject requestData) {
 		JSONObject result = new JSONObject ();
-		Routable router;
+		Routable router = null;
 		
 		if(route.startsWith("/login")) {
 			route = route.replace("/login", "");
-			router = new LoginControllerImpl();
+			UsuarioControllerFactory factory = new UsuarioControllerFactory ();
+			try {
+				router = factory.getController(UsuarioControllerFactory.EMPRESA_ID);
+			} catch (ControllerException e) {
+				e.printStackTrace();
+			}
 		} else if (route.startsWith("/evento")) {
 			route = route.replace("/evento", "");
 			router = new EventoControllerImpl();

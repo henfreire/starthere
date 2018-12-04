@@ -9,10 +9,14 @@ public class Startup extends Usuario {
 	private double capitalGiro;
 	private Ranking<Integer> ranking;
 	
-	public Startup(String nome, String email) {
-		super(nome, email);
+	public Startup() {
+		super();
 	}
-
+	
+	public Startup(Usuario user) {
+		super(user);
+	}
+	
 	public Calendar getDataFundacao() {
 		return dataFundacao;
 	}

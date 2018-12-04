@@ -1,3 +1,7 @@
 package controller;
 
-public interface UsuarioController extends Routable, CRUDController {}
+import org.json.JSONObject;
+
+public interface UsuarioController extends CRUDRoutableController {
+	public JSONObject login(JSONObject requestData);
+}

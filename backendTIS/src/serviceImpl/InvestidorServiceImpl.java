@@ -2,6 +2,7 @@ package serviceImpl;
 
 import java.util.List;
 
+import DAO.InvestidorDAO;
 import DAOImpl.InvestidorDAOImpl;
 import model.Evento;
 import model.Investidor;
@@ -10,9 +11,41 @@ import model.Startup;
 import service.InvestidorService;
 import util.RNException;
 
-public class InvestidorServiceImpl extends UsuarioServiceImpl<Investidor> implements InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer> > {
+public class InvestidorServiceImpl implements InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer> > {
+	private InvestidorDAO<Investidor, Long> investidorDAO;
+	
 	public InvestidorServiceImpl() {
-		this.usrDAO = new InvestidorDAOImpl();
+		this.investidorDAO = new InvestidorDAOImpl ();
+	}
+
+	@Override
+	public Investidor getUsuario(Long id) throws RNException {
+		return this.investidorDAO.get(id);
+	}
+
+	@Override
+	public Investidor getUsuarioByEmail(String email) throws RNException {
+		return this.investidorDAO.getByEmail(email);
+	}
+
+	@Override
+	public void add(Investidor inv) throws RNException {
+		this.investidorDAO.add(inv);
+	}
+
+	@Override
+	public void update(Investidor inv) throws RNException {
+		this.investidorDAO.update(inv);
+	}
+
+	@Override
+	public Investidor delete(Long id) throws RNException {
+		return this.investidorDAO.delete(this.investidorDAO.get(id));
+	}
+
+	@Override
+	public List<Investidor> getAll() throws RNException {
+		return this.investidorDAO.getAll();
 	}
 
 	@Override

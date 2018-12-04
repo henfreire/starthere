@@ -3,62 +3,61 @@ package DAOImpl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import DAO.UsuarioDAO;
 import model.Usuario;
 import util.FileHandler;
+import util.FileHandlerImpl;
 
-public abstract class UsuarioDAOImpl<E extends Usuario> implements UsuarioDAO<E, Long> {
-	protected FileHandler<E> fileManager;
+public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
+	private FileHandler<Usuario> fileManager;
 	
-	public List<E> getAll() {
-		List<E> empresas = new ArrayList<E>();
-		List<String> fileContents;
-		String  str, 
-				vet[];
-		E empresa = null;
-		fileContents = fileManager.getFileContents();
-		
+	public UsuarioDAOImpl(String fileName) {
+		this.fileManager = new FileHandlerImpl<Usuario> (fileName);
+	}
+	
+	public List<Usuario> getAll() {
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		List<String> fileContents = fileManager.getFileContents();
 		Iterator<String> itStr = fileContents.iterator();
+		String  str;
+		Usuario usuario = null;
+		
 		while(itStr.hasNext()) {
 			str = itStr.next();
-			vet = str.split("[|]");
 			
-			empresa = (E) new Usuario();
-			empresa.setId(Long.parseLong(vet[0]));
-			empresa.setNome(vet[1]);
-			empresa.setEmail(vet[2]);
-			empresa.setSenha(vet[3]);
+			usuario = new Usuario ();
 			
-			empresas.add(empresa);
+			usuario.setDAT(str);
+			
+			usuarios.add(usuario);
 		}
 			
-		return empresas;
+		return usuarios;
 	}
 
 	@Override
-	public E get(Long id) {
-		List<E> empresas = getAll();
+	public Usuario get(Long id) {
+		List<Usuario> empresas = getAll();
 		
 		return  empresas.stream()
 				.filter(empresa -> empresa.getId().equals(id))
-				.collect(Collectors.toList())
-				.get(0);		
+				.findAny()
+				.orElse(null);
 	}
 
 	@Override
-	public void add(E empresa) {
-		Long id = getNextId();
-		empresa.setId(id);
+	public void add(Usuario empresa) {
+		empresa.setId(getNextId());
 		fileManager.saveToFile(empresa);
 	}
 
 	@Override
-	public void update(E empresa) {
-		List<E> empresas = getAll();
+	public void update(Usuario empresa) {
+		List<Usuario> empresas = getAll();
 
 		int index = empresas.indexOf(empresa);
+		
 		if(index != -1) {
 			empresas.set(index, empresa);
 		}
@@ -66,55 +65,49 @@ public abstract class UsuarioDAOImpl<E extends Usuario> implements UsuarioDAO<E,
 	}
 
 	@Override
-	public E delete(E empresa) {
-		List<E> empresas = getAll();
-		E aux = null;
+	public Usuario delete(Usuario usuario) {
+		List<Usuario> usuarios = getAll();
+		Usuario aux = null;
 		
-		int index = empresas.indexOf(empresa);
+		int index = usuarios.indexOf(usuario);
 		
 		if(index != -1) {
-			aux = empresas.remove(index);
+			aux = usuarios.remove(index);
 		}
 		
-		saveEmpresasToFile(empresas);
+		saveEmpresasToFile(usuarios);
 
 		return aux;
 	}
 
-	private void saveEmpresasToFile(List<E> empresas) {
+	private void saveEmpresasToFile(List<Usuario> empresas) {
 		fileManager.saveToFile(empresas);	
 	}
 
 	@Override
-	public E getByEmail(String email) {
+	public Usuario getByEmail(String email) {
 		List<String> fileContents = fileManager.getFileContents();
-		E user = null;
-		String str, vet[];
+		Usuario user = null;
+		String str = null;
 		
 		Iterator<String> itStr = fileContents.iterator();
 				
 		while(itStr.hasNext()) {
 			str = itStr.next();
-			vet = str.split("[|]");
 
-			user = (E) new Usuario();
-			
-			user.setId(Long.parseLong(vet[0]));
-			user.setNome(vet[1]);
-			user.setSenha(vet[2]);
-			user.setEmail(vet[3]);
+			user = new Usuario();
+
+			user.setDAT(str);
 			
 			if(user.getEmail().equals(email))
 				break;
-			else 
-				user = null;
 		}
 		
 		return user;
 	}
 	
 	private Long getNextId() {
-		List<E> empresas = getAll();
-		return Long.parseLong((empresas.size() + 1) + "");
+		List<Usuario> usuarios = getAll();
+		return Long.parseLong((usuarios.size() + 1) + "");
 	}
 }

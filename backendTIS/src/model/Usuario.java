@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import util.toDAT;
 import util.toJSON;
 
-public class Usuario implements toJSON, toDAT {
-	private Long id;
-	private String nome,
+public class Usuario implements toJSON, toDAT, IUsuario<Usuario> {
+	protected Long id;
+	protected String nome,
 				   senha,
 				   email,
 				   linkSite,
@@ -16,9 +16,8 @@ public class Usuario implements toJSON, toDAT {
 	
 	public Usuario() {}
 	
-	public Usuario(String nome, String email) {
-		this.nome = nome;
-		this.email = email;
+	public Usuario(Usuario user) {
+		this.setUserData(user);
 	}
 	
 	public String getLinkSite() {
@@ -110,5 +109,16 @@ public class Usuario implements toJSON, toDAT {
 		this.linkSite = vet[4];
 		this.linkLinkedIn = vet[5];
 		this.imagem = vet[6];
+	}
+
+	@Override
+	public void setUserData(Usuario user) {
+		this.id = user.getId();
+		this.nome = user.getNome();
+		this.senha = user.getSenha();
+		this.email = user.getEmail();
+		this.linkSite = user.getLinkSite();
+		this.linkLinkedIn = user.getLinkLinkedIn();
+		this.imagem = user.getImagem();
 	}
 }

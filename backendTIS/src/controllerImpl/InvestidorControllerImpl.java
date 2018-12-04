@@ -2,14 +2,10 @@ package controllerImpl;
 
 import org.json.JSONObject;
 
-import controller.InvestidorController;
-import model.Investidor;
-import serviceImpl.InvestidorServiceImpl;
-
-public class InvestidorControllerImpl extends UsuarioControllerImpl<Investidor> implements InvestidorController {
+public class InvestidorControllerImpl extends UsuarioControllerImpl {
 	
 	public InvestidorControllerImpl() {
-		this.service = new InvestidorServiceImpl();
+//		new InvestidorServiceImpl();
 	}
 
 	@Override
@@ -30,5 +26,23 @@ public class InvestidorControllerImpl extends UsuarioControllerImpl<Investidor> 
 		}
 		
 		return result;
+	}
+
+	@Override
+	public JSONObject add(JSONObject obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject update(JSONObject obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject delete(long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

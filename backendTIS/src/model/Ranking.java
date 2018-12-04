@@ -25,3 +25,13 @@ public abstract class Ranking<E> implements toJSON, toDAT {
 		return obj;
 	}
 }
+
+// 1 - Imatura
+// 2 - Boa 
+// 3 - Ótima
+// 4 - Excelente
+// 5 - Super
+
+
+
+

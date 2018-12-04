@@ -15,10 +15,10 @@ public class EmpresaDAOTest {
     public static void runOnceBeforeClass() {
 		empDAO = new EmpresaDAOImpl();
 		
-		String  nome="Exemplo SA",
-				email="exemplo@teste.com",
+		String  nome = "Exemplo SA",
+				email = "exemplo@teste.com",
 				senha="123";
-		emp = new Empresa(nome, email);
+		emp = new Empresa();
 		emp.setSenha(senha);
 		emp.setId(Long.parseLong("13"));
     }

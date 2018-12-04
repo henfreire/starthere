@@ -8,10 +8,12 @@ public class Empresa extends Usuario {
 	private String razaoSocial;
 	private List<Evento> eventos;
 
-	public Empresa() {}
+	public Empresa() {
+		super();
+	}
 	
-	public Empresa(String nome, String email) {
-		super(nome, email);
+	public Empresa(Usuario user) {
+		super(user);
 	}
 
 	public String getRazaoSocial() {
@@ -45,9 +47,8 @@ public class Empresa extends Usuario {
 	@Override
 	public void setDAT(String DAT) {
 		super.setDAT(DAT);
-		
 		String[] vet = DAT.split("|");
-		
-		this.razaoSocial = vet[7];
+		this.razaoSocial = vet[0];
 	}
+	
 }
