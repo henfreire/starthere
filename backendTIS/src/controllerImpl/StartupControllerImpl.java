@@ -22,7 +22,7 @@ public class StartupControllerImpl extends UsuarioControllerImpl {
 //				throw new Exception("Rota inválida !");
 //			}
 
-			return this.login(data);
+//			return this.login(data);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

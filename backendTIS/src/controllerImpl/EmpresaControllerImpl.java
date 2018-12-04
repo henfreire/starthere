@@ -1,41 +1,86 @@
 package controllerImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONObject;
 
+import controller.EmpresaController;
 import serviceImpl.EmpresaServiceImpl;
+import util.RNException;
 import service.EmpresaService;
-
+import service.EventoService;
 import model.Empresa;
 import model.Startup;
 import model.Evento;
 
-public class EmpresaControllerImpl extends UsuarioControllerImpl {	
+public class EmpresaControllerImpl extends UsuarioControllerImpl implements EmpresaController {	
+	private final String BRAZILIAN_DATE_FORMAT = "DD/MM/YYYY";
 	private EmpresaService<Empresa, Startup, Evento, Long> empresaService;
+	private EventoService<Empresa, Evento, Long> evtService;
 	
 	public EmpresaControllerImpl () {
 		this.empresaService = new EmpresaServiceImpl ();
 	}
 	
 	@Override
-	public JSONObject sendRoute(String route, JSONObject data) {
-		JSONObject result = new JSONObject();
+	public JSONObject sendRoute(String route, JSONObject requestData) {
+		JSONObject result = null;
+		
+		if(route.startsWith("/addEvento")) {
+			result = this.add(requestData);
+		} else {
+			return this.sendRoute(route, requestData);
+		}
+		
+		return result;
+	}
+	
+
+	@Override
+	public JSONObject addEvento(JSONObject obj) {
+		JSONObject result = new JSONObject ();
+		
+		String  nome,
+				descricao,
+				dataEventoStr;
+		Long id;
 		
 		try {
-//			if(route.startsWith("/add")) {							
-//				result = this.add(data);
-//			} else if(route.startsWith("/get")) {
-//				result.put("empresas", this.get(data));
-//			} else if(route.startsWith("/getAll")) {
-//				result.put("empresas", this.getAll());
-//			} else {
-				return this.sendRoute(route, data);
-//			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.put("error", e.getMessage());
-		}
+			id = Long.parseLong(obj.getString("idEmpresa"));
+			nome = obj.getString("nome");
+			descricao = obj.getString("descricao");
+			dataEventoStr = obj.getString("dataEvento");
 			
+	        Date dataEvento = this.getDate(dataEventoStr);
+	        
+			Evento evento = new Evento ();
+			
+			evento.setNome(nome);
+			evento.setDataEvento(dataEvento);
+			evento.setDescricao(descricao);
+			
+			Empresa emp = new Empresa ();
+			emp.setId(id);
+			
+			this.evtService.add(evento, null);
+			
+			result.put("evento", evento.toJSONObject());
+		} catch (RNException e) {
+			e.printStackTrace();
+			result.put("RNException", e.getMessage());
+		} catch(ParseException e) {
+			e.printStackTrace();
+			result.put("ParseException", e.getMessage());
+		}
+		
 		return result;
+	}
+	
+	private Date getDate (String date) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat(BRAZILIAN_DATE_FORMAT);
+        return formatter.parse(date);
 	}
 
 	@Override

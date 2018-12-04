@@ -1,7 +1,6 @@
 package DAOImpl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import DAO.UsuarioDAO;
@@ -10,29 +9,25 @@ import util.FileHandler;
 import util.FileHandlerImpl;
 
 public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
-	private FileHandler<Usuario> fileManager;
+	private final String FILE_NAME = "usuarios.dat";
+	private FileHandler<Usuario> userFileManager;
 	
-	public UsuarioDAOImpl(String fileName) {
-		this.fileManager = new FileHandlerImpl<Usuario> (fileName);
+	public UsuarioDAOImpl() {
+		this.userFileManager = new FileHandlerImpl<Usuario> (FILE_NAME);
 	}
 	
 	public List<Usuario> getAll() {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		List<String> fileContents = fileManager.getFileContents();
-		Iterator<String> itStr = fileContents.iterator();
-		String  str;
+		List<String> fileContents = userFileManager.getFileContents();
+
 		Usuario usuario = null;
 		
-		while(itStr.hasNext()) {
-			str = itStr.next();
-			
+		for(String str : fileContents) {
 			usuario = new Usuario ();
-			
 			usuario.setDAT(str);
-			
 			usuarios.add(usuario);
 		}
-			
+		
 		return usuarios;
 	}
 
@@ -47,21 +42,22 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 
 	@Override
-	public void add(Usuario empresa) {
-		empresa.setId(getNextId());
-		fileManager.saveToFile(empresa);
+	public void add(Usuario usuario) {
+		usuario.setId(getNextId());
+		userFileManager.saveToFile(usuario);
 	}
 
 	@Override
-	public void update(Usuario empresa) {
-		List<Usuario> empresas = getAll();
+	public void update(Usuario usuario) {
+		List<Usuario> usuarios = getAll();
 
-		int index = empresas.indexOf(empresa);
+		int index = usuarios.indexOf(usuario);
 		
 		if(index != -1) {
-			empresas.set(index, empresa);
+			usuarios.set(index, usuario);
 		}
 		
+		userFileManager.saveToFile(usuarios);
 	}
 
 	@Override
@@ -75,35 +71,25 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 			aux = usuarios.remove(index);
 		}
 		
-		saveEmpresasToFile(usuarios);
+		userFileManager.saveToFile(usuarios);
 
 		return aux;
 	}
 
-	private void saveEmpresasToFile(List<Usuario> empresas) {
-		fileManager.saveToFile(empresas);	
-	}
-
 	@Override
 	public Usuario getByEmail(String email) {
-		List<String> fileContents = fileManager.getFileContents();
+		List<String> fileContents = userFileManager.getFileContents();
 		Usuario user = null;
-		String str = null;
 		
-		Iterator<String> itStr = fileContents.iterator();
-				
-		while(itStr.hasNext()) {
-			str = itStr.next();
-
+		for(String str : fileContents) {
 			user = new Usuario();
-
 			user.setDAT(str);
 			
 			if(user.getEmail().equals(email))
-				break;
+				return user;
 		}
 		
-		return user;
+		return null;
 	}
 	
 	private Long getNextId() {

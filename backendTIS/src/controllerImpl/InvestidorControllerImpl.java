@@ -2,30 +2,18 @@ package controllerImpl;
 
 import org.json.JSONObject;
 
+import model.Evento;
+import model.Investidor;
+import model.Ranking;
+import model.Startup;
+import service.InvestidorService;
+import serviceImpl.InvestidorServiceImpl;
+
 public class InvestidorControllerImpl extends UsuarioControllerImpl {
+	private InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer>> investidorService;
 	
 	public InvestidorControllerImpl() {
-//		new InvestidorServiceImpl();
-	}
-
-	@Override
-	public JSONObject sendRoute(String route, JSONObject data) {
-		JSONObject result = new JSONObject ();
-		
-		try {
-			if(route.startsWith("/add")) {			
-				result = this.add(data);
-			} else if(route.startsWith("/getAll")) {
-				this.getAll().toString();
-			}  else {
-				throw new Exception("Rota inválida !");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.put("error", e.getMessage());
-		}
-		
-		return result;
+		this.investidorService = new InvestidorServiceImpl ();
 	}
 
 	@Override

@@ -21,11 +21,12 @@ public class EmpresaServiceImpl implements EmpresaService<Empresa, Startup, Even
 	
 	public EmpresaServiceImpl() {
 		this.empresaDAO = new EmpresaDAOImpl ();
+		this.eventoService = new EventoServiceImpl (); 
 	}
 
 	@Override
-	public void criarEvento(Evento evento) throws RNException {
-		
+	public void criarEvento(Empresa empresa, Evento evento) throws RNException {
+		this.eventoService.add(empresa, evento);
 	}
 
 	@Override
@@ -50,14 +51,12 @@ public class EmpresaServiceImpl implements EmpresaService<Empresa, Startup, Even
 
 	@Override
 	public void update(Empresa emp) throws RNException {
-		// TODO Auto-generated method stub
-		
+		this.empresaDAO.update(emp);
 	}
 
 	@Override
 	public Empresa delete(Long id) throws RNException {
-//		return this.empresaDAO.delete();
-		return null;
+		return this.empresaDAO.delete(this.getUsuario(id));
 	}
 
 	@Override

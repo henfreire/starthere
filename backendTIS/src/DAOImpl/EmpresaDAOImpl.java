@@ -1,6 +1,7 @@
 package DAOImpl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DAO.EmpresaDAO;
@@ -17,7 +18,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 	private UsuarioDAO<Usuario, Long> userDAO;
 	
 	public EmpresaDAOImpl() {
-		this.userDAO = new UsuarioDAOImpl (FILE_NAME);
+		this.userDAO = new UsuarioDAOImpl ();
 		this.fileManager = new FileHandlerImpl <Empresa> (FILE_NAME);
 	}
 
@@ -29,8 +30,6 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 		if(usuario != null) {
 			empresa = new Empresa (usuario);
 			empresa.setUserData(usuario);
-		
-			
 		}
 
 		return empresa;
@@ -39,33 +38,72 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 	@Override
 	public List<Empresa> getAll() {
 		List<Empresa> empresas = new ArrayList<Empresa> (); 
-		List<Usuario> usuarios = this.userDAO.getAll();
+		List<String> fileContents = fileManager.getFileContents();
+
+		Empresa empresa = null;
 		
-		usuarios.stream()
-				.forEach(usr -> empresas.add(new Empresa(usr)) );
+		for(String str : fileContents) {
+			empresa = new Empresa ();
+			empresa.setDAT(str);
+			empresas.add(empresa);
+		}
 		
 		return empresas;
 	}
 
 	@Override
 	public Empresa get(Long id) {
-		return new Empresa (this.userDAO.get(id));
-	}
-
-	@Override
-	public void add(Empresa ele) {
+		List<Empresa> empresas = getAll();
 		
+		return  empresas.stream()
+				.filter(empresa -> empresa.getId().equals(id))
+				.findAny()
+				.orElse(null);
 	}
 
 	@Override
-	public void update(Empresa ele) {
-		// TODO Auto-generated method stub
+	public void add(Empresa empresa) {
+		this.userDAO.add(empresa);  // Gets next id by reference.
+		fileManager.saveToFile(empresa);
+	}
+
+	@Override
+	public void update(Empresa empresa) {
+		List<Empresa> empresas = this.getAll();
+		Empresa emp = empresas.stream()
+							  .filter(element -> element.getId().equals(empresa.getId()))
+							  .findAny()
+							  .orElse(null);
 		
+		if(emp != null) {
+			int index = empresas.indexOf(emp);
+			
+			if(index != -1) {
+				empresas.set(index, emp);
+			}
+			
+			fileManager.saveToFile(empresas);
+			this.userDAO.update(empresa); 
+		}
 	}
 
 	@Override
-	public Empresa delete(Empresa ele) {
-		// TODO Auto-generated method stub
-		return null;
+	public Empresa delete(Empresa empresa) {
+		List<Empresa> empresas = this.getAll();
+		Iterator<Empresa> itEmp = empresas.iterator();
+		Empresa emp = null;
+		
+		while(itEmp.hasNext()) {
+			emp = itEmp.next();
+			
+			if(emp.getId().equals(empresa.getId())) {
+				itEmp.remove();
+				fileManager.saveToFile(empresas);
+				this.userDAO.delete(empresa); 
+				break;
+			}
+		}
+		
+		return emp;
 	}	
 }

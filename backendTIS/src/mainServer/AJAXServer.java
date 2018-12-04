@@ -3,6 +3,7 @@ package mainServer;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
@@ -30,9 +31,13 @@ public class AJAXServer implements Container, Routable {
 
 		try {
 			String path = this.request.getPath().getPath();
-			JSONObject obj = new JSONObject (this.request.getContent());
 			
-			this.setResponse(this.sendRoute(path, obj).toString());
+			System.out.println(this.request.getContent());
+			
+//			JSONArray arr = new JSONArray (this.request);
+//			JSONObject obj = arr.getJSONObject(0);
+//			
+//			this.setResponse(this.sendRoute(path, obj).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
