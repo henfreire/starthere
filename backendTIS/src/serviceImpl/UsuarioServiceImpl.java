@@ -4,23 +4,24 @@ import java.util.List;
 
 import DAO.UsuarioDAO;
 import model.Usuario;
+import service.LoginService;
 import service.UsuarioService;
 import util.RNException;
 
-public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioService<E, Long> {
-	protected UsuarioDAO<E, Long> usrDAO;
+public class UsuarioServiceImpl implements UsuarioService<Usuario, Long>, LoginService<Usuario> {
+	protected UsuarioDAO<Usuario, Long> usrDAO;
 	
 	@Override
-	public void update(E user) throws RNException {
+	public void update(Usuario user) throws RNException {
 		this.usrDAO.update(user);
 	}
 
 	@Override
-	public E delete(Long id) throws RNException {
+	public Usuario delete(Long id) throws RNException {
 		if(id == null || id.intValue() == 0)
 			throw new RNException("O ID é inválido !");
 		
-		E user = this.usrDAO.get(id);
+		Usuario user = this.usrDAO.get(id);
 		
 		if(user == null)
 			throw new RNException("O ID informado não corresponde a nenhum usuário!");
@@ -29,12 +30,12 @@ public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioSe
 	}
 
 	@Override
-	public List<E> getAll() throws RNException {
+	public List<Usuario> getAll() throws RNException {
 		return this.usrDAO.getAll();
 	}
 
 	@Override
-	public void add(E user) throws RNException {
+	public void add(Usuario user) throws RNException {
 		if(user.getNome() == null) 
 			throw new RNException("O nome não pode ser nulo !");
 		
@@ -51,18 +52,18 @@ public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioSe
 	}
 	
 	@Override
-	public E getUsuario(Long id) throws RNException {
+	public Usuario getUsuario(Long id) throws RNException {
 		return this.usrDAO.get(id);
 	}
 	
 	@Override
-	public E getUsuarioByEmail(String email) throws RNException {
+	public Usuario getUsuarioByEmail(String email) throws RNException {
 		return this.usrDAO.getByEmail(email);
 	}
 	
 	@Override
-	public E autenticar(String email, String senha) throws RNException {
-		E user;
+	public Usuario login(String email, String senha) throws RNException {
+		Usuario user;
 		
 		if(email == null)
 			throw new RNException("O email não pode ser nulo !");
@@ -72,14 +73,14 @@ public abstract class UsuarioServiceImpl<E extends Usuario> implements UsuarioSe
 				
 		user = this.usrDAO.getByEmail(email);
 		
-		if(user != null && !isValidPassword((Usuario) user, senha))
+		if(user != null && !isValidPassword(user, senha))
 			throw new RNException("Credenciais inválidas !");
 			
 		return user;
 	}
 	
 	private boolean isRegisteredEmail(String email) {
-		E user = this.usrDAO.getByEmail(email);
+		Usuario user = this.usrDAO.getByEmail(email);
 		return user != null;
 	}
 	

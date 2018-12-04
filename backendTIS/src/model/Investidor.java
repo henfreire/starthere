@@ -3,11 +3,15 @@ package model;
 import org.json.JSONObject;
 
 public class Investidor extends Usuario {
-	
-	public Investidor(String nome, String email) {
-		super(nome, email);
-	}
 
+	public Investidor() {
+		super();
+	}
+	
+	public Investidor(Usuario user) {
+		super(user);
+	}
+	
 	@Override
 	public JSONObject toJSONObject() {
 		return super.toJSONObject();

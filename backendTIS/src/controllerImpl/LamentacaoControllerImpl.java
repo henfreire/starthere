@@ -8,7 +8,6 @@ public class LamentacaoControllerImpl implements LamentacaoController {
 
 	@Override
 	public JSONObject sendRoute(String route, JSONObject requestData) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
