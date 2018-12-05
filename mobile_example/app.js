@@ -7,12 +7,13 @@
 	Link: https://github.com/blueimp/JavaScript-MD5/
 */
 
-var SERVER_URL = "http://127.0.0.1:7201/";
+var SERVER_URL = "http://127.0.0.1:7200/";
 
 var sendRequest =  (route, jsonData) => {
 	return $.post({
 		url: SERVER_URL + route, 
-		data: jsonData
+		data: jsonData,
+		dataType: 'json'
 	});
 };
 
@@ -31,9 +32,9 @@ $('#loginBtn').click(() => {
 });
 
 $('#cadUsuarioBtn').click(() => {
-
 	var data = {
 		nome : $('#cadUsuarioNome').val(),
+//		senha: md5($('#cadUsuarioSenha').val()),
 		senha: $('#cadUsuarioSenha').val(),
 		email: $('#cadUsuarioEmail').val()
 	};	

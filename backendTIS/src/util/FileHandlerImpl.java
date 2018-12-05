@@ -66,6 +66,7 @@ public class FileHandlerImpl<E extends toDAT> implements FileHandler<E> {
 			DataInputStream entrada = new DataInputStream(new FileInputStream(filePath));
 			
 			while ((entrada.available() > 0) && (str = entrada.readUTF()) != null) {
+				
 				result.add(str);
 			}
 			

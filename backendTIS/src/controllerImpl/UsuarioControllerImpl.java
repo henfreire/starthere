@@ -99,28 +99,28 @@ public abstract class UsuarioControllerImpl implements UsuarioController {
 	
 	
 //
-//	public JSONObject add(JSONObject obj) {
-//		JSONObject result = new JSONObject();
-//		String email = obj.getString("email"),
-//			   senha = obj.getString("senha"),
-//			   nome  = obj.getString("nome");
-//		
-//		Usuario user = new Usuario();
-//
-//		user.setNome(nome);
-//		user.setEmail(email);
-//		user.setSenha(senha);
-//		
-//		try {
-//			this.userService.add(user);
-//			result.append("user", user.toJSONObject());
-//		} catch (RNException e) {
-//			e.printStackTrace();
-//			result.put("RNException", e.getMessage());
-//		}
-//		
-//		return result;
-//	}
+	public JSONObject add(JSONObject obj) {
+		JSONObject result = new JSONObject();
+		String email = obj.getString("email"),
+			   senha = obj.getString("senha"),
+			   nome  = obj.getString("nome");
+		
+		Usuario user = new Usuario();
+
+		user.setNome(nome);
+		user.setEmail(email);
+		user.setSenha(senha);
+		
+		try {
+			this.userService.add(user);
+			result.append("user", user.toJSONObject());
+		} catch (RNException e) {
+			e.printStackTrace();
+			result.put("RNException", e.getMessage());
+		}
+		
+		return result;
+	}
 //
 //	@Override
 //	public JSONObject update(JSONObject obj) {

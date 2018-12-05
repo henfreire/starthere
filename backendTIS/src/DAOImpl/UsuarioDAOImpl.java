@@ -3,8 +3,11 @@ package DAOImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import DAO.UsuarioDAO;
 import model.Usuario;
+import service.UsuarioService;
 import util.FileHandler;
 import util.FileHandlerImpl;
 
@@ -80,6 +83,7 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	public Usuario getByEmail(String email) {
 		List<String> fileContents = userFileManager.getFileContents();
 		Usuario user = null;
+		
 		
 		for(String str : fileContents) {
 			user = new Usuario();

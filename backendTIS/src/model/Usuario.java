@@ -1,5 +1,7 @@
 package model;
 
+import javax.swing.JOptionPane;
+
 import org.json.JSONObject;
 
 import util.toDAT;
@@ -89,7 +91,7 @@ public class Usuario implements toJSON, toDAT, IUsuario<Usuario> {
 
 	@Override
 	public String toDATFormat() {
-		return  id + "|" + 
+		return  String.valueOf(id) + "|" + 
 				nome + "|" + 
 				senha + "|" + 
 				email + "|" + 
@@ -100,7 +102,7 @@ public class Usuario implements toJSON, toDAT, IUsuario<Usuario> {
 
 	@Override
 	public void setDAT(String DAT) {
-		String[] vet = DAT.split("|");
+		String[] vet = DAT.split("\\|");
 		
 		this.id = Long.parseLong(vet[0]);
 		this.nome = vet[1];

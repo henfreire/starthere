@@ -3,6 +3,7 @@ package serviceImpl;
 import java.util.List;
 
 import DAO.UsuarioDAO;
+import DAOImpl.UsuarioDAOImpl;
 import model.Usuario;
 import service.LoginService;
 import service.UsuarioService;
@@ -10,6 +11,10 @@ import util.RNException;
 
 public class UsuarioServiceImpl implements UsuarioService<Usuario, Long>, LoginService<Usuario> {
 	protected UsuarioDAO<Usuario, Long> usrDAO;
+	
+	public UsuarioServiceImpl () {
+		this.usrDAO = new UsuarioDAOImpl();
+	}
 	
 	@Override
 	public void update(Usuario user) throws RNException {
@@ -80,8 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService<Usuario, Long>, LoginS
 	}
 	
 	private boolean isRegisteredEmail(String email) {
-		Usuario user = this.usrDAO.getByEmail(email);
-		return user != null;
+		return this.usrDAO.getByEmail(email) != null;
 	}
 	
 	public boolean isValidPassword(Usuario user, String senha) {

@@ -5,6 +5,7 @@ import java.io.PrintStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
@@ -31,15 +32,19 @@ public class AJAXServer implements Container, Routable {
 
 		try {
 			String path = this.request.getPath().getPath();
+			Query query = this.request.getQuery();
+			JSONObject obj = new JSONObject ();
 			
-			System.out.println(this.request.getContent());
+			Object[] keys = query.keySet().toArray();
 			
-//			JSONArray arr = new JSONArray (this.request);
-//			JSONObject obj = arr.getJSONObject(0);
-//			
-//			this.setResponse(this.sendRoute(path, obj).toString());
+			for(int i = 0 ; i < keys.length; i++) {
+				obj.put(keys[i].toString(), query.get(keys[i]));
+			}
+			
+			this.setResponse(this.sendRoute(path, obj).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+			this.setResponse("Ocorreu um erro insesperado ");
 		}
 	}
 
@@ -90,21 +95,27 @@ public class AJAXServer implements Container, Routable {
 		return result;
 	}
 		
-	private void setResponse(String message) throws IOException {
-		PrintStream body = this.response.getPrintStream();
-		long time = System.currentTimeMillis();
-
-		this.response.setValue("Content-Type", "application/json; charset=utf-8");
-		this.response.setValue("Server", "StartHere v0.0.1");
-		this.response.setValue("Access-Control-Allow-Origin", "null");
-		this.response.setDate("Date", time);
-		this.response.setDate("Last-Modified", time);
-		this.response.setStatus(Status.OK);
-
-		if (message != null)
-			body.println(message);
+	private void setResponse(String message) {
+		PrintStream body;
+		try {
+			body = this.response.getPrintStream();
 		
-		body.close();
+			long time = System.currentTimeMillis();
+	
+			this.response.setValue("Content-Type", "application/json; charset=utf-8");
+			this.response.setValue("Server", "StartHere v0.0.1");
+			this.response.setValue("Access-Control-Allow-Origin", "null");
+			this.response.setDate("Date", time);
+			this.response.setDate("Last-Modified", time);
+			this.response.setStatus(Status.OK);
+	
+			if (message != null)
+				body.println(message);
+			
+			body.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

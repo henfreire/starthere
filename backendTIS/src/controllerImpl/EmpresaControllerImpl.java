@@ -29,9 +29,9 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 		JSONObject result = null;
 		
 		if(route.startsWith("/addEvento")) {
-			result = this.add(requestData);
+			result = this.addEvento(requestData);
 		} else {
-			return this.sendRoute(route, requestData);
+			return super.sendRoute(route, requestData);
 		}
 		
 		return result;
@@ -82,11 +82,33 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 		SimpleDateFormat formatter = new SimpleDateFormat(BRAZILIAN_DATE_FORMAT);
         return formatter.parse(date);
 	}
-
-	@Override
-	public JSONObject add(JSONObject obj) {
-		return null;
-	}
+//
+//	@Override
+//	public JSONObject add(JSONObject obj) {
+//		JSONObject result =  new JSONObject ();
+//		String nome, email, senha;
+//
+//		email = obj.getString("email");
+//		senha = obj.getString("senha");
+//		nome = obj.getString("nome");
+//		
+//		Empresa emp = new Empresa();
+//		
+//		emp.setEmail(email);
+//		emp.setSenha(senha);
+//		emp.setNome(nome);
+//
+//		try {
+//			this.empresaService.add(emp);
+//			result.put("empresa", emp.toJSONObject());
+//		} catch (RNException e) {
+//			e.printStackTrace();
+//			emp = null;
+//			result.append("RNException", e.getMessage());
+//		}
+//		
+//		return result;
+//	}
 
 	@Override
 	public JSONObject update(JSONObject obj) {
