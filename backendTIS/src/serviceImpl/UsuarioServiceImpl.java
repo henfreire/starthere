@@ -78,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService<Usuario, Long>, LoginS
 				
 		user = this.usrDAO.getByEmail(email);
 		
-		if(user != null && !isValidPassword(user, senha))
+		if((user == null) || (user != null && !isValidPassword(user, senha)))
 			throw new RNException("Credenciais inválidas !");
 			
 		return user;

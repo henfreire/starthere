@@ -7,12 +7,6 @@ public class StartupControllerImpl extends UsuarioControllerImpl {
 	public StartupControllerImpl() {}
 
 	@Override
-	public JSONObject add(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public JSONObject update(JSONObject obj) {
 		// TODO Auto-generated method stub
 		return null;

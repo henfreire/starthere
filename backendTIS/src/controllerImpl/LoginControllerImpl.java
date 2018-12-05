@@ -14,28 +14,27 @@ public class LoginControllerImpl implements LoginController {
 	public JSONObject login(JSONObject requestData) {
 		JSONObject result = new JSONObject();
 		Usuario usr = null;
-		LoginService <Usuario> service;
+		LoginService <Usuario> service = new UsuarioServiceImpl(); 
 		
 		String email = requestData.getString("email"),
 			   senha = requestData.getString("senha");
-		
-		service = new UsuarioServiceImpl(); 
 				
 		try {
 			usr = service.login(email, senha);
 			
-			if(usr == null) {
-				throw new RNException("Credenciais Inválidas !");
-			} else {
-				usr.setSenha(null);
-				result = new JSONObject();
-				result.put("user", usr.toJSONObject());
-			}
+			usr.setSenha(null);
+			result = new JSONObject();
+			result.put("user", usr.toJSONObject());
+			
 		} catch (RNException e) {
-			result.append("RNException", e.getMessage());
+			result.put("RNException", e.getMessage());
 		}
 		
-		
 		return result;
+	}
+
+	@Override
+	public JSONObject sendRoute(String route, JSONObject requestData) {
+		return this.login(requestData);
 	}
 }

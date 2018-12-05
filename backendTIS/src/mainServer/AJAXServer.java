@@ -3,7 +3,6 @@ package mainServer;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
@@ -16,6 +15,7 @@ import controllerImpl.ControllerException;
 import controllerImpl.EmpresaControllerImpl;
 import controllerImpl.EventoControllerImpl;
 import controllerImpl.InvestidorControllerImpl;
+import controllerImpl.LoginControllerImpl;
 import controllerImpl.StartupControllerImpl;
 import controllerImpl.UsuarioControllerFactory;
 
@@ -55,12 +55,7 @@ public class AJAXServer implements Container, Routable {
 		
 		if(route.startsWith("/login")) {
 			route = route.replace("/login", "");
-			UsuarioControllerFactory factory = new UsuarioControllerFactory ();
-			try {
-				router = factory.getController(UsuarioControllerFactory.EMPRESA_ID);
-			} catch (ControllerException e) {
-				e.printStackTrace();
-			}
+			router = new LoginControllerImpl();
 		} else if (route.startsWith("/evento")) {
 			route = route.replace("/evento", "");
 			router = new EventoControllerImpl();
