@@ -10,7 +10,7 @@ const buscarTodosEventosRequest = async dados =>
 
 const addEventoRequest = async dados =>
 	api
-	  .post("/empresa/evento/add/", dados)
+	  .post("/empresa/eventoAdd", dados)
 	  .then(result => result)
 	  .catch(error => error);	
 	

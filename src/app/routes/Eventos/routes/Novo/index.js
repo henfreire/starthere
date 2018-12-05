@@ -14,7 +14,7 @@ class Novo extends React.Component {
     console.log("values", values);
     let reader = new FileReader();
     reader.onloadend = () => {
-      let dados = { ...values, imagem: reader.result, idEmpresa: usuario.id, dataEvento: ''};
+      let dados = { ...values, imagem: reader.result, idEmpresa: usuario.id};
       this.props.addEvento({values: dados});
     };
     reader.readAsDataURL(values.imagem);

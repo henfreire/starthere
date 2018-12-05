@@ -62,7 +62,7 @@ class Example extends React.Component {
           initialValues={
             initialValues
               ? initialValues
-              : { nome: "", descricao: "", imagem: "", dataEvento:  moment().format() }
+              : { nome: "", descricao: "", imagem: "", dataEvento:  moment().format('YYYY-MM-DD') }
           }
           onSubmit={(values, actions) => {
             this.props.onSubmit({ values });
