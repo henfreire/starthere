@@ -93,10 +93,10 @@ function* addMural({ payload }) {
   }
 
 export function* buscarTodosMuralsAcao() {
-  yield takeEvery(Types.BUSCAR_TODOS_EVENTOS, buscarTodosMurals);
+  yield takeEvery(Types.BUSCAR_TODOS_MURAL, buscarTodosMurals);
 }
 export function* addMuralAcao() {
-  yield takeEvery(Types.ADD_EVENTO, addMural);
+  yield takeEvery(Types.ADD_MURAL, addMural);
 }
 export default function* rootSaga() {
   yield all([fork(buscarTodosMuralsAcao), fork(addMuralAcao)]);

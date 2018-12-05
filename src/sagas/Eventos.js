@@ -47,6 +47,7 @@ function* buscarTodosEventos({ payload }) {
       );
     }
   } catch (error) {
+    console.log("error",error);
     yield put(ActionsEventos.setEventoMensagem(error));
   }
 }

@@ -48,7 +48,7 @@ class App extends Component {
 			if (usuario === null) {
 				return <Redirect to={'/login'} />;
 			} else if (initURL === '' || initURL === '/' || initURL === '/login') {
-				return <Redirect to={'/app/cadastro'} />;
+				return <Redirect to={'/app/home'} />;
 			} else {
 				return <Redirect to={initURL} />;
 			}
