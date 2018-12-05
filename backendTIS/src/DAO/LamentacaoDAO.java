@@ -1,5 +1,5 @@
 package DAO;
 
-public interface LamentacaoDAO {
+public interface LamentacaoDAO<Lam, Key> extends CRUD<Lam, Key> {
 
 }

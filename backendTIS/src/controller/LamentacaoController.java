@@ -1,5 +1,4 @@
 package controller;
 
-public interface LamentacaoController extends Routable {
-	
+public interface LamentacaoController extends CRUDRoutableController {
 }

@@ -3,22 +3,26 @@ package serviceImpl;
 import java.util.List;
 
 import DAO.InvestidorDAO;
+
 import DAOImpl.DAOException;
 import DAOImpl.InvestidorDAOImpl;
 
-import model.Evento;
+import model.IQuestionario;
 import model.Investidor;
-import model.Ranking;
 import model.Startup;
 
 import service.InvestidorService;
+import service.StartupService;
 import util.RNException;
 
-public class InvestidorServiceImpl implements InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer> > {
+public class InvestidorServiceImpl implements InvestidorService<Investidor, Startup, Long, IQuestionario<String>> {
 	private InvestidorDAO<Investidor, Long> investidorDAO;
 	
+	private StartupService <Startup, Long> stpService;
+	
 	public InvestidorServiceImpl() {
-		this.investidorDAO = new InvestidorDAOImpl ();
+		this.investidorDAO = new InvestidorDAOImpl  ();
+		this.stpService    = new StartupServiceImpl ();
 	}
 
 	@Override
@@ -58,11 +62,14 @@ public class InvestidorServiceImpl implements InvestidorService<Investidor, Star
 
 	@Override
 	public List<Startup> buscarStartups() throws RNException {
-		return null;
+		return this.stpService.getAll();
 	}
 
 	@Override
-	public void avaliarStartup(Startup stp, Ranking<Integer> rank) throws RNException {
+	public void avaliarStartup(Startup stp, IQuestionario<String> quest) throws RNException {
+		if(stp.getId() == null)
+			throw new RNException("Não foi possível avaliar esta StartUp !");
 		
+		stp.setRanking( quest.getResultado() );
 	}	
 }

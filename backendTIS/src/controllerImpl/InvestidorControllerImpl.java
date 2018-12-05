@@ -3,16 +3,15 @@ package controllerImpl;
 import org.json.JSONObject;
 
 import controller.AbstractUsuarioController;
-import model.Evento;
+import model.IQuestionario;
 import model.Investidor;
-import model.Ranking;
 import model.Startup;
 import service.InvestidorService;
 import serviceImpl.InvestidorServiceImpl;
 import util.RNException;
 
 public class InvestidorControllerImpl extends AbstractUsuarioController<Investidor> {
-	private InvestidorService<Investidor, Startup, Evento, Long, Ranking<Integer>> investidorService;
+	private InvestidorService<Investidor, Startup, Long, IQuestionario<String>> investidorService;
 	
 	public InvestidorControllerImpl() {
 		this.userService = 

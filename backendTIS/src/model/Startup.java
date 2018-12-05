@@ -1,14 +1,12 @@
 package model;
 
-import java.util.Calendar;
-
 import org.json.JSONObject;
 
 public class Startup extends AbstractUsuario  {
-	private Calendar dataFundacao;
+	private String dataFundacao;
 	private double capitalGiro;
-	private Ranking<Integer> ranking;
-	
+	private String ranking;
+
 	public Startup() {
 		super();
 	}
@@ -17,11 +15,11 @@ public class Startup extends AbstractUsuario  {
 		super(user);
 	}
 	
-	public Calendar getDataFundacao() {
+	public String getDataFundacao() {
 		return dataFundacao;
 	}
 
-	public void setDataFundacao(Calendar dataFundacao) {
+	public void setDataFundacao(String dataFundacao) {
 		this.dataFundacao = dataFundacao;
 	}
 
@@ -33,18 +31,22 @@ public class Startup extends AbstractUsuario  {
 		this.capitalGiro = capitalGiro;
 	}
 
-	public Ranking<Integer> getRanking() {
+	public String getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(Ranking<Integer> ranking) {
+	public void setRanking(String  ranking) {
 		this.ranking = ranking;
 	}
 
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject obj = super.toJSONObject();
-//		obj.put("ranking", ranking.toJSONObject());
+		
+		obj.put("ranking", ranking);
+		obj.put("capitalGiro", capitalGiro);
+		obj.put("dataFundacao", dataFundacao);
+		
 		return obj;
 	}
 
@@ -53,12 +55,16 @@ public class Startup extends AbstractUsuario  {
 		return super.toDATFormat() + 
 			   this.dataFundacao + "|" +
 			   this.capitalGiro + "|" + 
-			   this.ranking.toDATFormat();
+			   this.ranking + "|" ;
 	}
 
 	@Override
 	public void setDAT(String DAT) {
 		super.setDAT(DAT);
-		// NOT IMPLEMENTED YET
+		String[] vet = DAT.split("\\|");
+		
+		this.dataFundacao = vet[7];
+		this.capitalGiro = Double.parseDouble(vet[8]);
+		this.ranking = vet[9];
 	}
 }
