@@ -55,8 +55,13 @@ function* addEvento({ payload }) {
   let mensagem = "";
   const {values}= payload;
 	try {
-	  const dados = {};
-	  const response = yield call(addEventoRequest, values);
+    const dados = {};
+    let formData = new FormData();
+   
+    for (let key in values){
+      formData.append(key, values[key]);
+    }
+	  const response = yield call(addEventoRequest, formData);
 	  console.log("response", response);
 	  if (response.ok) {
 		result = response.data;
@@ -82,6 +87,7 @@ function* addEvento({ payload }) {
 		);
 	  }
 	} catch (error) {
+    console.log("error",error)
 	  yield put(ActionsEventos.setEventoMensagem(error));
 	}
   }

@@ -19,8 +19,14 @@ function* criarContaEmailSenha({ payload }) {
 			senha: dados.senha,
 
 		};
+		console.log("novoUsuario",novoUsuario);
+		let formData = new FormData();
 
-		const response = yield call(criarContaEmailSenhaRequest, novoUsuario);
+		formData.append('nome', dados.nome);
+		formData.append('email', dados.email);
+		formData.append('senha', dados.senha);
+	
+		const response = yield call(criarContaEmailSenhaRequest, formData);
 		if (response.ok) {
 			usuarioData = novoUsuario;
 		} else if (Object.prototype.hasOwnProperty.call(response.data, 'error')) {
@@ -43,6 +49,7 @@ function* criarContaEmailSenha({ payload }) {
 			yield put(ActionsAuth.setLoaderAuth(false));
 		}
 	} catch (error) {
+		console.log("error cadastro",error);
 		yield put(ActionsAuth.setLoaderAuth(false));
 		yield put(ActionsAuth.setAuthMensagem(error));
 	}
@@ -57,7 +64,11 @@ function* loginEmailSenha({ payload }) {
 			email: dados.email,
 			senha: dados.senha
 		};
-		const response = yield call(loginEmailSenhaRequest, dadosLogin);
+		let formData = new FormData();
+		
+		formData.append('email', dados.email);
+		formData.append('senha', dados.senha);
+		const response = yield call(loginEmailSenhaRequest, formData);
 		if (response.ok) {
 			if (Object.prototype.hasOwnProperty.call(response.data, 'user')) {
 				usuarioData = response.data;
@@ -84,6 +95,7 @@ function* loginEmailSenha({ payload }) {
 			yield put(ActionsAuth.setAuthMensagem({ mensagem: mensagemAuth, mostrar: true }));
 		}
 	} catch (error) {
+		console.log("error login",error);
 		yield put(ActionsAuth.setLoaderAuth(false));
 		yield put(ActionsAuth.setAuthMensagem({ mensagem: 'Ocooreu um error! Tente novamente', mostrar: true }));
 	}
