@@ -47,6 +47,11 @@ class App extends React.Component {
 					<main className="app-main-content-wrapper">
 						<div className="app-main-content">
 							<Switch>
+							<Route path={`${match.url}/home`}
+									component={Loadable({
+										loader: () => import('app/routes/Home'),
+										loading: () => <div />
+									})} />
 								<Route path={`${match.url}/cadastro`}
 									component={Loadable({
 										loader: () => import('app/routes/Cadastro'),
@@ -55,6 +60,11 @@ class App extends React.Component {
 								<Route path={`${match.url}/eventos`}
 									component={Loadable({
 										loader: () => import('app/routes/Eventos'),
+										loading: () => <div />
+									})} />
+								<Route path={`${match.url}/mural`}
+									component={Loadable({
+										loader: () => import('app/routes/Mural'),
 										loading: () => <div />
 									})} />
 								<Route
