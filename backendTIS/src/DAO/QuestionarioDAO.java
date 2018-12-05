@@ -1,4 +1,5 @@
 package DAO;
 
-public interface QuestionarioDAO<Quest, Key> extends CRUD<Quest, Key> {	
+public interface QuestionarioDAO<Stp> {	
+	public void salvarRanking(Stp startup);
 }

@@ -1,14 +1,21 @@
 package controllerImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import controller.AbstractUsuarioController;
+import controller.StartupController;
+import model.IQuestionario;
+import model.Questionario;
 import model.Startup;
 import service.StartupService;
 import serviceImpl.StartupServiceImpl;
 import util.RNException;
 
-public class StartupControllerImpl extends AbstractUsuarioController<Startup> {
+public class StartupControllerImpl extends AbstractUsuarioController<Startup> implements StartupController {
 	private StartupService<Startup, Long> stpService;
 	
 	public StartupControllerImpl() {
@@ -17,13 +24,35 @@ public class StartupControllerImpl extends AbstractUsuarioController<Startup> {
 
 	@Override
 	public JSONObject update(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject result = new JSONObject ();
+		
+		String nome, email, senha;
+	
+		nome = obj.getString("nome");
+		senha = obj.getString("senha");
+		email = obj.getString("email");
+		
+		Startup stp = new Startup ();
+		
+		stp.setNome(nome);
+		stp.setEmail(email);
+		stp.setSenha(senha);
+		
+		try {
+			this.stpService.update(stp);
+			result.put("startup", stp.toJSONObject());
+		} catch (RNException e) {
+			result.put("RNException", e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public JSONObject delete(long id) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 	
@@ -44,7 +73,7 @@ public class StartupControllerImpl extends AbstractUsuarioController<Startup> {
 		stp.setSenha(senha);
 		
 		try {
-			this.userService.add(stp);
+			this.stpService.add(stp);
 			result.put("startup", stp.toJSONObject());
 		} catch (RNException e) {
 			result.put("RNException", e.getMessage());
@@ -54,4 +83,24 @@ public class StartupControllerImpl extends AbstractUsuarioController<Startup> {
 		return result;
 	}
 
+	@Override
+	public JSONObject responderQuestionario(JSONObject obj) {
+		JSONObject result = new JSONObject ();
+		
+		Integer totalRanking = obj.getInt("ranking");
+		
+		Startup stp = new Startup ();
+		
+		stp.getId();
+		
+		try {
+			this.stpService.add(stp);
+			result.put("startup", stp.toJSONObject());
+		} catch (RNException e) {
+			result.put("RNException", e.getMessage());
+			e.printStackTrace();
+		}
+	
+		return result;
+	}
 }

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class Startup extends AbstractUsuario  {
 	private String dataFundacao;
 	private double capitalGiro;
-	private String ranking;
+	private Integer ranking;
 
 	public Startup() {
 		super();
@@ -31,11 +31,11 @@ public class Startup extends AbstractUsuario  {
 		this.capitalGiro = capitalGiro;
 	}
 
-	public String getRanking() {
+	public Integer getRanking() {
 		return ranking;
 	}
 
-	public void setRanking(String  ranking) {
+	public void setRanking(Integer ranking) {
 		this.ranking = ranking;
 	}
 
@@ -65,6 +65,6 @@ public class Startup extends AbstractUsuario  {
 		
 		this.dataFundacao = vet[7];
 		this.capitalGiro = Double.parseDouble(vet[8]);
-		this.ranking = vet[9];
+		this.ranking = Integer.parseInt(vet[9]);
 	}
 }

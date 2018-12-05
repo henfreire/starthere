@@ -67,9 +67,6 @@ public class InvestidorServiceImpl implements InvestidorService<Investidor, Star
 
 	@Override
 	public void avaliarStartup(Startup stp, IQuestionario<String> quest) throws RNException {
-		if(stp.getId() == null)
-			throw new RNException("Não foi possível avaliar esta StartUp !");
-		
-		stp.setRanking( quest.getResultado() );
+		// Not Implemented Yet
 	}	
 }
