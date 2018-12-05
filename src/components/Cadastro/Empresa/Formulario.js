@@ -5,187 +5,92 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import IntlMessages from 'util/IntlMessages';
-import { renderTextField } from 'components/Formularios/ReduxFields';
+import { renderTextField, renderRadio } from 'components/Formularios/ReduxFields';
 import { Field, reduxForm } from 'redux-form';
+import Pergunta1 from './pergunta1';
+import Pergunta2 from './pergunta2';
+import Pergunta3 from './pergunta3';
+import Pergunta4 from './pergunta4';
+import Pergunta5 from './pergunta5';
+import Pergunta6 from './pergunta6';
+import { totalmem } from 'os';
+
 function getSteps() {
-    return ['Dados da Conta', 'Dados da Empresa', 'Informações Extra', 'Confirmarção'];
+    return ['Tempo de atuação da Startup', 'Número de diversidade técnica da empresa', 'Desenvolvimento do projeto', 'Investimento recebido','Tempo disponível médio por membro da equipe semanalmente','Lucro mensal','Confirmação'];
 }
 
-function getStepContent(stepIndex) {
+
+function getStepContent(stepIndex,getState) {
+
+  
+
     switch (stepIndex) {
         case 0:
-            return <DadosContaForm />;
+            return <Pergunta1 getState={getState}/>;
         case 1:
-            return getPersonalInformation();
+            return <Pergunta2 getState={getState}/>;
         case 2:
-            return getPaymentInformation();
+            return <Pergunta3 getState={getState}/>;
         case 3:
-            return getConfirmation();
+            return <Pergunta4 getState={getState}/>;
+        case 4:
+            return <Pergunta5 getState={getState}/>;
+        case 5:
+            return <Pergunta6 getState={getState}/>;
 
         default:
-            return 'Uknown stepIndex';
+            return 'Confirme para ser ranqueado!';
     }
 }
 
-const DadosConta = () =>
-    (<div>
-        <div className="row">
-            <div className="col-md-6">
-                <div className="form-group">
-                    <Field
-                        name="usuario"
-                        component={renderTextField}
-                        label="Usuário"
-                    />
-                </div>
-            </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <Field
-                        name="senha"
-                        component={renderTextField}
-                        label="Senha"
-                    />
+// const PerguntaUm = () =>
+//   (<div>
+//     <Pergunta1/>
+//   </div>);
 
-                </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-md-6">
-                <div className="form-group">
-                    <Field
-                        name="confimarSenha"
-                        component={renderTextField}
-                        label="Confimar Senha"
-                    />
-                </div>
-            </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <Field
-                        name="email"
-                        component={renderTextField}
-                        label="E-mail"
-                    />
-                </div>
-            </div>
-        </div>
-    </div>);
+// const PerguntaDois = () =>
+//   (<div>
+//     <Pergunta2/>
+//   </div>);
+  
+// const PerguntaTres = () =>
+//   (<div>
+//     <Pergunta3/>
+//   </div>);
 
-const DadosContaForm = reduxForm({
-    form: 'DadosConta'
-})(DadosConta);
+// const PerguntaQuatro = () =>
+//   (<div>
+//     <Pergunta4/>
+//   </div>);
 
-function getPersonalInformation() {
-    return <div>
-        <div className="row">
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="fullName"
-                        label="Full Name"
-                        margin="normal"
-                        fullWidth
-                    /></div>
-            </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="userEmail"
-                        label="User Name"
-                        margin="normal"
-                        fullWidth
-                    />
-                </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-md-12">
-                <div className="form-group">
-                    <TextField
-                        id="aboutUser"
-                        label="Write Something About You"
-                        margin="normal"
-                        multiline
-                        rowsMax="4"
-                        fullWidth
-                    /></div>
-            </div>
-        </div>
-    </div>
+// const PerguntaCinco = () =>
+//   (<div>
+//     <Pergunta5/>
+//   </div>);
 
-}
+// const PerguntaSeis = ({getState}) =>
+//   (<div>
+//     <Pergunta6 getState={getState}  />
+//   </div>);
 
-function getPaymentInformation() {
-    return <div className="tab-pane" id="tab2-3">
-        <div className="row">
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="cardHolder"
-                        label="Card Holder Name"
-                        margin="normal"
-                        fullWidth
-                    /></div>
-            </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="cardNo"
-                        label="Card Number"
-                        margin="normal"
-                        fullWidth
-                    />
-                </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="userName"
-                        type="password"
-                        label="UserName"
-                        margin="normal"
-                        fullWidth
-                    /></div>
-            </div>
-            <div className="col-md-6">
-                <div className="form-group">
-                    <TextField
-                        id="cardType"
-                        label="CardType"
-                        margin="normal"
-                        fullWidth
-                    /></div>
-            </div>
-        </div>
-    </div>
-}
 
-function getConfirmation() {
-    return <div className="tab-pane" id="tab2-4">
-        <h3 className="title text-primary">Terms and Conditions</h3>
-        <p><strong>Lorem</strong> Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-            into electronic typesetting, remaining essentially unchanged.</p>
-        <div className="d-flex align-items-center">
-            <Checkbox color="primary" /> <span>I agree with the Terms and Conditions.</span>
-        </div>
-    </div>
-}
 
 class FormularioSequencia extends React.Component {
     state = {
         activeStep: 0,
+        total:0
     };
 
     handleNext = () => {
         const { activeStep } = this.state;
         this.setState({
+          total: this.getState()+this.state.total,
+      });
+        this.setState({
             activeStep: activeStep + 1,
         });
+
+
     };
 
     handleBack = () => {
@@ -200,6 +105,12 @@ class FormularioSequencia extends React.Component {
             activeStep: 0,
         });
     };
+
+    getState = (valor) => {
+      console.log("asdasdasdasdasda",valor)
+      return valor;
+    };
+
 
     render() {
         const steps = getSteps();
@@ -226,7 +137,7 @@ class FormularioSequencia extends React.Component {
                         </div>
                     ) : (
                             <div>
-                                {getStepContent(activeStep)}
+                                {getStepContent(activeStep,this.getState)}
                                 <div>
                                     <Button
                                         disabled={activeStep === 0}
