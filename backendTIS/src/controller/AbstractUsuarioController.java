@@ -1,26 +1,18 @@
-package controllerImpl;
+package controller;
 
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.UsuarioController;
-
 import service.UsuarioService;
-
-import serviceImpl.UsuarioServiceImpl;
 
 import util.RNException;
 
-import model.Usuario;
+import model.IUsuario;
 
-public abstract class UsuarioControllerImpl implements UsuarioController {
-	protected UsuarioService<Usuario, Long> userService; 
-	
-	public UsuarioControllerImpl () {
-		this.userService = new UsuarioServiceImpl();
-	}
+public abstract class AbstractUsuarioController<E extends IUsuario> implements CRUDRoutableController {
+	protected UsuarioService<E, Long> userService;
 	
 	@Override
 	public JSONObject sendRoute(String route, JSONObject data) {
@@ -50,11 +42,13 @@ public abstract class UsuarioControllerImpl implements UsuarioController {
 		JSONObject aux = new JSONObject ();
 		JSONArray usuariosJSON = new JSONArray();
 		
-		List<Usuario> usuarios;
+		List<E> usuarios;
 		try {
 			usuarios = this.userService.getAll();
-			usuarios.stream()
-					.forEach(emp -> usuariosJSON.put( emp.toJSONObject()) );
+			
+			for(IUsuario u : usuarios) {
+				usuariosJSON.put( u.toJSONObject()); 
+			}
 			
 			aux.put("usuarios", usuariosJSON);
 		} catch (RNException e) {
@@ -82,7 +76,7 @@ public abstract class UsuarioControllerImpl implements UsuarioController {
 		JSONObject result = new JSONObject();
 		String email = obj.getString("email");
 		
-		Usuario user;
+		IUsuario user;
 		try {
 			user = this.userService.getUsuarioByEmail(email);
 			
@@ -97,30 +91,26 @@ public abstract class UsuarioControllerImpl implements UsuarioController {
 		return result;
 	}
 	
-	
-//
-	public JSONObject add(JSONObject obj) {
-		JSONObject result = new JSONObject();
-		String email = obj.getString("email"),
-			   senha = obj.getString("senha"),
-			   nome  = obj.getString("nome");
-		
-		Usuario user = new Usuario();
-
-		user.setNome(nome);
-		user.setEmail(email);
-		user.setSenha(senha);
-		
-		try {
-			this.userService.add(user);
-			result.append("user", user.toJSONObject());
-		} catch (RNException e) {
-			e.printStackTrace();
-			result.put("RNException", e.getMessage());
-		}
-		
-		return result;
-	}
+//	public JSONObject add(JSONObject obj) {
+//		JSONObject result = new JSONObject();
+//		
+//		String email = obj.getString("email"),
+//			   senha = obj.getString("senha"),
+//			   nome  = obj.getString("nome");
+//		
+//		IUsuario user = new Usuario ();
+//		user.setUserData(nome, email, senha);
+//		
+//		try {
+//			this.userService.add(user);
+//			result.append("user", user.toJSONObject());
+//		} catch (RNException e) {
+//			e.printStackTrace();
+//			result.put("RNException", e.getMessage());
+//		}
+//		
+//		return result;
+//	}
 //
 //	@Override
 //	public JSONObject update(JSONObject obj) {

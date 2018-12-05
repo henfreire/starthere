@@ -7,7 +7,7 @@ import java.util.List;
 import DAO.EmpresaDAO;
 import DAO.UsuarioDAO;
 import model.Empresa;
-import model.Usuario;
+import model.IUsuario;
 
 import util.FileHandlerImpl;
 import util.FileHandler;
@@ -15,7 +15,7 @@ import util.FileHandler;
 public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 	private final String FILE_NAME = "empresa.dat"; 
 	private FileHandler<Empresa> fileManager;
-	private UsuarioDAO<Usuario, Long> userDAO;
+	private UsuarioDAO<IUsuario, Long> userDAO;
 	
 	public EmpresaDAOImpl() {
 		this.userDAO = new UsuarioDAOImpl ();
@@ -25,7 +25,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 	@Override
 	public Empresa getByEmail(String email) {
 		Empresa empresa = null;
-		Usuario usuario = this.userDAO.getByEmail(email); 
+		IUsuario usuario = this.userDAO.getByEmail(email); 
 		
 		if(usuario != null) {
 			empresa = new Empresa (usuario);
@@ -62,7 +62,7 @@ public class EmpresaDAOImpl implements EmpresaDAO<Empresa, Long> {
 	}
 
 	@Override
-	public void add(Empresa empresa) {
+	public void add(Empresa empresa) throws DAOException {
 		this.userDAO.add(empresa);  // Gets next id by reference.
 		fileManager.saveToFile(empresa);
 	}

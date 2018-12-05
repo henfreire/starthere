@@ -10,14 +10,10 @@ import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
 import org.simpleframework.http.core.Container;
 
+import controller.ControllerException;
 import controller.Routable;
-import controllerImpl.ControllerException;
-import controllerImpl.EmpresaControllerImpl;
-import controllerImpl.EventoControllerImpl;
-import controllerImpl.InvestidorControllerImpl;
-import controllerImpl.LoginControllerImpl;
-import controllerImpl.StartupControllerImpl;
-import controllerImpl.UsuarioControllerFactory;
+import controller.RouterFactory;
+import controllerImpl.RouterFactoryImpl;
 
 public class AJAXServer implements Container, Routable {
 	private Request request;
@@ -53,36 +49,20 @@ public class AJAXServer implements Container, Routable {
 		JSONObject result = new JSONObject ();
 		Routable router = null;
 		
-		if(route.startsWith("/login")) {
-			route = route.replace("/login", "");
-			router = new LoginControllerImpl();
-		} else if (route.startsWith("/evento")) {
-			route = route.replace("/evento", "");
-			router = new EventoControllerImpl();
-		} else if (route.startsWith("/empresa")) {
-			route = route.replaceAll("/empresa", "");
-			router = new EmpresaControllerImpl();
-		} else if (route.startsWith("/startup")) {
-			route = route.replaceAll("/startup", "");
-			router = new StartupControllerImpl();
-		} else if (route.startsWith("/investidor")) {
-			route = route.replaceAll("/investidor", "");
-			router = new InvestidorControllerImpl();
-		} else {
-			router = null;
-		}
-		
 		try {
-			if(router != null) {
-				result = router.sendRoute(route, requestData);
-				this.setResponse(result.toString());
-			} else {
-				throw new Exception("Essa rota não existe !");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			result.put("error", e.getMessage());
-		} catch (Exception e) {
+			RouterFactory factory = new RouterFactoryImpl ();
+
+			String controllerId = "/" + route.split("/")[1];
+			String controllerMethod = "";
+
+			if(!controllerId.equals("/login"))
+				controllerMethod = "/" + route.split("/")[2];
+			
+			router = factory.getRouter(controllerId);
+			result = router.sendRoute(controllerMethod, requestData);
+			
+			this.setResponse(result.toString());
+		} catch (ControllerException e) {
 			e.printStackTrace();
 			result.put("error", e.getMessage());
 		}
@@ -112,5 +92,4 @@ public class AJAXServer implements Container, Routable {
 			e.printStackTrace();
 		}
 	}
-
 }

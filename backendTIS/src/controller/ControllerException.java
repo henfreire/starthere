@@ -1,4 +1,4 @@
-package controllerImpl;
+package controller;
 
 @SuppressWarnings("serial")
 public class ControllerException extends Exception {

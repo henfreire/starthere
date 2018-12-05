@@ -1,28 +1,29 @@
 package controllerImpl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.json.JSONObject;
 
 import controller.EmpresaController;
+import controller.AbstractUsuarioController;
+
 import serviceImpl.EmpresaServiceImpl;
+import serviceImpl.EventoServiceImpl;
 import util.RNException;
+
 import service.EmpresaService;
 import service.EventoService;
+
 import model.Empresa;
 import model.Startup;
 import model.Evento;
 
-public class EmpresaControllerImpl extends UsuarioControllerImpl implements EmpresaController {	
-	private final String BRAZILIAN_DATE_FORMAT = "DD/MM/YYYY";
+public class EmpresaControllerImpl extends AbstractUsuarioController<Empresa> implements EmpresaController {
 	private EmpresaService<Empresa, Startup, Evento, Long> empresaService;
-	private EventoService<Empresa, Evento, Long> evtService;
+	private EventoService<Evento, Empresa, Long> evtService;
 	
 	public EmpresaControllerImpl () {
 		this.empresaService = new EmpresaServiceImpl ();
-	}
+		this.evtService = new EventoServiceImpl ();
+	}	
 	
 	@Override
 	public JSONObject sendRoute(String route, JSONObject requestData) {
@@ -36,25 +37,21 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 		
 		return result;
 	}
-	
 
 	@Override
 	public JSONObject addEvento(JSONObject obj) {
-		JSONObject result = new JSONObject ();
-		
+		JSONObject result = new JSONObject ();		
 		String  nome,
 				descricao,
-				dataEventoStr;
+				dataEvento;
 		Long id;
 		
 		try {
 			id = Long.parseLong(obj.getString("idEmpresa"));
 			nome = obj.getString("nome");
 			descricao = obj.getString("descricao");
-			dataEventoStr = obj.getString("dataEvento");
+			dataEvento = obj.getString("dataEvento");
 			
-	        Date dataEvento = this.getDate(dataEventoStr);
-	        
 			Evento evento = new Evento ();
 			
 			evento.setNome(nome);
@@ -64,51 +61,39 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 			Empresa emp = new Empresa ();
 			emp.setId(id);
 			
-			this.evtService.add(evento, null);
+			this.evtService.add(emp, evento);
 			
 			result.put("evento", evento.toJSONObject());
 		} catch (RNException e) {
 			e.printStackTrace();
 			result.put("RNException", e.getMessage());
-		} catch(ParseException e) {
-			e.printStackTrace();
-			result.put("ParseException", e.getMessage());
 		}
 		
 		return result;
 	}
-	
-	private Date getDate (String date) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat(BRAZILIAN_DATE_FORMAT);
-        return formatter.parse(date);
+
+	public JSONObject add(JSONObject obj) {
+		JSONObject result = new JSONObject();
+		String email = obj.getString("email"),
+			   senha = obj.getString("senha"),
+			   nome  = obj.getString("nome");
+		
+		Empresa newEmpresa = new Empresa ();
+
+		newEmpresa.setNome(nome);
+		newEmpresa.setEmail(email);
+		newEmpresa.setSenha(senha);
+		
+		try {
+			this.empresaService.add(newEmpresa);
+			result.append("empresa", newEmpresa.toJSONObject());
+		} catch (RNException e) {
+			e.printStackTrace();
+			result.put("RNException", e.getMessage());
+		}
+		
+		return result;
 	}
-//
-//	@Override
-//	public JSONObject add(JSONObject obj) {
-//		JSONObject result =  new JSONObject ();
-//		String nome, email, senha;
-//
-//		email = obj.getString("email");
-//		senha = obj.getString("senha");
-//		nome = obj.getString("nome");
-//		
-//		Empresa emp = new Empresa();
-//		
-//		emp.setEmail(email);
-//		emp.setSenha(senha);
-//		emp.setNome(nome);
-//
-//		try {
-//			this.empresaService.add(emp);
-//			result.put("empresa", emp.toJSONObject());
-//		} catch (RNException e) {
-//			e.printStackTrace();
-//			emp = null;
-//			result.append("RNException", e.getMessage());
-//		}
-//		
-//		return result;
-//	}
 
 	@Override
 	public JSONObject update(JSONObject obj) {
@@ -117,6 +102,18 @@ public class EmpresaControllerImpl extends UsuarioControllerImpl implements Empr
 
 	@Override
 	public JSONObject delete(long id) {
+		return null;
+	}
+
+	@Override
+	public JSONObject get(JSONObject obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject getAll() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

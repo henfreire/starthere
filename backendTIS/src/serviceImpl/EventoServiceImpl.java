@@ -3,6 +3,7 @@ package serviceImpl;
 import java.util.List;
 
 import DAO.EventoDAO;
+import DAOImpl.DAOException;
 import DAOImpl.EventoDAOImpl;
 import model.Empresa;
 import model.Evento;
@@ -30,7 +31,13 @@ public class EventoServiceImpl implements EventoService<Evento, Empresa, Long> {
 		if(evento.getDataEvento() == null) 
 			throw new RNException("O evento precisa ter data !");
 		
-		this.evtDAO.add(evento);
+		try {
+			evento.setIdEmpresa(empresa.getId());
+			this.evtDAO.add(evento);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new RNException(e.getMessage());
+		}
 	}
 
 	@Override

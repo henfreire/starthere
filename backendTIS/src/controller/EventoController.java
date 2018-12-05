@@ -1,5 +1,7 @@
 package controller;
 
-public interface EventoController {
-	
+import org.json.JSONObject;
+
+public interface EventoController extends Routable {
+	public JSONObject getAll();
 }

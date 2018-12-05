@@ -79,5 +79,4 @@ public class EventoDAOImpl implements EventoDAO<Evento, Empresa, Long> {
 		List<Evento> empresas = getAll();
 		return Long.parseLong((empresas.size() + 1) + "");
 	}
-
 }

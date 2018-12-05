@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-public class Empresa extends Usuario {
+public class Empresa extends AbstractUsuario {
 	private String razaoSocial;
 	private List<Evento> eventos;
 
@@ -12,8 +12,8 @@ public class Empresa extends Usuario {
 		super();
 	}
 	
-	public Empresa(Usuario user) {
-		super(user);
+	public Empresa(IUsuario user) {
+		super.setUserData(user);
 	}
 
 	public String getRazaoSocial() {
@@ -46,9 +46,10 @@ public class Empresa extends Usuario {
 
 	@Override
 	public void setDAT(String DAT) {
+		String[] vet;
+		
 		super.setDAT(DAT);
-		String[] vet = DAT.split("|");
+		vet = DAT.split("|");
 		this.razaoSocial = vet[0];
 	}
-	
 }

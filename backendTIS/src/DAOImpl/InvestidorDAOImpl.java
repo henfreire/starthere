@@ -7,8 +7,8 @@ import java.util.List;
 import DAO.InvestidorDAO;
 import DAO.UsuarioDAO;
 
+import model.IUsuario;
 import model.Investidor;
-import model.Usuario;
 
 import util.FileHandler;
 import util.FileHandlerImpl;
@@ -16,7 +16,7 @@ import util.FileHandlerImpl;
 public class InvestidorDAOImpl implements InvestidorDAO<Investidor, Long> {
 	private final String FILE_NAME = "investidor.dat"; 
 	private FileHandler<Investidor> fileManager;
-	private UsuarioDAO<Usuario, Long> userDAO;
+	private UsuarioDAO<IUsuario, Long> userDAO;
 	
 	public InvestidorDAOImpl() {
 		this.userDAO = new UsuarioDAOImpl ();
@@ -26,7 +26,7 @@ public class InvestidorDAOImpl implements InvestidorDAO<Investidor, Long> {
 	@Override
 	public Investidor getByEmail(String email) {
 		Investidor investidor = null;
-		Usuario usuario = this.userDAO.getByEmail(email); 
+		IUsuario usuario = this.userDAO.getByEmail(email); 
 		
 		if(usuario != null) {
 			investidor = new Investidor (usuario);
@@ -62,7 +62,7 @@ public class InvestidorDAOImpl implements InvestidorDAO<Investidor, Long> {
 	}
 
 	@Override
-	public void add(Investidor investidor) {
+	public void add(Investidor investidor) throws DAOException {		
 		this.userDAO.add(investidor);  // Gets next id by reference.
 		fileManager.saveToFile(investidor);
 	}

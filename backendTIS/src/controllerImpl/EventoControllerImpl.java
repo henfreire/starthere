@@ -5,16 +5,18 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.CRUDRoutableController;
+import controller.Routable;
 
 import model.Empresa;
 import model.Evento;
+
 import service.EventoService;
+
 import serviceImpl.EventoServiceImpl;
 
 import util.RNException;
 
-public class EventoControllerImpl implements CRUDRoutableController {
+public class EventoControllerImpl implements Routable {
 	private EventoService<Evento, Empresa, Long> evtService;
 	
 	public EventoControllerImpl() {
@@ -34,17 +36,6 @@ public class EventoControllerImpl implements CRUDRoutableController {
 		return result;
 	}
 
-	@Override
-	public JSONObject update(JSONObject obj) {
-		return null;
-	}
-	
-	@Override
-	public JSONObject get(JSONObject obj) {
-		return null;
-	}
-
-	@Override
 	public JSONObject getAll() {
 		List<Evento> eventos;
 		JSONObject result = new JSONObject();
@@ -54,7 +45,8 @@ public class EventoControllerImpl implements CRUDRoutableController {
 			eventos = this.evtService.getAll();
 			
 			if(eventos != null) {
-				eventos.stream().forEach(evt -> array.put(evt.toJSONObject()));
+				eventos .stream()
+						.forEach(evt -> array.put(evt.toJSONObject()));
 			}
 			
 			result.put("eventos", array);
@@ -64,17 +56,5 @@ public class EventoControllerImpl implements CRUDRoutableController {
 		}
 		
 		return result;
-	}
-
-	@Override
-	public JSONObject delete(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JSONObject add(JSONObject obj) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

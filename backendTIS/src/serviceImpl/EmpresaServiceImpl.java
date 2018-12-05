@@ -3,27 +3,24 @@ package serviceImpl;
 import java.util.List;
 
 import DAO.EmpresaDAO;
-import DAO.UsuarioDAO;
+import DAOImpl.DAOException;
 import DAOImpl.EmpresaDAOImpl;
-import DAOImpl.UsuarioDAOImpl;
+
 import model.Empresa;
 import model.Evento;
 import model.Startup;
-import model.Usuario;
 
 import service.EmpresaService;
 import service.EventoService;
-import service.UsuarioService;
 import util.RNException;
 
 public class EmpresaServiceImpl implements EmpresaService<Empresa, Startup, Evento, Long> {
 	private EmpresaDAO<Empresa, Long> empresaDAO;
+	
 	private EventoService<Evento, Empresa, Long> eventoService;
-	private UsuarioDAO<Usuario, Long> usuarioDAO;
 	
 	public EmpresaServiceImpl() {
-		this.usuarioDAO = new UsuarioDAOImpl ();
-		this.empresaDAO = new EmpresaDAOImpl ();
+		this.empresaDAO    = new EmpresaDAOImpl ();
 		this.eventoService = new EventoServiceImpl (); 
 	}
 
@@ -49,12 +46,12 @@ public class EmpresaServiceImpl implements EmpresaService<Empresa, Startup, Even
 
 	@Override
 	public void add(Empresa emp) throws RNException {
-		Usuario usr = this.usuarioDAO.getByEmail(emp.getEmail());
-		
-		if(usr != null)
-			throw new RNException("Este email já foi cadastrado !");
-		
-		this.empresaDAO.add(emp);
+		try {
+			this.empresaDAO.add(emp);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new RNException(e.getMessage());
+		}
 	}
 
 	@Override

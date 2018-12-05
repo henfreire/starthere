@@ -3,27 +3,27 @@ package DAOImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import DAO.UsuarioDAO;
+
+import model.IUsuario;
 import model.Usuario;
-import service.UsuarioService;
+
 import util.FileHandler;
 import util.FileHandlerImpl;
 
-public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
+public class UsuarioDAOImpl implements UsuarioDAO<IUsuario, Long> {
 	private final String FILE_NAME = "usuarios.dat";
-	private FileHandler<Usuario> userFileManager;
+	private FileHandler<IUsuario> userFileManager;
 	
 	public UsuarioDAOImpl() {
-		this.userFileManager = new FileHandlerImpl<Usuario> (FILE_NAME);
+		this.userFileManager = new FileHandlerImpl<IUsuario> (FILE_NAME);
 	}
 	
-	public List<Usuario> getAll() {
-		List<Usuario> usuarios = new ArrayList<Usuario>();
+	public List<IUsuario> getAll() {
+		List<IUsuario> usuarios = new ArrayList <IUsuario> ();
 		List<String> fileContents = userFileManager.getFileContents();
 
-		Usuario usuario = null;
+		IUsuario usuario = null;
 		
 		for(String str : fileContents) {
 			usuario = new Usuario ();
@@ -35,8 +35,8 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 
 	@Override
-	public Usuario get(Long id) {
-		List<Usuario> empresas = getAll();
+	public IUsuario get(Long id) {
+		List<IUsuario> empresas = getAll();
 		
 		return  empresas.stream()
 				.filter(empresa -> empresa.getId().equals(id))
@@ -45,14 +45,17 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 
 	@Override
-	public void add(Usuario usuario) {
+	public void add(IUsuario usuario) throws DAOException {
+		if(this.getByEmail(usuario.getEmail()) != null)
+			throw new DAOException ("Este email já está cadastrado !");
+
 		usuario.setId(getNextId());
 		userFileManager.saveToFile(usuario);
 	}
 
 	@Override
-	public void update(Usuario usuario) {
-		List<Usuario> usuarios = getAll();
+	public void update(IUsuario usuario) {
+		List<IUsuario> usuarios = getAll();
 
 		int index = usuarios.indexOf(usuario);
 		
@@ -64,9 +67,9 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 
 	@Override
-	public Usuario delete(Usuario usuario) {
-		List<Usuario> usuarios = getAll();
-		Usuario aux = null;
+	public IUsuario delete(IUsuario usuario) {
+		List<IUsuario> usuarios = getAll();
+		IUsuario aux = null;
 		
 		int index = usuarios.indexOf(usuario);
 		
@@ -80,9 +83,9 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 
 	@Override
-	public Usuario getByEmail(String email) {
+	public IUsuario getByEmail(String email) {
 		List<String> fileContents = userFileManager.getFileContents();
-		Usuario user = null;
+		IUsuario user = null;
 		
 		
 		for(String str : fileContents) {
@@ -97,7 +100,7 @@ public class UsuarioDAOImpl implements UsuarioDAO<Usuario, Long> {
 	}
 	
 	private Long getNextId() {
-		List<Usuario> usuarios = getAll();
+		List<IUsuario> usuarios = getAll();
 		return Long.parseLong((usuarios.size() + 1) + "");
 	}
 }

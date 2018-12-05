@@ -7,7 +7,7 @@
 	Link: https://github.com/blueimp/JavaScript-MD5/
 */
 
-var SERVER_URL = "http://127.0.0.1:7200/";
+var SERVER_URL = "http://127.0.0.1:7202/";
 
 var sendRequest =  (route, jsonData) => {
 	return $.post({
@@ -63,8 +63,10 @@ $('#cadEventoBtn').click(() => {
 		descricao: $('#cadEventoDescricao').val(),
 		idEmpresa: localStorage.getItem('loginId')
 	};
+
+	data['dataEvento'] = data['dataEvento'].split('-').reverse().join('/');
 	
-	route = 'evento/add';
+	route = 'empresa/addEvento';
 	
 	sendRequest(route, data);
 });

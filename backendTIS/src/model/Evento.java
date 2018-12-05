@@ -1,24 +1,29 @@
 package model;
 
-import java.util.Date;
-
 import org.json.JSONObject;
 
-import util.toDAT;
-import util.toJSON;
-
-public class Evento implements toDAT, toJSON {
+public class Evento implements TISModel {
 	private Long     id;
+	private Long     idEmpresa;
+	
 	private String   nome,
 					 descricao;
-	private Date     dataEvento;
+	private String   dataEvento;
 	
 	public Evento() {}
 	
-	public Evento(String nome, String descricao, Date dataEvento) {
+	public Evento(String nome, String descricao, String dataEvento) {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataEvento = dataEvento;
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public Long getId() {
@@ -45,28 +50,40 @@ public class Evento implements toDAT, toJSON {
 		this.descricao = descricao;
 	}
 
-	public Date getDataEvento() {
+	public String getDataEvento() {
 		return dataEvento;
 	}
 
-	public void setDataEvento(Date dataEvento) {
+	public void setDataEvento(String dataEvento) {
 		this.dataEvento = dataEvento;
 	}
 
 	@Override
 	public String toDATFormat() {
-		return id + "|" + nome + "|" + descricao + "|" + dataEvento.toString() + "|" ;
+		return  id + "|" + 
+				idEmpresa + "|" + 
+				nome + "|" + 
+				descricao + "|" + 
+				dataEvento + "|" ;
 	}
 
 	@Override
 	public void setDAT(String DAT) {
+		String[] vet = DAT.split("\\|");
+
+		id = Long.parseLong(vet[0]);
+		idEmpresa = Long.parseLong(vet[1]);
+		nome = vet[2];
+		descricao = vet[3];
+		dataEvento = vet[4];
 	}
 
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
-		
-		obj.put("id", id);		
+
+		obj.put("id", id);
+		obj.put("idEmpresa", idEmpresa);		
 		obj.put("nome", nome);		
 		obj.put("descricao", descricao);		
 		obj.put("dataEvento", dataEvento);

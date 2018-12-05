@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.json.JSONObject;
 
-public class Startup extends Usuario {
+public class Startup extends AbstractUsuario  {
 	private Calendar dataFundacao;
 	private double capitalGiro;
 	private Ranking<Integer> ranking;
@@ -13,7 +13,7 @@ public class Startup extends Usuario {
 		super();
 	}
 	
-	public Startup(Usuario user) {
+	public Startup(IUsuario user) {
 		super(user);
 	}
 	
@@ -44,7 +44,7 @@ public class Startup extends Usuario {
 	@Override
 	public JSONObject toJSONObject() {
 		JSONObject obj = super.toJSONObject();
-		obj.put("ranking", ranking.toJSONObject());
+//		obj.put("ranking", ranking.toJSONObject());
 		return obj;
 	}
 

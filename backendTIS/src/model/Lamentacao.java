@@ -2,10 +2,7 @@ package model;
 
 import org.json.JSONObject;
 
-import util.toDAT;
-import util.toJSON;
-
-public class Lamentacao implements toJSON, toDAT {
+public class Lamentacao implements TISModel {
 	private Long id;
 	private String  nome,
 				    descricao;
@@ -75,5 +72,17 @@ public class Lamentacao implements toJSON, toDAT {
 		this.descricao = vet[2];
 		this.status = Boolean.parseBoolean(vet[3]);
 		this.bonificacao = Double.parseDouble(vet[4]);
+	}
+
+	@Override
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -3,9 +3,11 @@ package controllerImpl;
 import org.json.JSONObject;
 
 import controller.LoginController;
-import model.Usuario;
+import model.IUsuario;
+
 import service.LoginService;
-import serviceImpl.UsuarioServiceImpl;
+import serviceImpl.LoginServiceImpl;
+
 import util.RNException;
 
 public class LoginControllerImpl implements LoginController {
@@ -13,8 +15,8 @@ public class LoginControllerImpl implements LoginController {
 	@Override
 	public JSONObject login(JSONObject requestData) {
 		JSONObject result = new JSONObject();
-		Usuario usr = null;
-		LoginService <Usuario> service = new UsuarioServiceImpl(); 
+		IUsuario usr = null;
+		LoginService <IUsuario> service = new LoginServiceImpl(); 
 		
 		String email = requestData.getString("email"),
 			   senha = requestData.getString("senha");

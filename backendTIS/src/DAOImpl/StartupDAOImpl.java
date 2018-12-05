@@ -7,8 +7,8 @@ import java.util.List;
 import DAO.StartupDAO;
 import DAO.UsuarioDAO;
 
+import model.IUsuario;
 import model.Startup;
-import model.Usuario;
 
 import util.FileHandler;
 import util.FileHandlerImpl;
@@ -16,7 +16,7 @@ import util.FileHandlerImpl;
 public class StartupDAOImpl implements StartupDAO<Startup, Long> {
 	private final String FILE_NAME = "startup.dat"; 
 	private FileHandler<Startup> fileManager;
-	private UsuarioDAO<Usuario, Long> userDAO;
+	private UsuarioDAO<IUsuario, Long> userDAO;
 	
 	public StartupDAOImpl() {
 		this.userDAO = new UsuarioDAOImpl ();
@@ -26,7 +26,7 @@ public class StartupDAOImpl implements StartupDAO<Startup, Long> {
 	@Override
 	public Startup getByEmail(String email) {
 		Startup startup = null;
-		Usuario usuario = this.userDAO.getByEmail(email); 
+		IUsuario usuario = this.userDAO.getByEmail(email); 
 		
 		if(usuario != null) {
 			startup = new Startup (usuario);
@@ -63,7 +63,7 @@ public class StartupDAOImpl implements StartupDAO<Startup, Long> {
 	}
 
 	@Override
-	public void add(Startup startup) {
+	public void add(Startup startup) throws DAOException {
 		this.userDAO.add(startup);  // Gets next id by reference.
 		fileManager.saveToFile(startup);
 	}
