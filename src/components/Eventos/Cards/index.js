@@ -12,7 +12,7 @@ class Cards extends Component {
     return (
       <div className="row">
         {listaEventos.map((item, index) => (
-          <div className="col col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-2">
+          <div className="col-lg-6 col-xs-12  mt-2">
             <Card item={item} numero={index + 1} />
           </div>
         ))}

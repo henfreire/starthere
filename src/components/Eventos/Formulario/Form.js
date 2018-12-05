@@ -2,10 +2,12 @@ import React from "react";
 import { Formik, Field } from "formik";
 import {
   renderTextField,
-  renderImg
+  renderImg,
+  renderReactData
 } from "components/Formularios/FormikFields";
 import Button from "@material-ui/core/Button";
-
+import moment from 'moment';
+import 'moment/locale/pt-br';
 class Thumb extends React.Component {
   state = {
     loading: false,
@@ -60,7 +62,7 @@ class Example extends React.Component {
           initialValues={
             initialValues
               ? initialValues
-              : { nome: "", descricao: "", imagem: "" }
+              : { nome: "", descricao: "", imagem: "", dataEvento:  moment().format() }
           }
           onSubmit={(values, actions) => {
             this.props.onSubmit({ values });
@@ -82,6 +84,12 @@ class Example extends React.Component {
                       rowsMax="4"
                       rows="4"
                       component={renderTextField}
+                    />
+                    <Field
+                      name="dataEvento"
+                      type="date"
+                      component={renderTextField}
+                      
                     />
                   </div>
                   <div className="col-6 col-xs-12">

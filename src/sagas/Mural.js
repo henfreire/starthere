@@ -10,7 +10,7 @@ const buscarTodosMuralsRequest = async dados =>
 
 const addMuralRequest = async dados =>
 	api
-	  .post("/evento/add/", dados)
+	  .post("/empresa/evento/add/", dados)
 	  .then(result => result)
 	  .catch(error => error);	
 	

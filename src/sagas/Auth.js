@@ -19,16 +19,16 @@ function* criarContaEmailSenha({ payload }) {
 			senha: dados.senha,
 
 		};
-		console.log("novoUsuario",novoUsuario);
+		
 		let formData = new FormData();
 
 		formData.append('nome', dados.nome);
 		formData.append('email', dados.email);
 		formData.append('senha', dados.senha);
-	
+		console.log("formData",formData);
 		const response = yield call(criarContaEmailSenhaRequest, formData);
 		if (response.ok) {
-			usuarioData = novoUsuario;
+			usuarioData = response.data.user;
 		} else if (Object.prototype.hasOwnProperty.call(response.data, 'error')) {
 			switch (response.data.error) {
 				case 'Unauthorised':
@@ -68,10 +68,12 @@ function* loginEmailSenha({ payload }) {
 		
 		formData.append('email', dados.email);
 		formData.append('senha', dados.senha);
+		
+
 		const response = yield call(loginEmailSenhaRequest, formData);
 		if (response.ok) {
 			if (Object.prototype.hasOwnProperty.call(response.data, 'user')) {
-				usuarioData = response.data;
+				usuarioData = response.data.user;
 			} else {
 				mensagemAuth = 'Resposta inválida';
 			}

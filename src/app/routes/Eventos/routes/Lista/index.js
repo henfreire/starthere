@@ -13,6 +13,7 @@ class Lista extends React.Component {
   };
 
   render() {
+    const { opcoes, filtros } = this.props;
     return (
       <div className="app-wrapper">
         <div className="animated slideInUpTiny animation-duration-3">
@@ -20,12 +21,10 @@ class Lista extends React.Component {
             Eventos
           </Typography>
           <div className="row">
-            <div className="col col-6">
-              <Filtros />
-            </div>
+            <div className="col col-6">{filtros != false && <Filtros />}</div>
             <div className="col col-6">
               <div className="d-flex justify-content-end">
-                <Opcoes novoEvento={this.novoEventoTela} />
+                {opcoes != false && <Opcoes novoEvento={this.novoEventoTela} />}
               </div>
             </div>
           </div>
@@ -34,7 +33,6 @@ class Lista extends React.Component {
               <Cards />
             </div>
           </div>
-          
         </div>
       </div>
     );

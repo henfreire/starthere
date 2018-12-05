@@ -9,11 +9,12 @@ import Fab from "@material-ui/core/Fab";
 import { connect } from "react-redux";
 import { Creators as ActionsEventos } from "ducks/Eventos";
 class Novo extends React.Component {
-  novoEvento = ({ values }) => {
-    console.log("values", values);
+  novoMural = ({ values }) => {
+    const {usuario} = this.props;
+    console.log("values", values, "usuario", usuario);
     let reader = new FileReader();
     reader.onloadend = () => {
-      let dados = { ...values, imagem: reader.result};
+      let dados = { ...values, imagem: reader.result, id: usuario.id};
       this.props.addEvento({values: dados});
     };
     reader.readAsDataURL(values.imagem);
@@ -33,7 +34,7 @@ class Novo extends React.Component {
               <Paper className="p-2">
                 <div className="row">
                   <div className="col col-12">
-                    <FormularioEvento onSubmit={this.novoEvento} />
+                    <FormularioEvento onSubmit={this.novoMural} />
                   </div>
                 </div>
               </Paper>
@@ -55,8 +56,9 @@ class Novo extends React.Component {
 }
 
 Novo.propTypes = {};
-const mapStateToProps = ({}) => {
-  return {};
+const mapStateToProps = ({auth}) => {
+  const {usuario} = auth;
+  return {usuario};
 };
 const { addEvento } = ActionsEventos;
 export default connect(

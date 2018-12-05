@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Typography";
 
-import Filtros from "components/Eventos/Filtros";
-import Opcoes from "components/Eventos/Opcoes";
-import Cards from "components/Eventos/Cards";
+import Filtros from "components/Mural/Filtros";
+import Opcoes from "components/Mural/Opcoes";
+import Cards from "components/Mural/Cards";
 
 class Lista extends React.Component {
   novoMuralTela = () => {
@@ -13,6 +13,7 @@ class Lista extends React.Component {
   };
 
   render() {
+    const { opcoes, filtros } = this.props;
     return (
       <div className="app-wrapper">
         <div className="animated slideInUpTiny animation-duration-3">
@@ -20,12 +21,10 @@ class Lista extends React.Component {
             Mural
           </Typography>
           <div className="row">
-            <div className="col col-6">
-              <Filtros />
-            </div>
+            <div className="col col-6">{opcoes != false && <Filtros />}</div>
             <div className="col col-6">
               <div className="d-flex justify-content-end">
-                <Opcoes novoEvento={this.novoMuralTela} />
+                {filtros != false && <Opcoes novoEvento={this.novoMuralTela} />}
               </div>
             </div>
           </div>
@@ -34,7 +33,6 @@ class Lista extends React.Component {
               <Cards />
             </div>
           </div>
-          
         </div>
       </div>
     );

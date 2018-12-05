@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import Datas from 'components/Datas';
 export const renderTextField = ({
   field, // { name, value, onChange, onBlur }
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
@@ -69,4 +70,13 @@ export const renderImg = ({
       )}
     </div>
   );
+};
+
+export const renderReactData = ({ field, label, ...custom }) => {
+  console.log("field", field)
+	const onMudar = (dados) => {
+		field.onChange(dados);
+    };
+    const {startDate, endDate} = field.value;
+	return <Datas  startDate ={startDate} endDate={endDate} onChange={onMudar} />;
 };

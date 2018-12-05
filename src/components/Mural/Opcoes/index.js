@@ -10,7 +10,7 @@ const Opcoes = ({ novoEvento }) => {
   };
   return (
     <div>
-      <Tooltip title="Acionar Evento">
+      <Tooltip title="Acionar Mural">
         <Fab color="primary" onClick={handleClick}>
           <FontAwesomeIcon icon={faCalendarPlus} size="2x" />
         </Fab>

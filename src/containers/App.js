@@ -37,10 +37,10 @@ class App extends Component {
 		super(props);
 	}
 	UNSAFE_componentWillMount() {
-		this.props.setUsuario({
-			nome: 'Henrique',
-			email: 'h.freire@live.com'
-		});
+		// this.props.setUsuario({
+		// 	nome: 'Henrique',
+		// 	email: 'h.freire@live.com'
+		// });
 	}
 	render() {
 		const { match, location, locale, usuario, initURL, isDirectionRTL } = this.props;

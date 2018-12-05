@@ -10,10 +10,11 @@ import { connect } from "react-redux";
 import { Creators as ActionsEventos } from "ducks/Eventos";
 class Novo extends React.Component {
   novoEvento = ({ values }) => {
+    const {usuario} = this.props;
     console.log("values", values);
     let reader = new FileReader();
     reader.onloadend = () => {
-      let dados = { ...values, imagem: reader.result};
+      let dados = { ...values, imagem: reader.result, idEmpresa: usuario.id, dataEvento: ''};
       this.props.addEvento({values: dados});
     };
     reader.readAsDataURL(values.imagem);
@@ -55,8 +56,9 @@ class Novo extends React.Component {
 }
 
 Novo.propTypes = {};
-const mapStateToProps = ({}) => {
-  return {};
+const mapStateToProps = ({auth}) => {
+  const {usuario} = auth;
+  return {usuario};
 };
 const { addEvento } = ActionsEventos;
 export default connect(

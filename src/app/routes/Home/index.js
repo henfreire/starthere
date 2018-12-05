@@ -6,10 +6,10 @@ class Home extends Component {
     return (
       <div className="row">
         <div className="col-6 col-xs-12">
-          <ListaEventos />
+          <ListaEventos opcoes={false} filtros={false}/>
         </div>
         <div className="col-6 col-xs-12">
-          <ListaMural />
+          <ListaMural opcoes={false} filtros={false}/>
         </div>
       </div>
     );
