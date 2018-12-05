@@ -1,0 +1,7 @@
+WARNING - 17:35:02: First conversion pass
+ERROR - 17:35:02: com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException: Byte inválido 2 da sequência UTF-8 do byte 2.
+ERROR - 17:35:02: com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException: Byte inválido 2 da sequência UTF-8 do byte 2.
+WARNING - 17:35:10: First conversion pass
+ERROR - 17:35:10: java.net.MalformedURLException: unknown protocol: pathmap
+WARNING - 17:35:21: First conversion pass
+ERROR - 17:35:21: java.net.MalformedURLException: unknown protocol: pathmap

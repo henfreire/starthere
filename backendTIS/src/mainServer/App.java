@@ -9,7 +9,7 @@ import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 
 public class App {
-	private static final int PORT = 7202;
+	private static final int PORT = 7201;
 									
 	public static void main(String args[]) throws IOException {
 		Container container = new AJAXServer();

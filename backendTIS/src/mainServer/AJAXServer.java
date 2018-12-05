@@ -2,8 +2,10 @@ package mainServer;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import org.json.JSONObject;
+import org.simpleframework.http.Part;
 import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
@@ -31,12 +33,25 @@ public class AJAXServer implements Container, Routable {
 			Query query = this.request.getQuery();
 			JSONObject obj = new JSONObject ();
 			
+			List<Part> list = request.getParts();
+			
+			list.stream().forEach(l -> {
+				try {
+					obj.put(l.getName(), l.getContent());
+					System.out.println(l.getName() + " -> " + l.getContent());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+			
 			Object[] keys = query.keySet().toArray();
 			
 			for(int i = 0 ; i < keys.length; i++) {
 				obj.put(keys[i].toString(), query.get(keys[i]));
 			}
 			
+			System.out.println(obj);
+
 			this.setResponse(this.sendRoute(path, obj).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
